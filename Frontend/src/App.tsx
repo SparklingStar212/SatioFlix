@@ -9,9 +9,7 @@ import CreateRecipePage from './components/CreateRecipePage'; // 👈 Import the
 import ReelsPage from './components/ReelsPage';
 import { api } from './services/api';
 import type { Recipe } from './services/api';
-import { Loader2 } from 'lucide-react';
-
-
+import { Loader2, Heart } from 'lucide-react';
 
 const TAG_FILTERS = ['All', 'Vegan', 'Spicy', 'Easy', 'Dessert'];
 
@@ -22,10 +20,15 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTag, setActiveTag] = useState('All');
 
+  // ⭐️ Favorites State
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
   const [searchParams] = useSearchParams();
   const countryFilter = searchParams.get('country') || '';
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
+  // Fetch initial recipes
   useEffect(() => {
     const fetchRecipes = async () => {
       setIsLoading(true);
@@ -44,20 +47,36 @@ function Home() {
     fetchRecipes();
   }, [countryFilter]);
 
+  // Load and listen to localStorage updates for Favorites
+  useEffect(() => {
+    const loadFavorites = () => {
+      const saved = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
+      setFavoriteIds(saved);
+    };
+
+    loadFavorites();
+
+    // Listen to changes fired by cards so our home screen updates instantly
+    window.addEventListener('favorites-updated', loadFavorites);
+    return () => window.removeEventListener('favorites-updated', loadFavorites);
+  }, []);
+
+  // Reset tag selection when switching countries
   useEffect(() => {
     setActiveTag('All');
+    setShowFavoritesOnly(false); // Reset favorites toggle when navigation changes
   }, [countryFilter]);
 
-  // 🔎 Combined Master Filter with smart country-name mapping!
+  // 🔎 Combined Master Filter: Matches Country AND Tag AND Search Query AND Bookmarks!
   const filteredRecipes = recipes.filter((recipe) => {
-    const queryCountry = countryFilter.trim().toLowerCase();
+    // A. Bookmarks Matching
+    const matchesFavorites = !showFavoritesOnly || favoriteIds.includes(recipe._id);
 
-    // A. Smart Country Matching (maps sidebar names to database names)
+    // B. Country Matching
+    const queryCountry = countryFilter.trim().toLowerCase();
     let matchesCountry = true;
     if (countryFilter) {
       const dbCountry = recipe.countryOfOrigin?.trim().toLowerCase() || '';
-
-      // Create a dictionary mapping the sidebar search keys to their database values
       const countryMap: Record<string, string[]> = {
         korean: ['south korea', 'korea', 'korean'],
         japanese: ['japan', 'japanese'],
@@ -65,17 +84,16 @@ function Home() {
         nigerian: ['nigeria', 'nigerian'],
         mexican: ['mexico', 'mexican']
       };
-
       const acceptableMatches = countryMap[queryCountry] || [queryCountry];
       matchesCountry = acceptableMatches.includes(dbCountry);
     }
 
-    // B. Tag Matching
+    // C. Tag Matching
     const matchesTag =
       activeTag === 'All' ||
       recipe.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase());
 
-    // C. Text Search Matching
+    // D. Text Search Matching
     const queryText = searchQuery.toLowerCase().trim();
     const matchesText =
       !queryText ||
@@ -83,7 +101,7 @@ function Home() {
       recipe.tags?.some(tag => tag.toLowerCase().includes(queryText)) ||
       recipe.description?.toLowerCase().includes(queryText);
 
-    return matchesCountry && matchesTag && matchesText;
+    return matchesFavorites && matchesCountry && matchesTag && matchesText;
   });
 
   return (
@@ -92,12 +110,14 @@ function Home() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-zinc-100 dark:border-zinc-800/80 pb-6">
         <div>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            {countryFilter ? `${countryFilter} Dishes` : 'Explore Culinary Creations'}
+            {showFavoritesOnly ? 'My Bookmarks' : countryFilter ? `${countryFilter} Dishes` : 'Explore Culinary Creations'}
           </h2>
           <p className="text-zinc-500 dark:text-zinc-400 mt-1.5">
-            {countryFilter
-              ? `Curated, authentic recipes originating directly from ${countryFilter}.`
-              : 'Browse through premium recipes seeded from all around the globe.'}
+            {showFavoritesOnly
+              ? 'Your personalized cookbook of saved recipes.'
+              : countryFilter
+                ? `Curated, authentic recipes originating directly from ${countryFilter}.`
+                : 'Browse through premium recipes seeded from all around the globe.'}
           </p>
         </div>
 
@@ -118,21 +138,42 @@ function Home() {
         </div>
       </div>
 
-      {/* Tag Pill Filter Row */}
+      {/* Tag Pill Filter Row & Favorites Toggle */}
       {!isLoading && !error && (
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-          {TAG_FILTERS.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setActiveTag(tag)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shrink-0 cursor-pointer ${activeTag === tag
-                  ? 'bg-rose-600 text-white shadow-md shadow-rose-600/25'
-                  : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
-                }`}
-            >
-              {tag}
-            </button>
-          ))}
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
+          {/* Left Side: Dynamic Food Tags */}
+          <div className="flex gap-2 overflow-x-auto scrollbar-none">
+            {TAG_FILTERS.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => {
+                  setActiveTag(tag);
+                  setShowFavoritesOnly(false); // Turn off favorites-only view if a tag is clicked
+                }}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shrink-0 cursor-pointer ${activeTag === tag && !showFavoritesOnly
+                    ? 'bg-rose-600 text-white shadow-md shadow-rose-600/25'
+                    : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+                  }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+
+          {/* Right Side: Quick Bookmarks Filter Button */}
+          <button
+            onClick={() => {
+              setShowFavoritesOnly(!showFavoritesOnly);
+              setActiveTag('All'); // Reset food tag focus
+            }}
+            className={`px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border transition-all duration-300 cursor-pointer ${showFavoritesOnly
+                ? 'bg-rose-100 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/40 shadow-sm'
+                : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+              }`}
+          >
+            <Heart className={`w-3.5 h-3.5 ${showFavoritesOnly ? 'fill-rose-500 stroke-rose-500' : 'stroke-zinc-500'}`} />
+            <span>Saved Only ({favoriteIds.length})</span>
+          </button>
         </div>
       )}
 
@@ -156,7 +197,11 @@ function Home() {
         <>
           {filteredRecipes.length === 0 ? (
             <div className="text-center py-16 bg-zinc-100/50 dark:bg-zinc-900/40 rounded-3xl border border-dashed border-zinc-200 dark:border-zinc-800">
-              <p className="text-zinc-500 font-medium">No dishes match your active search or tag filters. Try another combination!</p>
+              <p className="text-zinc-500 font-medium">
+                {showFavoritesOnly
+                  ? "You haven't bookmarked any recipes yet! Tap the heart icon on any dish."
+                  : "No dishes match your active search or tag filters. Try another combination!"}
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -174,6 +219,7 @@ function Home() {
         </>
       )}
 
+      {/* Slide-over details Panel */}
       <RecipeDrawer
         recipe={selectedRecipe}
         onClose={() => setSelectedRecipe(null)}

@@ -1,5 +1,4 @@
 // src/components/layout/Sidebar.tsx
-import React from 'react';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { ChefHat, Film, PlusCircle, Globe, Moon, Sun } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';

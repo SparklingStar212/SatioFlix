@@ -1,5 +1,5 @@
 // src/components/ReelsPage.tsx
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { api } from '../services/api';
 import type { Video } from '../services/api';
 import { Loader2, AlertCircle, RefreshCw, ChefHat } from 'lucide-react';

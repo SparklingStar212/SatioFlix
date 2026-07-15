@@ -1,6 +1,6 @@
 // src/components/RecipeDrawer.tsx
-import React, { useState } from 'react';
-import { X, Clock, Users, Globe, Check, ChefHat } from 'lucide-react';
+import { useState } from 'react';
+import { X, Globe, Check, ChefHat } from 'lucide-react';
 import type { Recipe } from '../services/api';
 
 interface RecipeDrawerProps {
@@ -12,8 +12,6 @@ export default function RecipeDrawer({ recipe, onClose }: RecipeDrawerProps) {
   const [checkedIngredients, setCheckedIngredients] = useState<Record<string, boolean>>({});
 
   if (!recipe) return null;
-
-  const totalTime = recipe.prepTime + recipe.cookTime;
 
   const toggleIngredient = (name: string) => {
     setCheckedIngredients(prev => ({
@@ -108,7 +106,7 @@ export default function RecipeDrawer({ recipe, onClose }: RecipeDrawerProps) {
                           ? 'bg-rose-500 border-rose-500 text-white'
                           : 'border-zinc-300 dark:border-zinc-700'
                         }`}>
-                        {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                        {isChecked && <Check className="w-3.5 h-3.5 stroke-3" />}
                       </div>
                       <span className={`text-sm ${isChecked ? 'line-through text-zinc-400' : 'font-medium'}`}>
                         {ing.quantity} {ing.unit} of {ing.name}
