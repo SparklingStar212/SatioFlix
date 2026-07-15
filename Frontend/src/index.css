@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+/* 
+  1. Tell Tailwind v4 to trigger dark mode when the .dark class 
+     is manually applied to the html tag (enabling our manual switch!)
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 
+  2. Define our custom theme design variables (like colors)
+*/
+@theme {
+  --color-accent-light: #e11d48;
+  --color-accent-dark: #f43f5e;
+}
+
+@layer base {
+  body {
+    transition-property: color, background-color;
+    transition-duration: 300ms;
+  }
+}
