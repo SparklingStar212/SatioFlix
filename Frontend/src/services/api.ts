@@ -47,4 +47,5 @@ export interface Video {
   creatorName: string;
   category: string;
   createdAt: string;
+  countryOfOrigin?: string;
 }
