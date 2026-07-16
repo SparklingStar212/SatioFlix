@@ -44,7 +44,7 @@ function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
         )}
 
         {/* Floating Overlay Metadata */}
-        <div className="absolute bottom-16 md:bottom-25 left-0 w-full p-6 md:p-4 bg-linear-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end pointer-events-none z-10">
+        <div className="absolute bottom-16 md:bottom-30 left-0 w-full p-6 md:p-4 bg-linear-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end pointer-events-none z-10">
           <div className="flex items-center gap-1.5 mb-1.5">
             <ChefHat className="w-4 h-4 text-rose-400" />
             <span className="text-xs font-bold text-rose-400">
