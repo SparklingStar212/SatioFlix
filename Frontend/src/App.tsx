@@ -89,10 +89,21 @@ function Home() {
       const dbCountry = recipe.countryOfOrigin?.trim().toLowerCase() || '';
       const countryMap: Record<string, string[]> = {
         korean: ['south korea', 'korea', 'korean'],
-        japanese: ['japan', 'japanese'],
-        italian: ['italy', 'italian'],
         nigerian: ['nigeria', 'nigerian'],
-        mexican: ['mexico', 'mexican']
+        italian: ['italy', 'italian'],
+        mexican: ['mexico', 'mexican'],
+        japanese: ['japan', 'japanese'],
+        chinese: ['china', 'chinese'],
+        indian: ['india', 'indian'],
+        thai: ['thailand', 'thai'],
+        french: ['france', 'french'],
+        spanish: ['spain', 'spanish'],
+        greek: ['greece', 'greek'],
+        brazilian: ['brazil', 'brazilian'],
+        vietnamese: ['vietnam', 'vietnamese'],
+        british: ['united kingdom', 'british', 'uk', 'england'],
+        american: ['united states', 'usa', 'us', 'american'],
+        'middle eastern': ['middle east', 'middle eastern', 'lebanon', 'egypt', 'turkish']
       };
       const acceptableMatches = countryMap[queryCountry] || [queryCountry];
       matchesCountry = acceptableMatches.includes(dbCountry);

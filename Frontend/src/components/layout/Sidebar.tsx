@@ -8,7 +8,18 @@ const CUISINES = [
   { name: 'Nigerian', flag: '🇳🇬' },
   { name: 'Italian', flag: '🇮🇹' },
   { name: 'Mexican', flag: '🇲🇽' },
-  { name: 'Japanese', flag: '🇯🇵' }
+  { name: 'Japanese', flag: '🇯🇵' },
+  { name: 'Chinese', flag: '🇨🇳' },
+  { name: 'Indian', flag: '🇮🇳' },
+  { name: 'Thai', flag: '🇹🇭' },
+  { name: 'French', flag: '🇫🇷' },
+  { name: 'Spanish', flag: '🇪🇸' },
+  { name: 'Greek', flag: '🇬🇷' },
+  { name: 'Brazilian', flag: '🇧🇷' },
+  { name: 'Vietnamese', flag: '🇻🇳' },
+  { name: 'British', flag: '🇬🇧' },
+  { name: 'American', flag: '🇺🇸' },
+  { name: 'Middle Eastern', flag: 'ME' }
 ];
 
 export default function Sidebar() {
