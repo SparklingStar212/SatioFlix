@@ -21,7 +21,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-const TAG_FILTERS = ['All', 'Vegan', 'Spicy', 'Easy', 'Dessert'];
+const TAG_FILTERS = ['All', 'Vegan', 'Spicy', 'Easy', 'Dessert', 'Quick', 'Healthy', 'Savory', 'Breakfast', 'Lunch', 'Sour', 'Vegetarian', 'Comfort-Food', 'Sweet', 'Soup', 'Salad', 'Classic', 'Creamy', 'Spiced', 'Curry', 'Slow-Cooked', 'Exotic', 'Sweet-Savory',  'Crispy', 'Onion-Heavy', 'Baked', 'Celebration', 'Traditional', 'Authentic', 'Cheesy', 'Seafood', 'Street-Food', 'Sweet-Spicy', 'Smoky', 'Beefy', 'Porky', 'Smoky', 'Grill', 'Stir-Fry', 'Fried', 'Herby', 'Chicken', 'Fresh', 'Classic', 'Pastry'];
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
