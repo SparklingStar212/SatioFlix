@@ -713,7 +713,7 @@ const recipesToSeed = [
     cookTime: 15,
     servingsDefault: 3,
     coverImage:
-      "https://images.unsplash.com/photo-1590412200988-a436bb705300?q=80&w=600",
+      "https://images.unsplash.com/photo-1590412200988-a436970781fa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8U2hha3NodWthfGVufDB8fDB8fHww",
     ingredients: [
       { name: "Eggs", quantity: 5, unit: "pcs" },
       { name: "Canned crushed tomatoes", quantity: 400, unit: "g" },
