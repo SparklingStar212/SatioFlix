@@ -5,11 +5,21 @@ import { ThemeProvider } from './context/ThemeContext';
 import Sidebar from './components/layout/Sidebar';
 import RecipeCard from './components/RecipeCard';
 import RecipeDrawer from './components/RecipeDrawer';
-import CreateRecipePage from './components/CreateRecipePage'; // 👈 Import the real creation page
+import CreateRecipePage from './components/CreateRecipePage';
 import ReelsPage from './components/ReelsPage';
 import { api } from './services/api';
 import type { Recipe } from './services/api';
 import { Loader2, Heart } from 'lucide-react';
+
+// 🎲 High-performance Fisher-Yates Shuffle algorithm
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 const TAG_FILTERS = ['All', 'Vegan', 'Spicy', 'Easy', 'Dessert'];
 
@@ -35,7 +45,10 @@ function Home() {
       setError(null);
       try {
         const response = await api.get('/recipes');
-        setRecipes(response.data);
+
+        // 🔀 SHUFFLE! Randomize the recipes catalog immediately on fetch
+        const randomizedRecipes = shuffleArray<Recipe>(response.data); // 👈 Add <Recipe> here
+        setRecipes(randomizedRecipes);
       } catch (err: any) {
         console.error("❌ Failed to fetch recipes:", err);
         setError("Could not connect to the SatioFlix server. Make sure your Backend is running on port 5000!");
@@ -45,7 +58,7 @@ function Home() {
     };
 
     fetchRecipes();
-  }, [countryFilter]);
+  }, [countryFilter]); // Re-shuffles nicely whenever navigating to different country collections!
 
   // Load and listen to localStorage updates for Favorites
   useEffect(() => {
@@ -56,7 +69,6 @@ function Home() {
 
     loadFavorites();
 
-    // Listen to changes fired by cards so our home screen updates instantly
     window.addEventListener('favorites-updated', loadFavorites);
     return () => window.removeEventListener('favorites-updated', loadFavorites);
   }, []);
@@ -64,15 +76,13 @@ function Home() {
   // Reset tag selection when switching countries
   useEffect(() => {
     setActiveTag('All');
-    setShowFavoritesOnly(false); // Reset favorites toggle when navigation changes
+    setShowFavoritesOnly(false);
   }, [countryFilter]);
 
   // 🔎 Combined Master Filter: Matches Country AND Tag AND Search Query AND Bookmarks!
   const filteredRecipes = recipes.filter((recipe) => {
-    // A. Bookmarks Matching
     const matchesFavorites = !showFavoritesOnly || favoriteIds.includes(recipe._id);
 
-    // B. Country Matching
     const queryCountry = countryFilter.trim().toLowerCase();
     let matchesCountry = true;
     if (countryFilter) {
@@ -88,12 +98,10 @@ function Home() {
       matchesCountry = acceptableMatches.includes(dbCountry);
     }
 
-    // C. Tag Matching
     const matchesTag =
       activeTag === 'All' ||
       recipe.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase());
 
-    // D. Text Search Matching
     const queryText = searchQuery.toLowerCase().trim();
     const matchesText =
       !queryText ||
@@ -141,18 +149,17 @@ function Home() {
       {/* Tag Pill Filter Row & Favorites Toggle */}
       {!isLoading && !error && (
         <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
-          {/* Left Side: Dynamic Food Tags */}
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
             {TAG_FILTERS.map((tag) => (
               <button
                 key={tag}
                 onClick={() => {
                   setActiveTag(tag);
-                  setShowFavoritesOnly(false); // Turn off favorites-only view if a tag is clicked
+                  setShowFavoritesOnly(false);
                 }}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shrink-0 cursor-pointer ${activeTag === tag && !showFavoritesOnly
-                    ? 'bg-rose-600 text-white shadow-md shadow-rose-600/25'
-                    : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+                  ? 'bg-rose-600 text-white shadow-md shadow-rose-600/25'
+                  : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
                   }`}
               >
                 {tag}
@@ -160,15 +167,14 @@ function Home() {
             ))}
           </div>
 
-          {/* Right Side: Quick Bookmarks Filter Button */}
           <button
             onClick={() => {
               setShowFavoritesOnly(!showFavoritesOnly);
-              setActiveTag('All'); // Reset food tag focus
+              setActiveTag('All');
             }}
             className={`px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border transition-all duration-300 cursor-pointer ${showFavoritesOnly
-                ? 'bg-rose-100 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/40 shadow-sm'
-                : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+              ? 'bg-rose-100 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/40 shadow-sm'
+              : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
           >
             <Heart className={`w-3.5 h-3.5 ${showFavoritesOnly ? 'fill-rose-500 stroke-rose-500' : 'stroke-zinc-500'}`} />
@@ -228,18 +234,12 @@ function Home() {
   );
 }
 
-// src/App.tsx (Update the main container styling)
-
 export default function App() {
   return (
     <ThemeProvider>
       <Router>
         <div className="min-h-screen flex flex-col md:flex-row bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-300">
           <Sidebar />
-          {/* 
-            Added pb-20 (bottom breathing room for bottom bar) AND pt-14 (top breathing room for top header on mobile).
-            On desktop (md), both paddings reset to 0 to look perfectly standard!
-          */}
           <main className="flex-1 min-h-screen overflow-y-auto pt-14 md:pt-0 pb-20 md:pb-0">
             <Routes>
               <Route path="/" element={<Home />} />
