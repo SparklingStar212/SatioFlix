@@ -78,19 +78,65 @@ router.get(
   },
 );
 
-router.get("/all", async (req: Request, res: Response): Promise<any> => {
-  try {
-    // 1. Fetch every single cached video inside the collection
-    const cachedVideos = await Video.find({}).sort({ createdAt: -1 });
+// Backend: src/routes/videoRoutes.ts (or your backend router)
 
-    console.log(
-      `📦 Returning ${cachedVideos.length} compiled cache videos for all countries`,
-    );
-    return res.json(cachedVideos);
-  } catch (error) {
-    console.error(`❌ Error fetching compiled video feed:`, error);
-    res.status(500).json({ error: "Internal Server Error" });
+router.get(
+  "/all",
+  async (req: Request, res: Response): Promise<any> => {
+    try {
+      let cachedVideos = await Video.find({}).sort({ createdAt: -1 });
+
+      // 🚨 COLD START: If the database is wiped or empty, automatically seed it!
+      if (cachedVideos.length === 0) {
+        console.log("🚨 Database is empty! Seeding starting categories...");
+        
+        // Let's seed a few primary categories instantly to wake up the feed
+        const seedCategories = ['Korean', 'Nigerian', 'Italian', 'Mexican', 'Japanese'];
+        
+        await Promise.all(
+          seedCategories.map(async (category) => {
+            const searchQuery = `${category} food`;
+            try {
+              // Fetch 30 fresh videos
+              const freshVideos = (await fetchDynamicCookingVideos(searchQuery, 30)) as YouTubeVideo[];
+              
+              if (freshVideos && freshVideos.length > 0) {
+                await Promise.all(
+                  freshVideos.map(async (vid: YouTubeVideo) => {
+                    await Video.findOneAndUpdate(
+                      { externalVideoId: vid.videoId },
+                      {
+                        title: vid.title,
+                        platform: "youtube",
+                        videoUrl: `https://www.youtube.com/watch?v=${vid.videoId}`,
+                        externalVideoId: vid.videoId,
+                        thumbnailUrl: vid.thumbnail,
+                        creatorName: vid.channelTitle,
+                        category: category,
+                        createdAt: new Date(),
+                      },
+                      { upsert: true, new: true }
+                    );
+                  })
+                );
+              }
+            } catch (err) {
+              console.error(`Failed to seed ${category}:`, err);
+            }
+          })
+        );
+
+        // Re-query the database now that it has been populated
+        cachedVideos = await Video.find({}).sort({ createdAt: -1 });
+      }
+
+      console.log(`📦 Returning ${cachedVideos.length} compiled cache videos for all countries`);
+      return res.json(cachedVideos);
+    } catch (error) {
+      console.error(`❌ Error fetching compiled video feed:`, error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
-});
+);
 
 export default router;
