@@ -78,4 +78,19 @@ router.get(
   },
 );
 
+router.get("/all", async (req: Request, res: Response): Promise<any> => {
+  try {
+    // 1. Fetch every single cached video inside the collection
+    const cachedVideos = await Video.find({}).sort({ createdAt: -1 });
+
+    console.log(
+      `📦 Returning ${cachedVideos.length} compiled cache videos for all countries`,
+    );
+    return res.json(cachedVideos);
+  } catch (error) {
+    console.error(`❌ Error fetching compiled video feed:`, error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export default router;

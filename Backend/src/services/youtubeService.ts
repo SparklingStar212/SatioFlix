@@ -3,20 +3,23 @@ import axios from "axios";
 
 // Helper function to convert ISO 8601 duration (like "PT4M12S") to seconds
 const parseISO8601ToSeconds = (durationStr: string): number => {
-  const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
+  // Regex now optionally matches Days (\d+D) before the optional Time (T...) portion
+  const regex = /P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?/;
   const matches = durationStr.match(regex);
   if (!matches) return 0;
 
-  const hours = parseInt(matches[1] || "0", 10);
-  const minutes = parseInt(matches[2] || "0", 10);
-  const seconds = parseInt(matches[3] || "0", 10);
+  const days = parseInt(matches[1] || "0", 10);
+  const hours = parseInt(matches[2] || "0", 10);
+  const minutes = parseInt(matches[3] || "0", 10);
+  const seconds = parseInt(matches[4] || "0", 10);
 
-  return hours * 3600 + minutes * 60 + seconds;
+  // 1 Day = 86,400 seconds
+  return days * 86400 + hours * 3600 + minutes * 60 + seconds;
 };
 
 export const fetchDynamicCookingVideos = async (
   searchQuery: string,
-  maxResults: number = 8,
+  maxResults: number = 30,
 ) => {
   const apiKey = process.env.YOUTUBE_API_KEY;
   if (!apiKey) {

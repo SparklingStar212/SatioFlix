@@ -4,7 +4,34 @@ import { api } from '../services/api';
 import type { Video } from '../services/api';
 import { Loader2, AlertCircle, RefreshCw, ChefHat } from 'lucide-react';
 
-const CATEGORIES = ['Korean', 'Nigerian', 'Italian', 'Mexican', 'Japanese'];
+// 🎲 High-performance Fisher-Yates Shuffle algorithm
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+const CATEGORIES = [
+  'Korean',
+  'Nigerian',
+  'Italian',
+  'Mexican',
+  'Japanese',
+  'Chinese',
+  'Indian',
+  'Thai',
+  'French',
+  'Spanish',
+  'Greek',
+  'Brazilian',
+  'Vietnamese',
+  'British',
+  'American',
+  'Middle Eastern'
+];
 
 function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
   const getEmbedUrl = (vid: Video) => {
@@ -77,38 +104,38 @@ export default function ReelsPage() {
     setIsLoading(true);
     setError(null);
     setCurrentIndex(0);
+
     try {
-      // 1. Fetch from all category endpoints in parallel!
-      const requests = CATEGORIES.map((cat) =>
-        api.get(`/videos/feed/${cat.toLowerCase()}`)
-      );
+      // 1. Check client-side sessionStorage first so page refreshing hits 0 endpoints!
+      const cachedFeed = sessionStorage.getItem('satio_compiled_reels');
+      if (cachedFeed) {
+        const parsedFeed = JSON.parse(cachedFeed);
+        setAllVideos(shuffleArray(parsedFeed));
+        setIsLoading(false);
+        return;
+      }
 
-      const results = await Promise.all(requests);
+      // 2. Fetch all aggregated cache videos in ONE single backend roundtrip!
+      const response = await api.get('/videos/all');
+      const combinedVideos: Video[] = response.data;
 
-      // 2. Flatten all results into a single array
-      const combinedVideos = results.flatMap((response) => response.data);
-
-      // 3. Deduplicate by video _id (just in case any video exists in multiple categories)
+      // 3. Deduplicate by video _id (if any overlap exists across dynamic syncs)
       const uniqueVideosMap: Record<string, Video> = {};
       combinedVideos.forEach((video) => {
         if (video && video._id) {
-          // Tag the category directly onto the video object for our desktop filter!
-          const categoryMatch = CATEGORIES.find(
-            (cat) => video.title?.toLowerCase().includes(cat.toLowerCase()) ||
-              video.creatorName?.toLowerCase().includes(cat.toLowerCase())
-          ) || 'Korean'; // Default fallback if no tag matching is found
-
-          uniqueVideosMap[video._id] = {
-            ...video,
-            category: (video as any).category || categoryMatch
-          };
+          uniqueVideosMap[video._id] = video;
         }
       });
 
       const uniqueVideosList = Object.values(uniqueVideosMap);
-      setAllVideos(uniqueVideosList);
+
+      // 4. Save to sessionStorage for instant sub-navigation loads
+      sessionStorage.setItem('satio_compiled_reels', JSON.stringify(uniqueVideosList));
+
+      // Shuffle the list to keep the reels feeling fresh on every load!
+      setAllVideos(shuffleArray(uniqueVideosList));
     } catch (err: any) {
-      console.error("❌ Failed to compile parallel video feeds:", err);
+      console.error("❌ Failed to fetch compiled video feed:", err);
       setError("Unable to load reels. Check if your Backend server is running!");
     } finally {
       setIsLoading(false);
@@ -121,19 +148,29 @@ export default function ReelsPage() {
 
   // 🔎 Filter Selection: Mobile sees everything, desktop filters by selected button!
   const displayedVideos = allVideos.filter((video) => {
-    if (isMobile) return true; // Mobile gets uninterrupted, combined continuous feed
+    if (isMobile) return true; // Mobile still gets the full, shuffled feed of everything!
 
-    // Desktop: Match category to video schema's country value
     const target = activeCategory.toLowerCase();
-    const videoCountry = video.countryOfOrigin?.toLowerCase() || '';
+    const videoCountry = (video as any).countryOfOrigin?.toLowerCase() || (video as any).category?.toLowerCase() || '';
 
-    // Map region names to database variations
+    // 2. Expanded Country Dictionary mapping desktop filters to Database collections
     const countryMap: Record<string, string[]> = {
       korean: ['south korea', 'korea', 'korean'],
       japanese: ['japan', 'japanese'],
       italian: ['italy', 'italian'],
       nigerian: ['nigeria', 'nigerian'],
-      mexican: ['mexico', 'mexican']
+      mexican: ['mexico', 'mexican'],
+      chinese: ['china', 'chinese'],
+      indian: ['india', 'indian'],
+      thai: ['thailand', 'thai'],
+      french: ['france', 'french'],
+      spanish: ['spain', 'spanish'],
+      greek: ['greece', 'greek'],
+      brazilian: ['brazil', 'brazilian'],
+      vietnamese: ['vietnam', 'vietnamese'],
+      british: ['united kingdom', 'british', 'uk'],
+      american: ['united states', 'usa', 'american'],
+      'middle eastern': ['middle east', 'middle eastern']
     };
 
     const validMatches = countryMap[target] || [target];
