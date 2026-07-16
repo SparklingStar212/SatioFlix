@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { api } from '../services/api';
 import type { Video } from '../services/api';
-import { Loader2, AlertCircle, RefreshCw, ChefHat, Search } from 'lucide-react';
+import { Loader2, AlertCircle, RefreshCw, ChefHat, Search, X } from 'lucide-react';
 
 // 🎲 High-performance Fisher-Yates Shuffle algorithm
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -17,17 +17,11 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
   const getEmbedUrl = (vid: Video) => {
     const playParam = isActive ? 'autoplay=1&mute=0' : 'autoplay=0&mute=1';
-    // 💡 Added iv_load_policy=3 (hides annotations) and fs=0 (hides the native full-screen button)
-    // This stops users from tapping the native button and breaking the scroll loop!
     return `https://www.youtube-nocookie.com/embed/${vid.externalVideoId}?${playParam}&loop=1&playlist=${vid.externalVideoId}&controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0`;
   };
 
   return (
     <div className="w-full h-full shrink-0 snap-start flex flex-col justify-center items-center">
-      {/* 
-        📱 Mobile: w-full h-full (completely edge-to-edge, zero margins)
-        💻 Desktop: max-w-[350px] h-[85vh] rounded-3xl border (nice centered card)
-      */}
       <div className="relative w-full h-full md:max-w-[350px] md:h-[85vh] bg-black md:rounded-3xl overflow-hidden border-0 md:border md:border-zinc-800 shadow-2xl flex items-center justify-center">
         {isActive ? (
           <iframe
@@ -49,7 +43,7 @@ function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
           </div>
         )}
 
-        {/* Floating Overlay Metadata (Shifted up slightly on mobile for better visibility over bottom bars) */}
+        {/* Floating Overlay Metadata */}
         <div className="absolute bottom-16 md:bottom-12 left-0 w-full p-6 md:p-4 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end pointer-events-none z-10">
           <div className="flex items-center gap-1.5 mb-1.5">
             <ChefHat className="w-4 h-4 text-rose-400" />
@@ -71,14 +65,24 @@ export default function ReelsPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // 🔎 Search and Toggle States
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
-  // Fetch compiled feed ONCE on mount
   useEffect(() => {
     fetchAllVideos();
   }, []);
+
+  // Auto-focus the search input when opened
+  useEffect(() => {
+    if (isSearchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [isSearchOpen]);
 
   const fetchAllVideos = async () => {
     setIsLoading(true);
@@ -115,12 +119,11 @@ export default function ReelsPage() {
     }
   };
 
-  // 🔎 Clean Search Filter (Now runs globally for both Mobile and Desktop!)
   const displayedVideos = allVideos.filter((video) => {
     if (!video) return false;
 
     const query = searchQuery.toLowerCase().trim();
-    if (!query) return true; // If search is empty, show all shuffled videos
+    if (!query) return true;
 
     return (
       video.title?.toLowerCase().includes(query) ||
@@ -146,38 +149,49 @@ export default function ReelsPage() {
   return (
     <div className="h-screen bg-zinc-950 text-white flex flex-col overflow-hidden relative">
 
-      {/* 🔎 Floating Header Search Bar */}
-      <div className="absolute top-4 left-4 right-4 z-20 max-w-md mx-auto">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Search country reels or creators..."
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              setCurrentIndex(0); // Snap back to the first match!
-              if (containerRef.current) containerRef.current.scrollTop = 0;
-            }}
-            className="w-full pl-11 pr-12 py-2.5 rounded-full bg-zinc-900/80 backdrop-blur-md border border-zinc-800 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-rose-500/40 focus:border-rose-500/50 transition-all shadow-lg"
-          />
-          <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-
-          {searchQuery && (
-            <button
-              onClick={() => {
-                setSearchQuery('');
+      {/* 🔎 Dynamic Slidout Search Container */}
+      <div className="absolute top-4 left-4 right-4 z-30 max-w-md mx-auto flex items-center gap-2">
+        {isSearchOpen ? (
+          <div className="flex-1 relative flex items-center animate-in slide-in-from-top duration-300">
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="Search country reels or creators..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
                 setCurrentIndex(0);
                 if (containerRef.current) containerRef.current.scrollTop = 0;
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-rose-500 hover:text-rose-400 font-bold"
+              className="w-full pl-11 pr-12 py-2.5 rounded-full bg-zinc-900/90 backdrop-blur-md border border-zinc-800 text-sm text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-rose-500/40 focus:border-rose-500/50 transition-all shadow-lg"
+            />
+            <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+
+            {/* Close / Collapse Search Button */}
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setIsSearchOpen(false);
+                setCurrentIndex(0);
+                if (containerRef.current) containerRef.current.scrollTop = 0;
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-zinc-400 hover:text-white transition-colors"
             >
-              Clear
+              <X className="w-4 h-4" />
             </button>
-          )}
-        </div>
+          </div>
+        ) : (
+          /* Floating trigger magnifying glass (Displays clean and subtle in the top right corner) */
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="ml-auto p-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-full transition-all shadow-lg text-zinc-300 hover:text-white cursor-pointer z-40"
+          >
+            <Search className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
-      {/* Main viewport area (Cleaned up responsive padding) */}
+      {/* Main viewport area */}
       <div className="flex-1 flex items-center justify-center p-4 pt-20 pb-6 relative overflow-hidden h-full">
 
         {isLoading && (
@@ -202,20 +216,10 @@ export default function ReelsPage() {
 
         {/* Dynamic Snap Scrolling Frame */}
         {!isLoading && !error && displayedVideos.length > 0 && (
-          // 📱 Mobile: w-full h-full absolute inset-0 (full screen overlay)
-          // 💻 Desktop: relative h-full
           <div className="absolute inset-0 md:relative md:h-full w-full flex flex-col items-center justify-center">
-
-            {/* Index Counter Widget */}
-            <span className="absolute top-20 right-4 text-xs bg-black/60 px-3 py-1.5 rounded-full text-zinc-300 font-semibold backdrop-blur-sm z-30">
-              {currentIndex + 1} / {displayedVideos.length}
-            </span>
-
             <div
               ref={containerRef}
               onScroll={handleScroll}
-              // 📱 Mobile: w-full h-full (fills entire viewport)
-              // 💻 Desktop: max-w-[360px]
               className="w-full md:max-w-[360px] h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden z-10"
             >
               {displayedVideos.map((vid, idx) => (

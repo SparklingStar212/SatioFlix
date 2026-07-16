@@ -1,6 +1,6 @@
 // src/App.tsx
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useSearchParams, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Sidebar from './components/layout/Sidebar';
 import RecipeCard from './components/RecipeCard';
@@ -47,7 +47,7 @@ function Home() {
         const response = await api.get('/recipes');
 
         // 🔀 SHUFFLE! Randomize the recipes catalog immediately on fetch
-        const randomizedRecipes = shuffleArray<Recipe>(response.data); // 👈 Add <Recipe> here
+        const randomizedRecipes = shuffleArray<Recipe>(response.data);
         setRecipes(randomizedRecipes);
       } catch (err: any) {
         console.error("❌ Failed to fetch recipes:", err);
@@ -58,7 +58,7 @@ function Home() {
     };
 
     fetchRecipes();
-  }, [countryFilter]); // Re-shuffles nicely whenever navigating to different country collections!
+  }, [countryFilter]);
 
   // Load and listen to localStorage updates for Favorites
   useEffect(() => {
@@ -79,7 +79,7 @@ function Home() {
     setShowFavoritesOnly(false);
   }, [countryFilter]);
 
-  // 🔎 Combined Master Filter: Matches Country AND Tag AND Search Query AND Bookmarks!
+  // 🔎 Combined Master Filter
   const filteredRecipes = recipes.filter((recipe) => {
     const matchesFavorites = !showFavoritesOnly || favoriteIds.includes(recipe._id);
 
@@ -234,20 +234,40 @@ function Home() {
   );
 }
 
+// 📱 Main Layout Wrapper (Calculates dynamic padding depending on current page URL)
+function AppContent() {
+  const location = useLocation();
+  const isReelsPage = location.pathname === '/reels';
+
+  return (
+    <div className="min-h-screen flex flex-col md:flex-row bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-300">
+
+      {/* Sidebar/Bottom Navigation Bar remains mounted */}
+      <Sidebar />
+
+      {/* 
+        On /reels: No top padding (pt-0) and full bottom bar room (pb-20).
+        On other pages: Standard mobile breathing room (pt-14 pb-20).
+      */}
+      <main
+        className={`flex-1 min-h-screen overflow-y-auto md:pt-0 md:pb-0 ${isReelsPage ? 'pt-0 pb-20' : 'pt-14 pb-20'
+          }`}
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/reels" element={<ReelsPage />} />
+          <Route path="/create" element={<CreateRecipePage />} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen flex flex-col md:flex-row bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-300">
-          <Sidebar />
-          <main className="flex-1 min-h-screen overflow-y-auto pt-14 md:pt-0 pb-20 md:pb-0">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/reels" element={<ReelsPage />} />
-              <Route path="/create" element={<CreateRecipePage />} />
-            </Routes>
-          </main>
-        </div>
+        <AppContent /> {/* 👈 Beautiful. Simply renders the AppContent wrapper with no duplicate nodes! */}
       </Router>
     </ThemeProvider>
   );
