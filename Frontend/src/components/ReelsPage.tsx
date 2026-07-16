@@ -73,17 +73,42 @@ export default function ReelsPage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Fetch ALL videos once on mount to handle client filtering
   const fetchAllVideos = async () => {
     setIsLoading(true);
     setError(null);
     setCurrentIndex(0);
     try {
-      // Fetch the full catalog of videos
-      const response = await api.get('/videos');
-      setAllVideos(response.data);
+      // 1. Fetch from all category endpoints in parallel!
+      const requests = CATEGORIES.map((cat) =>
+        api.get(`/videos/feed/${cat.toLowerCase()}`)
+      );
+
+      const results = await Promise.all(requests);
+
+      // 2. Flatten all results into a single array
+      const combinedVideos = results.flatMap((response) => response.data);
+
+      // 3. Deduplicate by video _id (just in case any video exists in multiple categories)
+      const uniqueVideosMap: Record<string, Video> = {};
+      combinedVideos.forEach((video) => {
+        if (video && video._id) {
+          // Tag the category directly onto the video object for our desktop filter!
+          const categoryMatch = CATEGORIES.find(
+            (cat) => video.title?.toLowerCase().includes(cat.toLowerCase()) ||
+              video.creatorName?.toLowerCase().includes(cat.toLowerCase())
+          ) || 'Korean'; // Default fallback if no tag matching is found
+
+          uniqueVideosMap[video._id] = {
+            ...video,
+            category: (video as any).category || categoryMatch
+          };
+        }
+      });
+
+      const uniqueVideosList = Object.values(uniqueVideosMap);
+      setAllVideos(uniqueVideosList);
     } catch (err: any) {
-      console.error("❌ Failed to fetch video catalog:", err);
+      console.error("❌ Failed to compile parallel video feeds:", err);
       setError("Unable to load reels. Check if your Backend server is running!");
     } finally {
       setIsLoading(false);
