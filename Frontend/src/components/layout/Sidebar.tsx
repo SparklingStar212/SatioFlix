@@ -33,7 +33,11 @@ export default function Sidebar() {
   return (
     <>
       {/* 📱 1. MODERN TOP MOBILE HEADER (Only visible on screens smaller than md) */}
-      <header className="md:hidden fixed top-0 left-0 right-0 h-14 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200/60 dark:border-zinc-800/60 flex items-center justify-between px-4 z-40">
+      {/* ⚡ Added conditional check: if isReelsActive is true, apply 'hidden' to strip header on mobile! */}
+      <header
+        className={`md:hidden fixed top-0 left-0 right-0 h-14 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200/60 dark:border-zinc-800/60 items-center justify-between px-4 z-40 ${isReelsActive ? 'hidden' : 'flex'
+          }`}
+      >
         <div
           onClick={handleAllCuisinesClick}
           className="flex items-center gap-2 cursor-pointer"
@@ -81,8 +85,8 @@ export default function Sidebar() {
           <button
             onClick={handleAllCuisinesClick}
             className={`flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-4 py-1 md:py-2.5 rounded-xl text-[10px] md:text-sm font-bold transition-all duration-300 cursor-pointer ${isHomeActive
-                ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
-                : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
+              ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
+              : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
               }`}
           >
             <ChefHat className="w-5 h-5" />
@@ -93,8 +97,8 @@ export default function Sidebar() {
           <button
             onClick={() => navigate('/reels')}
             className={`flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-4 py-1 md:py-2.5 rounded-xl text-[10px] md:text-sm font-bold transition-all duration-300 cursor-pointer ${isReelsActive
-                ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
-                : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
+              ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
+              : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
               }`}
           >
             <Film className="w-5 h-5" />
@@ -105,8 +109,8 @@ export default function Sidebar() {
           <button
             onClick={() => navigate('/create')}
             className={`flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-4 py-1 md:py-2.5 rounded-xl text-[10px] md:text-sm font-bold transition-all duration-300 cursor-pointer ${isCreateActive
-                ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
-                : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
+              ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
+              : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
               }`}
           >
             <PlusCircle className="w-5 h-5" />
@@ -130,8 +134,8 @@ export default function Sidebar() {
                   key={cuisine.name}
                   onClick={() => handleCuisineClick(cuisine.name)}
                   className={`flex items-center justify-between px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 cursor-pointer ${isActive
-                      ? 'bg-rose-100/75 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/40'
-                      : 'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 border border-transparent'
+                    ? 'bg-rose-100/75 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-900/40'
+                    : 'text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/40 border border-transparent'
                     }`}
                 >
                   <span>{cuisine.name}</span>

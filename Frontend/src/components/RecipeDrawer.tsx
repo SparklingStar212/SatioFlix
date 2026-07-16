@@ -45,7 +45,7 @@ export default function RecipeDrawer({ recipe, onClose }: RecipeDrawerProps) {
         </div>
 
         {/* Scrollable Recipe Body */}
-        <div className="flex-1 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex-1 overflow-y-auto [scrollbar-none] [&::-webkit-scrollbar]:hidden">
           {/* Header Cover Image */}
           <div className="relative aspect-video w-full bg-zinc-100 dark:bg-zinc-800">
             <img

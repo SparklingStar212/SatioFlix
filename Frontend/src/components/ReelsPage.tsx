@@ -22,7 +22,7 @@ function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
 
   return (
     <div className="w-full h-full shrink-0 snap-start flex flex-col justify-center items-center">
-      <div className="relative w-full h-full md:max-w-[350px] md:h-[85vh] bg-black md:rounded-3xl overflow-hidden border-0 md:border md:border-zinc-800 shadow-2xl flex items-center justify-center">
+      <div className="relative w-full h-full md:max-w-87.5 md:h-[85vh] bg-black md:rounded-3xl overflow-hidden border-0 md:border md:border-zinc-800 shadow-2xl flex items-center justify-center">
         {isActive ? (
           <iframe
             title={video.title}
@@ -44,7 +44,7 @@ function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
         )}
 
         {/* Floating Overlay Metadata */}
-        <div className="absolute bottom-16 md:bottom-12 left-0 w-full p-6 md:p-4 bg-gradient-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end pointer-events-none z-10">
+        <div className="absolute bottom-16 md:bottom-12 left-0 w-full p-6 md:p-4 bg-linear-to-t from-black/95 via-black/40 to-transparent flex flex-col justify-end pointer-events-none z-10">
           <div className="flex items-center gap-1.5 mb-1.5">
             <ChefHat className="w-4 h-4 text-rose-400" />
             <span className="text-xs font-bold text-rose-400">
@@ -220,7 +220,7 @@ export default function ReelsPage() {
             <div
               ref={containerRef}
               onScroll={handleScroll}
-              className="w-full md:max-w-[360px] h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth flex flex-col [scrollbar-width:none] [&::-webkit-scrollbar]:hidden z-10"
+              className="w-full md:max-w-90 h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth flex flex-col [scrollbar-none] [&::-webkit-scrollbar]:hidden z-10"
             >
               {displayedVideos.map((vid, idx) => (
                 <VideoReel
