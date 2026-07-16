@@ -10,6 +10,7 @@ import ReelsPage from './components/ReelsPage';
 import { api } from './services/api';
 import type { Recipe } from './services/api';
 import { Loader2, Heart } from 'lucide-react';
+import InstallPrompt from './components/layout/InstallPrompt';
 
 // 🎲 High-performance Fisher-Yates Shuffle algorithm
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -256,10 +257,7 @@ function AppContent() {
       {/* Sidebar/Bottom Navigation Bar remains mounted */}
       <Sidebar />
 
-      {/* 
-        On /reels: No top padding (pt-0) and full bottom bar room (pb-20).
-        On other pages: Standard mobile breathing room (pt-14 pb-20).
-      */}
+      <InstallPrompt />
       <main
         className={`flex-1 min-h-screen overflow-y-auto md:pt-0 md:pb-0 ${isReelsPage ? 'pt-0 pb-20' : 'pt-14 pb-20'
           }`}
