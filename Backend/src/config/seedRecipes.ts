@@ -17,7 +17,7 @@ const recipesToSeed = [
     cookTime: 10,
     servingsDefault: 2,
     coverImage:
-      "https://images.unsplash.com/photo-1598214813590-c4e3650ce89d?q=80&w=600",
+      "https://plus.unsplash.com/premium_photo-1700746098646-6dc011a64d82?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Cold leftover white rice", quantity: 400, unit: "g" },
       { name: "Ripened Kimchi, chopped", quantity: 150, unit: "g" },
@@ -56,7 +56,7 @@ const recipesToSeed = [
     cookTime: 120,
     servingsDefault: 2,
     coverImage:
-      "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?q=80&w=600",
+      "https://images.unsplash.com/photo-1638866281450-3933540af86a?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Ramen noodles", quantity: 200, unit: "g" },
       { name: "Pork belly slice", quantity: 300, unit: "g" },
@@ -91,7 +91,7 @@ const recipesToSeed = [
     cookTime: 10,
     servingsDefault: 2,
     coverImage:
-      "https://images.unsplash.com/photo-1626804475315-9644b37a2fe4?q=80&w=600",
+      "https://images.unsplash.com/photo-1652957705092-b2f8d357c8a2?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Flat rice noodles", quantity: 150, unit: "g" },
       { name: "Tamarind paste", quantity: 3, unit: "tbsp" },
@@ -231,7 +231,7 @@ const recipesToSeed = [
     cookTime: 40,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=600",
+      "https://lowcarbafrica.com/wp-content/uploads/2022/09/Poulet-Yassa-Senegalese-Chicken-Recipe-2.webp",
     ingredients: [
       { name: "Chicken drumsticks", quantity: 4, unit: "pcs" },
       { name: "Large onions, sliced", quantity: 4, unit: "pcs" },
@@ -265,7 +265,7 @@ const recipesToSeed = [
     cookTime: 40,
     servingsDefault: 6,
     coverImage:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600",
+      "https://foodieonboard.com/wp-content/uploads/2014/11/dsc_6572.jpg",
     ingredients: [
       { name: "Minced beef or lamb", quantity: 500, unit: "g" },
       { name: "Curry powder", quantity: 2, unit: "tbsp" },
@@ -299,7 +299,7 @@ const recipesToSeed = [
     cookTime: 60,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600",
+      "https://plus.unsplash.com/premium_photo-1695297516692-82b537c62733?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Chicken legs, skinless", quantity: 4, unit: "pcs" },
       { name: "Berbere spice blend", quantity: 3, unit: "tbsp" },
@@ -333,7 +333,7 @@ const recipesToSeed = [
     cookTime: 25,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600",
+      "https://images.unsplash.com/photo-1604329760661-e71dc83f8f26?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Fresh spinach (shoko or tatar)", quantity: 500, unit: "g" },
       { name: "Palm oil", quantity: 80, unit: "ml" },
@@ -403,7 +403,7 @@ const recipesToSeed = [
     cookTime: 50,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1620418029653-f725a3375811?q=80&w=600",
+      "https://www.simplyrecipes.com/thmb/SY2lL2neXpYOvkxhYvoUcl6pXLQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Simply-Recipes-French-Onion-Soup-LEAD-2-757941da129647dc90e490ed72b3807c.jpg",
     ingredients: [
       { name: "Yellow onions, thin-sliced", quantity: 4, unit: "pcs" },
       { name: "Beef stock", quantity: 1000, unit: "ml" },
@@ -437,7 +437,7 @@ const recipesToSeed = [
     cookTime: 30,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1534080391025-a77d0189a9e7?q=80&w=600",
+      "https://plus.unsplash.com/premium_photo-1694790149322-e8f8957e01c5?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Bomba rice", quantity: 300, unit: "g" },
       { name: "Shrimp & Mussels", quantity: 300, unit: "g" },
@@ -471,7 +471,7 @@ const recipesToSeed = [
     cookTime: 50,
     servingsDefault: 6,
     coverImage:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600",
+      "https://silkroadrecipes.com/wp-content/uploads/2022/01/Eggplant-Moussaka-square.jpg",
     ingredients: [
       { name: "Large eggplants", quantity: 2, unit: "pcs" },
       { name: "Minced beef", quantity: 500, unit: "g" },
@@ -505,7 +505,7 @@ const recipesToSeed = [
     cookTime: 15,
     servingsDefault: 3,
     coverImage:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600",
+      "https://images.unsplash.com/photo-1594610352455-e4d10d2f2cf0?q=80&w=872&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Beef sirloin, sliced", quantity: 500, unit: "g" },
       { name: "Cremini mushrooms", quantity: 200, unit: "g" },
@@ -541,7 +541,7 @@ const recipesToSeed = [
     cookTime: 15,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=600",
+      "https://images.unsplash.com/photo-1660180750968-4fbc84789a96?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Pork shoulder, thin-sliced", quantity: 800, unit: "g" },
       { name: "Achiote paste", quantity: 3, unit: "tbsp" },
@@ -575,7 +575,7 @@ const recipesToSeed = [
     cookTime: 180,
     servingsDefault: 6,
     coverImage:
-      "https://images.unsplash.com/photo-1541832676-9b763b0239ab?q=80&w=600",
+      "https://images.unsplash.com/photo-1697384874147-4e9b086d144d?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Beef chuck roast, cubed", quantity: 1000, unit: "g" },
       { name: "Chili powder blend", quantity: 4, unit: "tbsp" },
@@ -609,7 +609,7 @@ const recipesToSeed = [
     cookTime: 120,
     servingsDefault: 6,
     coverImage:
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=600",
+      "https://images.unsplash.com/photo-1627906327792-4ede6149189f?q=80&w=435&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Dry black beans", quantity: 500, unit: "g" },
       { name: "Chorizo sausage", quantity: 200, unit: "g" },
@@ -643,7 +643,7 @@ const recipesToSeed = [
     cookTime: 45,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1606787366850-de6330128bfc?q=80&w=600",
+      "https://images.unsplash.com/photo-1610057098265-05f2bcbedd55?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Chicken thighs, bone-in", quantity: 1000, unit: "g" },
       { name: "Scotch bonnet peppers", quantity: 3, unit: "pcs" },
@@ -677,7 +677,7 @@ const recipesToSeed = [
     cookTime: 10,
     servingsDefault: 2,
     coverImage:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600",
+      "https://cravingsjournal.com/wp-content/uploads/2018/07/lomo-saltado-2-500x375.jpg",
     ingredients: [
       { name: "Beef tenderloin, sliced", quantity: 400, unit: "g" },
       { name: "Red onion, wedged", quantity: 1, unit: "pc" },
@@ -747,7 +747,7 @@ const recipesToSeed = [
     cookTime: 10,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1547058886-af77992d478c?q=80&w=600",
+      "https://images.unsplash.com/photo-1680990999782-ba7fe26e4d0b?q=80&w=710&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Dried chickpeas (soaked)", quantity: 250, unit: "g" },
       { name: "Fresh parsley", quantity: 1, unit: "cup" },
@@ -781,7 +781,7 @@ const recipesToSeed = [
     cookTime: 20,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1642145853243-82860d2b3f28?q=80&w=600",
+      "https://images.unsplash.com/photo-1719282431565-3b30bb7d2658?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Chicken breasts, sliced", quantity: 800, unit: "g" },
       { name: "Lemon juice", quantity: 50, unit: "ml" },
@@ -815,7 +815,7 @@ const recipesToSeed = [
     cookTime: 25,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1541518763669-27fef04b14ea?q=80&w=600",
+      "https://www.seriouseats.com/thmb/nhgfDG68_YXD-qz-0b1C9L45lmE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2014__02__20140225-baba-ganoush-recipe-food-lab-vegan-primary-3-30d3fa6c920a4c3dafce66e140a35905.jpg",
     ingredients: [
       { name: "Large eggplants", quantity: 2, unit: "pcs" },
       { name: "Tahini paste", quantity: 3, unit: "tbsp" },
@@ -849,7 +849,7 @@ const recipesToSeed = [
     cookTime: 0,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=600",
+      "https://images.unsplash.com/photo-1764314845985-82dd5d0bdbf9?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Fresh flat-leaf parsley", quantity: 2, unit: "bunches" },
       { name: "Fine Bulgur wheat", quantity: 40, unit: "g" },
@@ -885,7 +885,7 @@ const recipesToSeed = [
     cookTime: 15,
     servingsDefault: 2,
     coverImage:
-      "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?q=80&w=600",
+      "https://images.unsplash.com/photo-1579208030886-b937da0925dc?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Cod or Haddock fillets", quantity: 2, unit: "pcs" },
       { name: "Cold carbonated beer", quantity: 200, unit: "ml" },
@@ -953,7 +953,7 @@ const recipesToSeed = [
     cookTime: 15,
     servingsDefault: 2,
     coverImage:
-      "https://images.unsplash.com/photo-1585503411425-4704040a6b29?q=80&w=600",
+      "https://plus.unsplash.com/premium_photo-1683861800944-0ffaf3ef9b13?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Fresh french fries", quantity: 400, unit: "g" },
       { name: "Fresh cheese curds", quantity: 150, unit: "g" },
@@ -985,7 +985,7 @@ const recipesToSeed = [
     cookTime: 20,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600",
+      "https://images.unsplash.com/photo-1624128082323-beb6b8b508db?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     ingredients: [
       { name: "Minced beef", quantity: 400, unit: "g" },
       { name: "Large onion, minced", quantity: 1, unit: "pc" },
@@ -1019,7 +1019,7 @@ const recipesToSeed = [
     cookTime: 10,
     servingsDefault: 4,
     coverImage:
-      "https://images.unsplash.com/photo-1562376502-6f769499c886?q=80&w=600",
+      "https://noshingwiththenolands.com/wp-content/uploads/2018/01/Belgian-Waffles-IMG_4979-CROPPED.jpg",
     ingredients: [
       { name: "All-purpose flour", quantity: 250, unit: "g" },
       { name: "Active dry yeast", quantity: 1, unit: "tsp" },
@@ -1050,29 +1050,23 @@ export const seedDatabase = async (): Promise<void> => {
     await mongoose.connect(process.env.MONGODB_URI || "");
     console.log("📡 Seeding Database: Connected to MongoDB.");
 
-    // Check how many we have
-    const existingCount = await Recipe.countDocuments();
-    console.log(`📊 Found ${existingCount} existing recipes.`);
+    console.log("🌱 Syncing global recipes with database changes...");
 
-    if (existingCount < 25) {
-      console.log(
-        "🌱 Database seems empty or has low counts. Seeding 30 global recipes...",
-      );
-
-      // Prevent duplicating exact titles
-      for (const recipe of recipesToSeed) {
-        await Recipe.updateOne(
-          { title: recipe.title },
-          { $set: recipe },
-          { upsert: true },
-        );
-      }
-      console.log("🎉 Seeding Successful! 30 Premium recipes added.");
-    } else {
-      console.log(
-        "✅ Database already has sufficient recipes. Skipping seeding.",
+    // ⚡ Instead of skipping, we loop and upsert every recipe.
+    // This inserts new recipes AND instantly updates existing ones with your edits!
+    for (const recipe of recipesToSeed) {
+      await Recipe.updateOne(
+        { title: recipe.title },
+        { $set: recipe },
+        { upsert: true },
       );
     }
+
+    // Fetch final count to verify
+    const finalCount = await Recipe.countDocuments();
+    console.log(
+      `🎉 Sync Complete! Database now has ${finalCount} up-to-date recipes.`,
+    );
   } catch (error) {
     console.error("❌ Seeding failed:", error);
   } finally {
