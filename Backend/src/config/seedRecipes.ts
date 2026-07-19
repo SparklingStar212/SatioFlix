@@ -1043,6 +1043,1007 @@ const recipesToSeed = [
     ],
     tags: ["sweet", "breakfast", "classic"],
   },
+  {
+    title: "Smoky Jollof Rice",
+    description:
+      "Long-grain parboiled rice cooked to perfection in a rich, deeply seasoned tomato, onion, and tatashe (bell pepper) base with signature party-style smoky flavor.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 45,
+    servingsDefault: 4,
+    coverImage:
+      "https://images.unsplash.com/photo-1665332195309-9d75071138f0?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    ingredients: [
+      { name: "Long-grain parboiled rice", quantity: 400, unit: "g" },
+      { name: "Roma tomatoes", quantity: 5, unit: "pcs" },
+      { name: "Red bell peppers (Tatashe)", quantity: 3, unit: "pcs" },
+      { name: "Onions", quantity: 2, unit: "pcs" },
+      { name: "Tomato paste", quantity: 100, unit: "g" },
+      { name: "Bay leaves", quantity: 3, unit: "pcs" },
+      { name: "Curry powder", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Blend tomatoes, bell peppers, Scotch bonnets, and onions into a smooth puree, then boil until reduced.",
+      },
+      {
+        stepNumber: 2,
+        text: "Fry sliced onions and tomato paste in vegetable oil, add curry, thyme, and the boiled pepper base, frying until oil separates.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add washed rice and chicken stock, adjust seasoning, cover tightly with foil, and cook on low heat until parboiled rice absorbs liquid and develops a classic smoky bottom burn.",
+      },
+    ],
+    tags: ["Classic", "Smoky", "Traditional", "Celebration"],
+  },
+  {
+    title: "Egusi Soup",
+    description:
+      "A rich, savory soup prepared with ground melon seeds, cooked in bleached palm oil, and loaded with leafy greens, stockfish, and assorted meats.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 25,
+    cookTime: 35,
+    servingsDefault: 4,
+    coverImage:
+      "https://images.unsplash.com/photo-1763048443535-1243379234e2?q=80&w=672&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    ingredients: [
+      { name: "Ground melon seeds (Egusi)", quantity: 200, unit: "g" },
+      { name: "Palm oil", quantity: 150, unit: "ml" },
+      { name: "Assorted meats (Beef & Shaki)", quantity: 500, unit: "g" },
+      { name: "Stockfish", quantity: 1, unit: "pc" },
+      { name: "Ground crayfish", quantity: 2, unit: "tbsp" },
+      { name: "Fresh spinach or Ugu leaves", quantity: 150, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Mix ground egusi with a little warm water to form thick pastes.",
+      },
+      {
+        stepNumber: 2,
+        text: "Heat palm oil in a pot, fry onions, add the egusi pastes in small chunks, and stir-fry for 10 minutes until firm.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour in meat stock, crayfish, and cooked meats, simmer for 15 minutes, then stir in the green vegetables and cook for 5 more minutes.",
+      },
+    ],
+    tags: ["Soup", "Traditional", "Savory", "Beefy"],
+  },
+  {
+    title: "Suya",
+    description:
+      "Thinly sliced beef skewered and coated in a spicy yaji peanut spice rub, then perfectly grilled over an open fire.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 30,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://media.istockphoto.com/id/2245938019/photo/a-pack-of-spicy-tasty-nigerian-beef-suya.webp?a=1&b=1&s=612x612&w=0&k=20&c=cARfhqIyABYplk2HPUuYhQyGCEdQjCxD5v8visqTqao=",
+    ingredients: [
+      { name: "Beef sirloin, thinly sliced", quantity: 500, unit: "g" },
+      { name: "Yaji spice (Peanut powder blend)", quantity: 4, unit: "tbsp" },
+      { name: "Vegetable oil", quantity: 3, unit: "tbsp" },
+      { name: "Red onions, sliced", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Thread the thinly sliced strips of beef onto pre-soaked wooden skewers.",
+      },
+      {
+        stepNumber: 2,
+        text: "Generously coat the meat with the yaji spice blend and brush with vegetable oil.",
+      },
+      {
+        stepNumber: 3,
+        text: "Grill over hot charcoal or in an oven at high heat until cooked through and slightly charred around the edges, serving hot with extra onions.",
+      },
+    ],
+    tags: ["Street-Food", "Spicy", "Grill", "Beefy"],
+  },
+  {
+    title: "Asun (Spicy Peppered Goat)",
+    description:
+      "Delectable, authentic smoked goat meat chopped into bite-sized pieces and sautéed in a fiery crushed habanero pepper and onion mix.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 40,
+    servingsDefault: 4,
+    coverImage:
+      "https://images.unsplash.com/photo-1628294896516-344152572ee8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8QXN1biUyMChTcGljeSUyMFBlcHBlcmVkJTIwR29hdCl8ZW58MHx8MHx8fDA%3D",
+    ingredients: [
+      { name: "Goat meat (with skin)", quantity: 800, unit: "g" },
+      { name: "Scotch bonnet peppers (Rodo)", quantity: 6, unit: "pcs" },
+      { name: "Onions", quantity: 3, unit: "pcs" },
+      { name: "Vegetable oil", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil goat meat with seasonings until tender, then roast or grill until skin is crispy.",
+      },
+      {
+        stepNumber: 2,
+        text: "Coarsely blend or chop the scotch bonnets and onions.",
+      },
+      {
+        stepNumber: 3,
+        text: "Heat oil, stir-fry the chopped peppers and onions, toss in the grilled goat meat, and stir on high heat until thoroughly coated.",
+      },
+    ],
+    tags: ["Street-Food", "Spicy", "Authentic", "Onion-Heavy"],
+  },
+  {
+    title: "Pounded Yam and Nsala Soup",
+    description:
+      "Also known as White Soup, a light yet deeply aromatic pepper soup thickened with mashed white yam, served with smooth pounded yam.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 30,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_ZgUZWEAVWgF7DGtf__WuJcZH4urJ9ySvrOosAximtA&s=10",
+    ingredients: [
+      { name: "Catfish or Assorted Chicken", quantity: 600, unit: "g" },
+      { name: "Pounded yam paste (for thickening)", quantity: 100, unit: "g" },
+      { name: "Utazi leaves", quantity: 5, unit: "pcs" },
+      { name: "Ehuru (Calabash nutmeg)", quantity: 1, unit: "tsp" },
+      { name: "Uziza seeds", quantity: 1, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil the meat or catfish with ground uziza, ehuru, and seasoning cubes until aromatic.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add small chunks of raw pounded yam into the boiling pot to melt completely and thicken the broth.",
+      },
+      {
+        stepNumber: 3,
+        text: "Shred and add the utazi leaves, simmering for 5 more minutes before serving hot.",
+      },
+    ],
+    tags: ["Soup", "Traditional", "Spiced", "Comfort-Food"],
+  },
+  {
+    title: "Boli and Roasted Fish",
+    description:
+      "A popular Nigerian street food combo consisting of sweet, ripe plantain roasted over charcoal grills and paired with peppered grilled fish.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 10,
+    cookTime: 25,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT15vaEZGSa1lH2cgMJuVnroS3YbVX0RJ-uZ_NQ8d_hYg&s=10",
+    ingredients: [
+      { name: "Ripe plantains", quantity: 3, unit: "pcs" },
+      { name: "Whole Mackerel (Titus Fish)", quantity: 1, unit: "pc" },
+      { name: "Crushed chili peppers", quantity: 2, unit: "tbsp" },
+      { name: "Palm oil", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Peel plantains and place them directly on an open charcoal grill or oven wire rack, turning frequently.",
+      },
+      {
+        stepNumber: 2,
+        text: "Marinate the fish with chili peppers, palm oil, and seasoning cubes.",
+      },
+      {
+        stepNumber: 3,
+        text: "Grill both the fish and plantains until the plantains turn golden brown and caramelized, and the fish is fully charred.",
+      },
+    ],
+    tags: ["Street-Food", "Grill", "Sweet-Savory", "Seafood"],
+  },
+  {
+    title: "Ofe Akwu (Banga Soup)",
+    description:
+      "An incredibly flavorful palm fruit extract soup loaded with fresh catfish, dried fish, and local aromatic herbs, traditionally eaten with white rice.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 35,
+    cookTime: 40,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYzH6fPQTbUKtHTg043T0kYN7Pw8J7qpBbCR0kC_otwQ&s=10",
+    ingredients: [
+      { name: "Palm fruit concentrate", quantity: 400, unit: "g" },
+      { name: "Fresh catfish", quantity: 500, unit: "g" },
+      { name: "Banga spice mix", quantity: 1, unit: "tbsp" },
+      { name: "Beletete leaves", quantity: 1, unit: "tsp" },
+      { name: "Oburunbebe stick", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil the palm fruit concentrate with water until the oil begins to float to the top.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add the banga spices, oburunbebe stick, crayfish, and cooked proteins.",
+      },
+      {
+        stepNumber: 3,
+        text: "Gently fold in fresh catfish and beletete leaves, simmering until the sauce thickens and flavors fully marry.",
+      },
+    ],
+    tags: ["Soup", "Traditional", "Seafood", "Slow-Cooked"],
+  },
+  {
+    title: "Classic Moi Moi",
+    description:
+      "A silky, steamed savory bean pudding made from peeled black-eyed peas, enriched with peppers, onions, oil, and hard-boiled eggs.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 30,
+    cookTime: 45,
+    servingsDefault: 6,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0OvGhXyq1XOlKL9ykcmwKtmhz7bVAGDxilLxNYF4jiA&s=10",
+    ingredients: [
+      { name: "Honey beans or black-eyed peas", quantity: 300, unit: "g" },
+      { name: "Red bell pepper", quantity: 2, unit: "pcs" },
+      { name: "Onions", quantity: 1, unit: "pc" },
+      { name: "Vegetable oil", quantity: 100, unit: "ml" },
+      { name: "Boiled eggs, sliced", quantity: 2, unit: "pcs" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Soak and peel the beans, then blend with bell peppers and onions into an ultra-smooth batter.",
+      },
+      {
+        stepNumber: 2,
+        text: "Whisk vegetable oil, stock, and salt into the batter until fluffy.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour into lined ramekins or pouches, drop egg slices inside, and steam over boiling water until set.",
+      },
+    ],
+    tags: ["Classic", "Healthy", "Savory", "Traditional"],
+  },
+  {
+    title: "Akara (Fried Bean Cakes)",
+    description:
+      "Crispy on the outside, light and fluffy on the inside golden bean fritters flavored with finely chopped onions and habaneros.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 15,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi4pecAtWGcrOnXSoPtfH7HDf0i4YjP1mdnVdjGOcznQ&s=10",
+    ingredients: [
+      { name: "Peeled brown beans", quantity: 250, unit: "g" },
+      { name: "Onion, finely chopped", quantity: 1, unit: "pc" },
+      { name: "Scotch bonnet, chopped", quantity: 1, unit: "pc" },
+      { name: "Vegetable oil (for frying)", quantity: 300, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Blend peeled beans with minimal water into a very thick paste.",
+      },
+      {
+        stepNumber: 2,
+        text: "Vigorously whisk the batter using a wooden spoon for 5-10 minutes to incorporate air until light and white.",
+      },
+      {
+        stepNumber: 3,
+        text: "Fold in chopped onions and peppers, scoop into hot oil, and deep-fry until golden brown.",
+      },
+    ],
+    tags: ["Fried", "Breakfast", "Crispy", "Street-Food"],
+  },
+  {
+    title: "Gizdodo",
+    description:
+      "A vibrant, mouth-watering celebration dish combining sweet fried plantain cubes and chewy gizzards tossed in a rich pepper sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 25,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR45bubk3N3pcPGNc3wfuTAQuKTPF-i6sE5PqKe0gTWtg&s=10",
+    ingredients: [
+      { name: "Chicken gizzards", quantity: 400, unit: "g" },
+      { name: "Ripe plantains, cubed", quantity: 2, unit: "pcs" },
+      { name: "Bell peppers, chopped", quantity: 2, unit: "pcs" },
+      { name: "Onions", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Season and boil gizzards until tender, then deep fry until crisp.",
+      },
+      {
+        stepNumber: 2,
+        text: "Deep fry the cubed plantains until golden brown and sweet.",
+      },
+      {
+        stepNumber: 3,
+        text: "Sauté onions and bell peppers to form a thick chunky sauce, then toss in the fried gizzards and plantains until well combined.",
+      },
+    ],
+    tags: ["Sweet-Savory", "Celebration", "Chicken", "Fried"],
+  },
+  {
+    title: "Ewa Agoyin",
+    description:
+      "Extremely soft, mashed brown beans served with a famous dark, spicy, and smoky palm oil pepper sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 60,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWRO3gwM6cVn-fQgKmp8ukQ-pRK0YbpXNZR5dFctSfvw&s=10",
+    ingredients: [
+      { name: "Nigerian honey beans", quantity: 300, unit: "g" },
+      { name: "Dried bell peppers (Sombo)", quantity: 50, unit: "g" },
+      { name: "Onions, sliced", quantity: 3, unit: "pcs" },
+      { name: "Palm oil", quantity: 200, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil the beans with a little salt on low heat for an hour until mushy, then mash with a wooden spoon.",
+      },
+      {
+        stepNumber: 2,
+        text: "Bleach the palm oil until amber-colored, then fry a heavy amount of chopped onions until dark brown.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add ground dried peppers and fry continuously until the sauce turns dark, gritty, and deeply smoky.",
+      },
+    ],
+    tags: ["Slow-Cooked", "Spicy", "Street-Food", "Onion-Heavy"],
+  },
+  {
+    title: "Pepper Soup (Assorted Meat)",
+    description:
+      "A light, fiery, and deeply comforting broth packed with traditional medicinal spices and tender assorted meats.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 10,
+    cookTime: 30,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeUju6tfCVihSLSlN3OV5WN6rS7zvEBwczcadd7jGhTg&s=10",
+    ingredients: [
+      { name: "Assorted beef parts", quantity: 600, unit: "g" },
+      { name: "Pepper soup spice blend", quantity: 2, unit: "tbsp" },
+      { name: "Uziza or scent leaves", quantity: 10, unit: "pcs" },
+      { name: "Scotch bonnet, minced", quantity: 2, unit: "pcs" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Cut beef into bite-sized pieces and boil with minced onions and garlic.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add plenty of water, the aromatic pepper soup spice blend, and minced scotch bonnets.",
+      },
+      {
+        stepNumber: 3,
+        text: "Simmer until the meats are incredibly soft, then top with shredded scent leaves right before serving.",
+      },
+    ],
+    tags: ["Soup", "Spicy", "Comfort-Food", "Spiced"],
+  },
+  {
+    title: "Amala and Abula (Ewedu & Gbegiri)",
+    description:
+      "Dark, smooth yam flour swallow served with a classic trio combo of silky jute leaf soup, creamy bean soup, and peppered stew.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 25,
+    cookTime: 35,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSniyewXCRPDLoXDbfSg172onKUOwCiqoQDe7dFY72_Ww&s=10",
+    ingredients: [
+      { name: "Elubo (Yam flour)", quantity: 200, unit: "g" },
+      { name: "Ewedu (Jute leaves)", quantity: 150, unit: "g" },
+      { name: "Peeled beans (for Gbegiri)", quantity: 100, unit: "g" },
+      { name: "Palm oil", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil peeled beans until soft, mash and sieve to form a smooth paste, then cook with palm oil to create Gbegiri.",
+      },
+      {
+        stepNumber: 2,
+        text: "Blend boiled ewedu leaves with iru (locust beans) into a smooth, viscous green soup.",
+      },
+      {
+        stepNumber: 3,
+        text: "Turn yam flour into boiling water continuously, beating vigorously until smooth and fluffy.",
+      },
+    ],
+    tags: ["Traditional", "Authentic", "Soup", "Creamy"],
+  },
+  {
+    title: "Edikang Ikong Soup",
+    description:
+      "A prestigious, nutrient-dense dry soup native to South-South Nigeria, crafted with a perfect ratio of waterleaf and fluted pumpkin leaves.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 30,
+    cookTime: 20,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMZkNgCMpEpPj1kOtiEwIt2I0KBCC45yca2WGbbpV3zA&s=10",
+    ingredients: [
+      { name: "Ugu leaves (Pumpkin)", quantity: 400, unit: "g" },
+      { name: "Waterleaf", quantity: 200, unit: "g" },
+      { name: "Periwinkles", quantity: 100, unit: "g" },
+      { name: "Smoked fish & Beef", quantity: 400, unit: "g" },
+      { name: "Palm oil", quantity: 100, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil assorted meats and smoked fish with minimal water until dry.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add palm oil, ground crayfish, and periwinkles, then throw in the waterleaf first.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add the sliced ugu leaves immediately after, toss well on high heat for 5 minutes without covering the pot to lock in fresh color.",
+      },
+    ],
+    tags: ["Soup", "Healthy", "Traditional", "Authentic"],
+  },
+  {
+    title: "Ogor Miyan Kuka",
+    description:
+      "A popular, traditional Northern Nigerian green soup prepared from dried boabab leaf powder and flavorful dried fish chunks.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 10,
+    cookTime: 25,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFSBijuDaZWz0d0lP-Y3gex23HK8AEqnJJJMIJKzZqBA&s=10",
+    ingredients: [
+      { name: "Kuka powder (Baobab leaf)", quantity: 3, unit: "tbsp" },
+      { name: "Dried fish", quantity: 200, unit: "g" },
+      { name: "Yaji spice mix", quantity: 1, unit: "tsp" },
+      { name: "Palm oil", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil meat stock along with dried fish, onions, and yaji spikes.",
+      },
+      {
+        stepNumber: 2,
+        text: "Gradually whisk in the green kuka powder into the boiling broth to avoid forming lumps.",
+      },
+      {
+        stepNumber: 3,
+        text: "Simmer gently on low heat for 10 minutes until smooth and viscous.",
+      },
+    ],
+    tags: ["Soup", "Traditional", "Exotic", "Savory"],
+  },
+  {
+    title: "Miyan Taushe",
+    description:
+      "A rich, pumpkin-based Northern soup sweet and savory in profile, heavily infused with peanut paste and served with Tuwo Shinkafa.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 30,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN0ZjkswSoAziCIgsGj0HBOB7HthG1TzrT8NCpJ0JD6A&s=10",
+    ingredients: [
+      { name: "Ripe pumpkin, mashed", quantity: 300, unit: "g" },
+      { name: "Peanut paste", quantity: 3, unit: "tbsp" },
+      { name: "Beef chunks", quantity: 350, unit: "g" },
+      { name: "Sorrel leaves (Yakuwa)", quantity: 50, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil pieces of pumpkin with beef until the pumpkin is mushy enough to fork-mash into a paste.",
+      },
+      {
+        stepNumber: 2,
+        text: "Stir the peanut paste and blended peppers smoothly into the pumpkin mixture.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add chopped yakuwa sorrel leaves, simmer for 8 minutes to balance the sweet-savory notes.",
+      },
+    ],
+    tags: ["Soup", "Sweet-Savory", "Creamy", "Traditional"],
+  },
+  {
+    title: "Nkwobi",
+    description:
+      "A classic Eastern Nigerian bar dessert snack composed of tender cow foot gelatinous chunks bathed in a rich, palm oil spicy potash mortar sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 50,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG1A8yFvAV_5QE7qTpatl4feRSY3l5U_rMXTeGbu0U4A&s=10",
+    ingredients: [
+      { name: "Cow foot pieces", quantity: 800, unit: "g" },
+      { name: "Palm oil", quantity: 100, unit: "ml" },
+      { name: "Edible potash (Kanwa)", quantity: 1, unit: "tsp" },
+      { name: "Utazi leaves, sliced", quantity: 5, unit: "pcs" },
+      { name: "Ground Ehuru mix", quantity: 1, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Pressure cook the cow foot pieces until completely tender and sticky.",
+      },
+      {
+        stepNumber: 2,
+        text: "Mix palm oil with dissolved potash solution in a mortar, whisking until it emulsifies into a thick yellow cream.",
+      },
+      {
+        stepNumber: 3,
+        text: "Fold in the cooked meat, pepper paste, and ehuru, garnishing with fresh onions and sliced bitter utazi leaves.",
+      },
+    ],
+    tags: ["Street-Food", "Authentic", "Savory", "Slow-Cooked"],
+  },
+  {
+    title: "Abacha (African Salad)",
+    description:
+      "A refreshing, exotic Eastern salad made from shredded, dried cassava flakes rehydrated and tossed in a savory palm oil paste.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 10,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLIpShqzk-FIGAiPuXFiyMOIZR70R0Q56epWEEiLAhNg&s=10",
+    ingredients: [
+      { name: "Dried Abacha flakes", quantity: 200, unit: "g" },
+      { name: "Palm oil", quantity: 80, unit: "ml" },
+      { name: "Ugba (Oil bean slices)", quantity: 50, unit: "g" },
+      { name: "Garden eggs, sliced", quantity: 2, unit: "pcs" },
+      { name: "Kanda (Cow skin strips)", quantity: 100, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Soak dried abacha flakes in warm water for 5 minutes to soften, then drain fully.",
+      },
+      {
+        stepNumber: 2,
+        text: "Make a yellow palm oil emulsion using warm water and dissolved potash.",
+      },
+      {
+        stepNumber: 3,
+        text: "Stir in the abacha flakes, ugba, pepper paste, and kanda, assembling with fresh garden eggs on top.",
+      },
+    ],
+    tags: ["Salad", "Traditional", "Exotic", "Fresh"],
+  },
+  {
+    title: "Plantain Mosa",
+    description:
+      "Fluffy, golden sweet-savory breakfast puff fritters made from over-ripe mashed plantains and a dash of pepper.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 15,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBUL29iKa5qiwTdO5f_tQIC6-LDOo3eFo0EHmxOFq_9Q&s=10",
+    ingredients: [
+      { name: "Over-ripe plantains", quantity: 2, unit: "pcs" },
+      { name: "All-purpose flour", quantity: 100, unit: "g" },
+      { name: "Instant dry yeast", quantity: 1, unit: "tsp" },
+      { name: "Scotch bonnet, minced", quantity: 0.5, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Mash the plantains until completely liquid and smooth with no solid chunks.",
+      },
+      {
+        stepNumber: 2,
+        text: "Mix in flour, yeast, and minced pepper, allowing the batter to proof for 20 minutes.",
+      },
+      {
+        stepNumber: 3,
+        text: "Scoop small balls into hot vegetable oil and deep fry until crispy and deeply browned.",
+      },
+    ],
+    tags: ["Breakfast", "Sweet-Savory", "Fried", "Easy"],
+  },
+  {
+    title: "Ofada Rice and Ayamase Stew",
+    description:
+      "Unpolished, local short-grain rice accompanied by a fierce, rich green bell pepper stew cooked in deeply bleached palm oil.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 40,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmTkQfmGVfSNo_q5PqRL-Fy0NCwfMWg8U4JkfMdMuYDw&s=10",
+    ingredients: [
+      { name: "Local Ofada Rice", quantity: 300, unit: "g" },
+      { name: "Green bell peppers", quantity: 6, unit: "pcs" },
+      { name: "Bleached palm oil", quantity: 150, unit: "ml" },
+      { name: "Iru (Locust beans)", quantity: 2, unit: "tbsp" },
+      { name: "Assorted meats, diced", quantity: 400, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Wash and boil the pungent local ofada rice until tender.",
+      },
+      {
+        stepNumber: 2,
+        text: "Bleach palm oil in a closed pot until crystal clear, then fry onions and locust beans until sizzling.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour in blended, strained green peppers, add diced meats, and fry until the oil floats cleanly above the green sauce.",
+      },
+    ],
+    tags: ["Classic", "Spicy", "Authentic", "Traditional"],
+  },
+  {
+    title: "Ogbono Soup",
+    description:
+      "A comforting, thick African mango seed soup that features an incredible draw texture, loaded with stockfish and leafy vegetables.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 10,
+    cookTime: 25,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlLRo7KgFnWILSVhFnhmPtFjBpyjKYpIwE8Q5fphZjAw&s=10",
+    ingredients: [
+      { name: "Ground Ogbono seeds", quantity: 80, unit: "g" },
+      { name: "Palm oil", quantity: 3, unit: "tbsp" },
+      { name: "Assorted meats", quantity: 400, unit: "g" },
+      { name: "Ugu leaves, shredded", quantity: 50, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Dissolve ground ogbono seeds inside warm palm oil completely off the flame to prevent clumping.",
+      },
+      {
+        stepNumber: 2,
+        text: "Pour the smooth oil mixture into boiling meat stock, stirring continuously as it begins to draw and thicken.",
+      },
+      {
+        stepNumber: 3,
+        text: "Toss in cooked meats, crayfish, and vegetables, simmering gently on low heat for 15 minutes.",
+      },
+    ],
+    tags: ["Soup", "Traditional", "Easy", "Savory"],
+  },
+  {
+    title: "Peppered Snail Snack",
+    description:
+      "Crispy, crunchy giant African land snails tossed in a fiery habanero onion reduction, perfect as a gourmet party appetizer.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 25,
+    cookTime: 20,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSf0IWEk5tJatLj9bCYxUs9PBKqrhAOB_c8NONS0L1bQ&s=10",
+    ingredients: [
+      { name: "Cleaned land snails", quantity: 6, unit: "pcs" },
+      { name: "Scotch bonnet peppers", quantity: 4, unit: "pcs" },
+      { name: "Onions, chopped", quantity: 2, unit: "pcs" },
+      { name: "Vegetable oil", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil washed snails with lime juice, garlic, and onions until fully cooked but firm.",
+      },
+      {
+        stepNumber: 2,
+        text: "Deep-fry or pan-sear the snails briefly to give them a crunchy bite.",
+      },
+      {
+        stepNumber: 3,
+        text: "Sauté the chopped peppers and plenty of onions in oil, toss the snails inside, and glaze evenly.",
+      },
+    ],
+    tags: ["Street-Food", "Spicy", "Onion-Heavy", "Celebration"],
+  },
+  {
+    title: "Oloyin Honey Beans (Porridge)",
+    description:
+      "Naturally sweet Nigerian honey beans stewed softly down into a savory palm oil porridge structure.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 10,
+    cookTime: 50,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU2NqtTRwiqKK1sQrddUmm5HuNvDfOP-MnFSAGiNsHyQ&s=10",
+    ingredients: [
+      { name: "Oloyin Honey Beans", quantity: 300, unit: "g" },
+      { name: "Palm oil", quantity: 50, unit: "ml" },
+      { name: "Blended onion paste", quantity: 2, unit: "tbsp" },
+      { name: "Crayfish powder", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil the honey beans until extremely soft and creamy.",
+      },
+      {
+        stepNumber: 2,
+        text: "Pour in palm oil, pepper mix, onion paste, and crayfish directly into the pot.",
+      },
+      {
+        stepNumber: 3,
+        text: "Stir thoroughly, mash a portion of the beans against the side of the pot to thicken, and simmer until thick.",
+      },
+    ],
+    tags: ["Vegetarian", "Slow-Cooked", "Comfort-Food", "Easy"],
+  },
+  {
+    title: "Nigerian Meat Pie",
+    description:
+      "The ultimate street-food pastry pastry, featuring a buttery, flaky crust stuffed with seasoned minced beef, carrots, and potatoes.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 35,
+    cookTime: 25,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxe_vh6NYlhSLwm9kC4bSW7OzImACJmgicSvLQ5vXRNQ&s=10",
+    ingredients: [
+      { name: "All-purpose flour", quantity: 500, unit: "g" },
+      { name: "Minced beef", quantity: 300, unit: "g" },
+      { name: "Margarine or butter", quantity: 250, unit: "g" },
+      { name: "Diced potatoes & carrots", quantity: 100, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Cook minced beef with potatoes, carrots, and flour slurry to form a thick, moist pie filling.",
+      },
+      {
+        stepNumber: 2,
+        text: "Rub cold butter into flour, mix with ice water to make dough, and roll out flat.",
+      },
+      {
+        stepNumber: 3,
+        text: "Cut out circles, stuff with meat filling, crimp edges with a fork, and bake at 180°C until golden.",
+      },
+    ],
+    tags: ["Pastry", "Beefy", "Baked", "Classic"],
+  },
+  {
+    title: "Banga Rice",
+    description:
+      "A rich coastal dish of rice cooked directly inside fresh, aromatic palm fruit extract broth and ground local spices.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 35,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVdKTrrmOwB71bS1ZIaXXUZySxM6EInDT52KjnOqi9iQ&s=10",
+    ingredients: [
+      { name: "Parboiled rice", quantity: 400, unit: "g" },
+      { name: "Palm fruit concentrate", quantity: 250, unit: "g" },
+      { name: "Dried catfish pieces", quantity: 100, unit: "g" },
+      { name: "Banga spices blend", quantity: 1, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil palm fruit concentrate with water and local banga spices until rich and fragrant.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add dried catfish, crayfish, and washed parboiled rice directly into the palm broth.",
+      },
+      {
+        stepNumber: 3,
+        text: "Cover tightly and let the rice steam slowly until dry and infused with rich palm oils.",
+      },
+    ],
+    tags: ["Traditional", "Savory", "Seafood", "Slow-Cooked"],
+  },
+  {
+    title: "Crunchy Chin Chin",
+    description:
+      "A highly addictive, fried sweet pastry snack cut into tiny cubes.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 20,
+    cookTime: 15,
+    servingsDefault: 6,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS8OLtbjsnZrMKimWDIvOBZuKdoOoAkMbuPucUYMtZsQ&s=10",
+    ingredients: [
+      { name: "All-purpose flour", quantity: 400, unit: "g" },
+      { name: "Sugar", quantity: 80, unit: "g" },
+      { name: "Butter", quantity: 50, unit: "g" },
+      { name: "Ground nutmeg", quantity: 1, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Combine flour, sugar, and nutmeg, then rub in the butter until crumbly.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add milk to form a stiff dough, roll out thin on a board, and slice into tiny squares.",
+      },
+      {
+        stepNumber: 3,
+        text: "Deep fry in small batches in hot oil until crunchy and light golden brown.",
+      },
+    ],
+    tags: ["Pastry", "Sweet", "Crispy", "Celebration"],
+  },
+  {
+    title: "Garden Egg Sauce",
+    description:
+      "A uniquely savory, slightly bitter sauce made from mashed white garden eggs cooked down in palm oil, perfect with boiled yams.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 20,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lix4JQjDKDWSO1DmUPSiofhRqBFX6f1Idr9Qcj3jNQ&s=10",
+    ingredients: [
+      { name: "White garden eggs (Eggplants)", quantity: 8, unit: "pcs" },
+      { name: "Palm oil", quantity: 80, unit: "ml" },
+      { name: "Smoked mackerel chunks", quantity: 150, unit: "g" },
+      { name: "Onion, chopped", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil garden eggs for 10 minutes, remove skins, and mash coarsely with a fork.",
+      },
+      {
+        stepNumber: 2,
+        text: "Sauté chopped onions in palm oil, add blended peppers and smoked fish.",
+      },
+      {
+        stepNumber: 3,
+        text: "Stir in the mashed garden eggs and simmer for 10 minutes until oil bubbles over.",
+      },
+    ],
+    tags: ["Vegetarian", "Lunch", "Traditional", "Easy"],
+  },
+  {
+    title: "Fried Plantain (Dodo)",
+    description:
+      "Sweet, perfectly caramelized ripe plantain slices fried to golden perfection—the ultimate Nigerian side dish.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 5,
+    cookTime: 10,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlZ_P9nTYv_Z-Qm5b0MkMro8I5ehX2NcxVSeD-vj3veA&s=10",
+    ingredients: [
+      { name: "Ripe yellow plantains", quantity: 2, unit: "pcs" },
+      { name: "Vegetable oil (for frying)", quantity: 200, unit: "ml" },
+      { name: "Salt", quantity: 0.5, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Peel the plantains and slice diagonally into uniform disks.",
+      },
+      {
+        stepNumber: 2,
+        text: "Toss with a tiny pinch of salt based on preference.",
+      },
+      {
+        stepNumber: 3,
+        text: "Fry in hot oil for 3-4 minutes per side until beautifully caramelized and golden.",
+      },
+    ],
+    tags: ["Sweet-Savory", "Fried", "Easy", "Quick"],
+  },
+  {
+    title: "Chicken Pepper Stew",
+    description:
+      "A classic Sunday staple of fried chicken steeped deep inside a vibrant tomato and red bell pepper sauce mix.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 15,
+    cookTime: 35,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSiH30AjemR77qrIlM08jVpbATQ48yjQtTuQn7OqoQqw&s=10",
+    ingredients: [
+      { name: "Chicken drumsticks", quantity: 6, unit: "pcs" },
+      { name: "Tomatoes", quantity: 6, unit: "pcs" },
+      { name: "Red bell peppers", quantity: 4, unit: "pcs" },
+      { name: "Vegetable oil", quantity: 100, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil chicken with onions and thyme, then fry or bake until golden crisp.",
+      },
+      {
+        stepNumber: 2,
+        text: "Fry concentrated tomato-pepper puree in hot oil until the sourness fades completely.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour in rich chicken stock, add the fried chicken pieces, and reduce until thick and oil rises.",
+      },
+    ],
+    tags: ["Chicken", "Classic", "Lunch", "Traditional"],
+  },
+  {
+    title: "Yamarita (Egg-Fried Yam)",
+    description:
+      "Crispy street-food slices of white yam coated in a seasoned egg and flour batter, then shallow-fried until golden.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "Nigeria",
+    prepTime: 10,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTREZOs3FfH6bktsJ73xwfYTaAYvcIMQfohqMr9g2wF5w&s=10",
+    ingredients: [
+      { name: "White Puna Yam tuber", quantity: 400, unit: "g" },
+      { name: "Eggs, beaten", quantity: 2, unit: "pcs" },
+      { name: "All-purpose flour", quantity: 3, unit: "tbsp" },
+      { name: "Chili powder", quantity: 1, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Slice yam into flat rectangles and parboil with salt for 8 minutes until slightly tender.",
+      },
+      {
+        stepNumber: 2,
+        text: "Dredge each yam slice in seasoned flour, then dip completely into the beaten eggs.",
+      },
+      {
+        stepNumber: 3,
+        text: "Fry in hot oil until both sides are perfectly crisp and crunchy.",
+      },
+    ],
+    tags: ["Breakfast", "Fried", "Crispy", "Street-Food"],
+  },
 ];
 
 export const seedDatabase = async (): Promise<void> => {
