@@ -9,15 +9,15 @@ export default defineConfig({
     tailwindcss(),
     react(),
     VitePWA({
-      registerType: "autoUpdate", // Automatically refreshes the app when updates are pushed
+      registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       manifest: {
         name: "SatioFlix - Global Culinary Reels",
         short_name: "SatioFlix",
         description: "Immersive global recipe feed and video reels platform",
-        theme_color: "#f43f5e", // Matches your gorgeous rose-500 theme
-        background_color: "#09090b", // Matches zinc-950 dark background
-        display: "standalone", // Hides the browser URL bar on mobile!
+        theme_color: "#f43f5e",
+        background_color: "#09090b",
+        display: "standalone",
         orientation: "portrait",
         icons: [
           {
@@ -38,6 +38,65 @@ export default defineConfig({
           },
         ],
       },
+      // ⚡ Workbox Service Worker Caching Engine
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
+        runtimeCaching: [
+          {
+            // 📸 Cache optimized images & video thumbnails for 30 days
+            urlPattern:
+              /^https:\/\/(wsrv\.nl|images\.unsplash\.com|img\.youtube\.com)\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "satio-image-cache",
+              expiration: {
+                maxEntries: 150,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            // 🔤 Cache external fonts and stylesheets
+            urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts-cache",
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 Year
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
+      },
     }),
   ],
+  build: {
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        // ⚡ Function-based manualChunks to satisfy TypeScript & Rollup types
+        manualChunks(id) {
+          if (id.includes("node_modules")) {
+            if (
+              id.includes("react") ||
+              id.includes("react-dom") ||
+              id.includes("react-router-dom")
+            ) {
+              return "react-core";
+            }
+            if (id.includes("lucide-react")) {
+              return "lucide-icons";
+            }
+          }
+        },
+      },
+    },
+  },
 });
