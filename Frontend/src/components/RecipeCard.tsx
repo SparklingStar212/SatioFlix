@@ -7,50 +7,92 @@ interface RecipeCardProps {
   recipe: Recipe;
 }
 
+// ⚡ Dynamic CDN proxy that converts raw/Google URLs to compressed, responsive WebP images
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=600&auto=format&fit=crop&q=70';
+
+const getOptimizedImageUrl = (url: string, width = 600): string => {
+  if (!url) return FALLBACK_IMAGE;
+  // If it's already a local data URI or already proxied, return as-is
+  if (url.startsWith('data:') || url.includes('wsrv.nl')) return url;
+
+  // Proxy via Cloudflare-backed wsrv.nl: resizes to exact width, converts to WebP, and sets 75% quality
+  return `https://wsrv.nl/?url=${encodeURIComponent(url)}&w=${width}&q=75&output=webp&default=${encodeURIComponent(FALLBACK_IMAGE)}`;
+};
+
 export default function RecipeCard({ recipe }: RecipeCardProps) {
   const [isFavorited, setIsFavorited] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState(() => getOptimizedImageUrl(recipe.coverImage, 600));
 
   // Sync state with localStorage on mount
   useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
-    setIsFavorited(favorites.includes(recipe._id));
+    try {
+      const favorites = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
+      setIsFavorited(favorites.includes(recipe._id));
+    } catch {
+      setIsFavorited(false);
+    }
   }, [recipe._id]);
 
+  // Update image source if recipe coverImage changes
+  useEffect(() => {
+    setImageSrc(getOptimizedImageUrl(recipe.coverImage, 600));
+    setIsImageLoaded(false);
+  }, [recipe.coverImage]);
+
   const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevents the card click (opening details drawer) from firing!
-    
-    const favorites = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
-    let updatedFavorites: string[];
+    e.stopPropagation(); // Prevents opening the details drawer
 
-    if (favorites.includes(recipe._id)) {
-      updatedFavorites = favorites.filter((id: string) => id !== recipe._id);
-      setIsFavorited(false);
-    } else {
-      updatedFavorites = [...favorites, recipe._id];
-      setIsFavorited(true);
+    try {
+      const favorites = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
+      let updatedFavorites: string[];
+
+      if (favorites.includes(recipe._id)) {
+        updatedFavorites = favorites.filter((id: string) => id !== recipe._id);
+        setIsFavorited(false);
+      } else {
+        updatedFavorites = [...favorites, recipe._id];
+        setIsFavorited(true);
+      }
+
+      localStorage.setItem('satio_favorites', JSON.stringify(updatedFavorites));
+      window.dispatchEvent(new Event('favorites-updated'));
+    } catch (err) {
+      console.error('Error saving favorite:', err);
     }
-
-    localStorage.setItem('satio_favorites', JSON.stringify(updatedFavorites));
-    
-    // Dispatch a custom event so our Home screen can instantly listen and update!
-    window.dispatchEvent(new Event('favorites-updated'));
   };
 
-  const totalTime = recipe.prepTime + recipe.cookTime;
+  const totalTime = (recipe.prepTime || 0) + (recipe.cookTime || 0);
 
   return (
     <div className="group relative bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-100 dark:border-zinc-800/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-zinc-200/80 dark:hover:border-zinc-700/60 transition-all duration-300 flex flex-col h-full">
-      
-      {/* 📸 Recipe Cover Image */}
+
+      {/* 📸 Recipe Cover Image Container */}
       <div className="relative aspect-video w-full bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
-        <img 
-          src={recipe.coverImage} 
-          alt={recipe.title} 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+
+        {/* ⚡ Skeleton shimmer placeholder while image buffers */}
+        {!isImageLoaded && (
+          <div className="absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse" />
+        )}
+
+        <img
+          src={imageSrc}
+          alt={recipe.title}
+          loading="lazy"         // ⚡ Browser downloads only when scrolled near
+          decoding="async"       // ⚡ Decode off the main thread to prevent scrolling stutter
+          onLoad={() => setIsImageLoaded(true)}
+          onError={() => {
+            // If the external image link fails or 403s, gracefully swap to fallback
+            if (imageSrc !== FALLBACK_IMAGE) {
+              setImageSrc(FALLBACK_IMAGE);
+            }
+          }}
+          className={`w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ${isImageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
         />
-        
+
         {/* Flag Badge */}
-        <span className="absolute bottom-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-white/95 dark:bg-zinc-900/95 text-zinc-900 dark:text-zinc-50 shadow-md backdrop-blur-sm">
+        <span className="absolute bottom-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-white/95 dark:bg-zinc-900/95 text-zinc-900 dark:text-zinc-50 shadow-md backdrop-blur-sm pointer-events-none">
           <Globe className="w-3 h-3 text-rose-500" />
           {recipe.countryOfOrigin}
         </span>
@@ -58,15 +100,14 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
         {/* 💖 FLOATING HEART TOGGLE */}
         <button
           onClick={toggleFavorite}
-          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 dark:bg-zinc-900/90 hover:bg-white dark:hover:bg-zinc-800 shadow-md backdrop-blur-sm transition-all duration-200 active:scale-90 cursor-pointer group/heart"
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/90 dark:bg-zinc-900/90 hover:bg-white dark:hover:bg-zinc-800 shadow-md backdrop-blur-sm transition-all duration-200 active:scale-90 cursor-pointer group/heart z-10"
           aria-label="Favorite recipe"
         >
-          <Heart 
-            className={`w-4 h-4 transition-colors ${
-              isFavorited 
-                ? 'fill-rose-500 stroke-rose-500 scale-110' 
+          <Heart
+            className={`w-4 h-4 transition-colors ${isFavorited
+                ? 'fill-rose-500 stroke-rose-500 scale-110'
                 : 'stroke-zinc-500 dark:stroke-zinc-400 group-hover/heart:stroke-rose-500'
-            }`} 
+              }`}
           />
         </button>
       </div>

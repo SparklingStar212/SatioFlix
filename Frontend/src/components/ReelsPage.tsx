@@ -1,5 +1,5 @@
 // src/components/ReelsPage.tsx
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { api } from '../services/api';
 import type { Video } from '../services/api';
 import { Loader2, AlertCircle, RefreshCw, ChefHat, Search, X } from 'lucide-react';
@@ -14,28 +14,72 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-function VideoReel({ video, isActive }: { video: Video; isActive: boolean }) {
-  const getEmbedUrl = (vid: Video) => {
-    const playParam = isActive ? 'autoplay=1&mute=0' : 'autoplay=0&mute=1';
-    return `https://www.youtube-nocookie.com/embed/${vid.externalVideoId}?${playParam}&loop=1&playlist=${vid.externalVideoId}&controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0`;
-  };
+// ⚡ Fast, optimized thumbnail generator using YouTube's direct CDN
+const getOptimizedThumbnail = (video: Video): string => {
+  const rawUrl = video.thumbnailUrl || (video.externalVideoId ? `https://img.youtube.com/vi/${video.externalVideoId}/hqdefault.jpg` : '');
+  if (!rawUrl) return '';
+  return `https://wsrv.nl/?url=${encodeURIComponent(rawUrl)}&w=480&q=75&output=webp`;
+};
+
+function VideoReel({
+  video,
+  isActive,
+  index,
+  onVisible,
+}: {
+  video: Video;
+  isActive: boolean;
+  index: number;
+  onVisible: (index: number) => void;
+}) {
+  const reelRef = useRef<HTMLDivElement>(null);
+
+  // ⚡ IntersectionObserver tracks visible video smoothly without onScroll recalculations
+  useEffect(() => {
+    const element = reelRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          onVisible(index);
+        }
+      },
+      {
+        threshold: 0.6, // Fire when 60% of the reel is in view
+      }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [index, onVisible]);
+
+  const embedUrl = useMemo(() => {
+    if (!isActive) return '';
+    return `https://www.youtube-nocookie.com/embed/${video.externalVideoId}?autoplay=1&mute=0&loop=1&playlist=${video.externalVideoId}&controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0`;
+  }, [isActive, video.externalVideoId]);
 
   return (
-    <div className="w-full h-full shrink-0 snap-start flex flex-col justify-center items-center">
+    <div
+      ref={reelRef}
+      className="w-full h-full shrink-0 snap-start flex flex-col justify-center items-center"
+    >
       <div className="relative w-full h-full md:max-w-87.5 md:h-[85vh] bg-black md:rounded-3xl overflow-hidden border-0 md:border md:border-zinc-800 shadow-2xl flex items-center justify-center">
         {isActive ? (
           <iframe
             title={video.title}
-            src={getEmbedUrl(video)}
+            src={embedUrl}
             className="w-full h-full object-cover"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           />
         ) : (
           <div className="w-full h-full relative">
             <img
-              src={video.thumbnailUrl}
-              alt="thumbnail"
-              className="w-full h-full object-cover blur-sm opacity-50"
+              src={getOptimizedThumbnail(video)}
+              alt={video.title || "thumbnail"}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover blur-sm opacity-50 transition-opacity duration-300"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <Loader2 className="w-8 h-8 animate-spin text-zinc-600" />
@@ -66,7 +110,7 @@ export default function ReelsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 🔎 Search and Toggle States
+  // 🔎 Search States
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -77,7 +121,7 @@ export default function ReelsPage() {
     fetchAllVideos();
   }, []);
 
-  // Auto-focus the search input when opened
+  // Auto-focus search input
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
       searchInputRef.current.focus();
@@ -92,10 +136,14 @@ export default function ReelsPage() {
     try {
       const cachedFeed = sessionStorage.getItem('satio_compiled_reels');
       if (cachedFeed) {
-        const parsedFeed = JSON.parse(cachedFeed);
-        setAllVideos(shuffleArray(parsedFeed));
-        setIsLoading(false);
-        return;
+        try {
+          const parsedFeed = JSON.parse(cachedFeed);
+          setAllVideos(shuffleArray(parsedFeed));
+          setIsLoading(false);
+          return;
+        } catch {
+          sessionStorage.removeItem('satio_compiled_reels');
+        }
       }
 
       const response = await api.get('/videos/all');
@@ -119,37 +167,29 @@ export default function ReelsPage() {
     }
   };
 
-  const displayedVideos = allVideos.filter((video) => {
-    if (!video) return false;
-
+  // ⚡ Memoized Filter prevents re-filtering on active video changes
+  const displayedVideos = useMemo(() => {
     const query = searchQuery.toLowerCase().trim();
-    if (!query) return true;
+    if (!query) return allVideos;
 
-    return (
-      video.title?.toLowerCase().includes(query) ||
-      video.creatorName?.toLowerCase().includes(query) ||
-      video.category?.toLowerCase().includes(query)
-    );
-  });
+    return allVideos.filter((video) => {
+      if (!video) return false;
+      return (
+        video.title?.toLowerCase().includes(query) ||
+        video.creatorName?.toLowerCase().includes(query) ||
+        video.category?.toLowerCase().includes(query)
+      );
+    });
+  }, [allVideos, searchQuery]);
 
-  const handleScroll = () => {
-    if (!containerRef.current || displayedVideos.length === 0) return;
-    const container = containerRef.current;
-
-    const scrollTop = container.scrollTop;
-    const itemHeight = container.clientHeight;
-    if (itemHeight === 0) return;
-
-    const currentIdx = Math.round(scrollTop / itemHeight);
-    if (currentIdx !== currentIndex && currentIdx >= 0 && currentIdx < displayedVideos.length) {
-      setCurrentIndex(currentIdx);
-    }
+  const handleReelVisible = (index: number) => {
+    setCurrentIndex(index);
   };
 
   return (
     <div className="h-screen bg-zinc-950 text-white flex flex-col overflow-hidden relative">
 
-      {/* 🔎 Dynamic Slidout Search Container */}
+      {/* 🔎 Dynamic Slideout Search Container */}
       <div className="absolute top-4 left-4 right-4 z-30 max-w-md mx-auto flex items-center gap-2">
         {isSearchOpen ? (
           <div className="flex-1 relative flex items-center animate-in slide-in-from-top duration-300">
@@ -167,7 +207,7 @@ export default function ReelsPage() {
             />
             <Search className="w-4 h-4 text-zinc-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
 
-            {/* Close / Collapse Search Button */}
+            {/* Close Search Button */}
             <button
               onClick={() => {
                 setSearchQuery('');
@@ -175,16 +215,16 @@ export default function ReelsPage() {
                 setCurrentIndex(0);
                 if (containerRef.current) containerRef.current.scrollTop = 0;
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-zinc-400 hover:text-white transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-zinc-400 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
         ) : (
-          /* Floating trigger magnifying glass (Displays clean and subtle in the top right corner) */
           <button
             onClick={() => setIsSearchOpen(true)}
             className="ml-auto p-3 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 rounded-full transition-all shadow-lg text-zinc-300 hover:text-white cursor-pointer z-40"
+            aria-label="Open search"
           >
             <Search className="w-5 h-5" />
           </button>
@@ -219,21 +259,22 @@ export default function ReelsPage() {
           <div className="absolute inset-0 md:relative md:h-full w-full flex flex-col items-center justify-center">
             <div
               ref={containerRef}
-              onScroll={handleScroll}
               className="w-full md:max-w-90 h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth flex flex-col [scrollbar-none] [&::-webkit-scrollbar]:hidden z-10"
             >
               {displayedVideos.map((vid, idx) => (
                 <VideoReel
                   key={vid._id}
                   video={vid}
+                  index={idx}
                   isActive={idx === currentIndex}
+                  onVisible={handleReelVisible}
                 />
               ))}
             </div>
           </div>
         )}
 
-        {/* Unified "No Reels Found" Search Fallback */}
+        {/* Empty State */}
         {!isLoading && !error && displayedVideos.length === 0 && (
           <div className="text-center p-6 space-y-2">
             <p className="text-zinc-500 text-sm font-medium">No reels found matching your criteria.</p>

@@ -1,16 +1,18 @@
 // src/App.tsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useSearchParams, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import Sidebar from './components/layout/Sidebar';
 import RecipeCard from './components/RecipeCard';
-import RecipeDrawer from './components/RecipeDrawer';
-import CreateRecipePage from './components/CreateRecipePage';
-import ReelsPage from './components/ReelsPage';
 import { api } from './services/api';
 import type { Recipe } from './services/api';
 import { Loader2, Heart } from 'lucide-react';
 import InstallPrompt from './components/layout/InstallPrompt';
+
+// ⚡ Code-splitting heavy routes and modals so initial page load is lightweight
+const RecipeDrawer = lazy(() => import('./components/RecipeDrawer'));
+const ReelsPage = lazy(() => import('./components/ReelsPage'));
+const CreateRecipePage = lazy(() => import('./components/CreateRecipePage'));
 
 // 🎲 High-performance Fisher-Yates Shuffle algorithm
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -22,7 +24,34 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-const TAG_FILTERS = ['All', 'Vegan', 'Spicy', 'Easy', 'Dessert', 'Quick', 'Healthy', 'Savory', 'Breakfast', 'Lunch', 'Sour', 'Vegetarian', 'Comfort-Food', 'Sweet', 'Soup', 'Salad', 'Classic', 'Creamy', 'Spiced', 'Curry', 'Slow-Cooked', 'Exotic', 'Sweet-Savory',  'Crispy', 'Onion-Heavy', 'Baked', 'Celebration', 'Traditional', 'Authentic', 'Cheesy', 'Seafood', 'Street-Food', 'Sweet-Spicy', 'Smoky', 'Beefy', 'Porky', 'Smoky', 'Grill', 'Stir-Fry', 'Fried', 'Herby', 'Chicken', 'Fresh', 'Classic', 'Pastry'];
+// 🗺️ Static Country Map kept outside the component so it is only allocated once in memory
+const COUNTRY_MAP: Record<string, string[]> = {
+  korean: ['south korea', 'korea', 'korean'],
+  nigerian: ['nigeria', 'nigerian'],
+  italian: ['italy', 'italian'],
+  mexican: ['mexico', 'mexican'],
+  japanese: ['japan', 'japanese'],
+  chinese: ['china', 'chinese'],
+  indian: ['india', 'indian'],
+  thai: ['thailand', 'thai'],
+  french: ['france', 'french'],
+  spanish: ['spain', 'spanish'],
+  greek: ['greece', 'greek'],
+  brazilian: ['brazil', 'brazilian'],
+  vietnamese: ['vietnam', 'vietnamese'],
+  british: ['united kingdom', 'british', 'uk', 'england'],
+  american: ['united states', 'usa', 'us', 'american'],
+  'middle eastern': ['middle east', 'middle eastern', 'lebanon', 'egypt', 'turkish']
+};
+
+const TAG_FILTERS = [
+  'All', 'Vegan', 'Spicy', 'Easy', 'Dessert', 'Quick', 'Healthy', 'Savory',
+  'Breakfast', 'Lunch', 'Sour', 'Vegetarian', 'Comfort-Food', 'Sweet', 'Soup',
+  'Salad', 'Classic', 'Creamy', 'Spiced', 'Curry', 'Slow-Cooked', 'Exotic',
+  'Sweet-Savory', 'Crispy', 'Onion-Heavy', 'Baked', 'Celebration', 'Traditional',
+  'Authentic', 'Cheesy', 'Seafood', 'Street-Food', 'Sweet-Spicy', 'Smoky',
+  'Beefy', 'Porky', 'Grill', 'Stir-Fry', 'Fried', 'Herby', 'Chicken', 'Fresh', 'Pastry'
+];
 
 function Home() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -39,37 +68,49 @@ function Home() {
   const countryFilter = searchParams.get('country') || '';
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
-  // Fetch initial recipes
+  // ⚡ Fetch recipes ONCE on mount instead of refetching over the network when clicking countries
   useEffect(() => {
+    let isMounted = true;
+
     const fetchRecipes = async () => {
       setIsLoading(true);
       setError(null);
       try {
         const response = await api.get('/recipes');
-
-        // 🔀 SHUFFLE! Randomize the recipes catalog immediately on fetch
-        const randomizedRecipes = shuffleArray<Recipe>(response.data);
-        setRecipes(randomizedRecipes);
+        if (isMounted) {
+          const randomizedRecipes = shuffleArray<Recipe>(response.data);
+          setRecipes(randomizedRecipes);
+        }
       } catch (err: any) {
-        console.error("❌ Failed to fetch recipes:", err);
-        setError("Could not connect to the SatioFlix server. Make sure your Backend is running on port 5000!");
+        if (isMounted) {
+          console.error("❌ Failed to fetch recipes:", err);
+          setError("Could not connect to the SatioFlix server. Make sure your Backend is running!");
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     fetchRecipes();
-  }, [countryFilter]);
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Load and listen to localStorage updates for Favorites
   useEffect(() => {
     const loadFavorites = () => {
-      const saved = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
-      setFavoriteIds(saved);
+      try {
+        const saved = JSON.parse(localStorage.getItem('satio_favorites') || '[]');
+        setFavoriteIds(saved);
+      } catch {
+        setFavoriteIds([]);
+      }
     };
 
     loadFavorites();
-
     window.addEventListener('favorites-updated', loadFavorites);
     return () => window.removeEventListener('favorites-updated', loadFavorites);
   }, []);
@@ -80,49 +121,37 @@ function Home() {
     setShowFavoritesOnly(false);
   }, [countryFilter]);
 
-  // 🔎 Combined Master Filter
-  const filteredRecipes = recipes.filter((recipe) => {
-    const matchesFavorites = !showFavoritesOnly || favoriteIds.includes(recipe._id);
-
+  // ⚡ Memoized Filter computation prevents UI lockups when typing in search or scrolling
+  const filteredRecipes = useMemo(() => {
     const queryCountry = countryFilter.trim().toLowerCase();
-    let matchesCountry = true;
-    if (countryFilter) {
-      const dbCountry = recipe.countryOfOrigin?.trim().toLowerCase() || '';
-      const countryMap: Record<string, string[]> = {
-        korean: ['south korea', 'korea', 'korean'],
-        nigerian: ['nigeria', 'nigerian'],
-        italian: ['italy', 'italian'],
-        mexican: ['mexico', 'mexican'],
-        japanese: ['japan', 'japanese'],
-        chinese: ['china', 'chinese'],
-        indian: ['india', 'indian'],
-        thai: ['thailand', 'thai'],
-        french: ['france', 'french'],
-        spanish: ['spain', 'spanish'],
-        greek: ['greece', 'greek'],
-        brazilian: ['brazil', 'brazilian'],
-        vietnamese: ['vietnam', 'vietnamese'],
-        british: ['united kingdom', 'british', 'uk', 'england'],
-        american: ['united states', 'usa', 'us', 'american'],
-        'middle eastern': ['middle east', 'middle eastern', 'lebanon', 'egypt', 'turkish']
-      };
-      const acceptableMatches = countryMap[queryCountry] || [queryCountry];
-      matchesCountry = acceptableMatches.includes(dbCountry);
-    }
-
-    const matchesTag =
-      activeTag === 'All' ||
-      recipe.tags?.some(tag => tag.toLowerCase() === activeTag.toLowerCase());
-
+    const acceptableMatches = queryCountry ? (COUNTRY_MAP[queryCountry] || [queryCountry]) : null;
     const queryText = searchQuery.toLowerCase().trim();
-    const matchesText =
-      !queryText ||
-      recipe.title.toLowerCase().includes(queryText) ||
-      recipe.tags?.some(tag => tag.toLowerCase().includes(queryText)) ||
-      recipe.description?.toLowerCase().includes(queryText);
+    const activeTagLower = activeTag.toLowerCase();
 
-    return matchesFavorites && matchesCountry && matchesTag && matchesText;
-  });
+    return recipes.filter((recipe) => {
+      if (showFavoritesOnly && !favoriteIds.includes(recipe._id)) return false;
+
+      if (acceptableMatches) {
+        const dbCountry = recipe.countryOfOrigin?.trim().toLowerCase() || '';
+        if (!acceptableMatches.includes(dbCountry)) return false;
+      }
+
+      if (activeTag !== 'All') {
+        const hasTag = recipe.tags?.some(tag => tag.toLowerCase() === activeTagLower);
+        if (!hasTag) return false;
+      }
+
+      if (queryText) {
+        const matchesText =
+          recipe.title.toLowerCase().includes(queryText) ||
+          recipe.tags?.some(tag => tag.toLowerCase().includes(queryText)) ||
+          recipe.description?.toLowerCase().includes(queryText);
+        if (!matchesText) return false;
+      }
+
+      return true;
+    });
+  }, [recipes, showFavoritesOnly, favoriteIds, countryFilter, activeTag, searchQuery]);
 
   return (
     <div className="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
@@ -161,7 +190,7 @@ function Home() {
       {/* Tag Pill Filter Row & Favorites Toggle */}
       {!isLoading && !error && (
         <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
-          <div className="flex gap-2 overflow-x-auto scrollbar-none">
+          <div className="flex gap-2 overflow-x-auto scrollbar-none max-w-full">
             {TAG_FILTERS.map((tag) => (
               <button
                 key={tag}
@@ -169,9 +198,9 @@ function Home() {
                   setActiveTag(tag);
                   setShowFavoritesOnly(false);
                 }}
-                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 shrink-0 cursor-pointer ${activeTag === tag && !showFavoritesOnly
-                  ? 'bg-rose-600 text-white shadow-md shadow-rose-600/25'
-                  : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 shrink-0 cursor-pointer ${activeTag === tag && !showFavoritesOnly
+                    ? 'bg-rose-600 text-white shadow-md shadow-rose-600/25'
+                    : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
                   }`}
               >
                 {tag}
@@ -184,9 +213,9 @@ function Home() {
               setShowFavoritesOnly(!showFavoritesOnly);
               setActiveTag('All');
             }}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border transition-all duration-300 cursor-pointer ${showFavoritesOnly
-              ? 'bg-rose-100 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/40 shadow-sm'
-              : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
+            className={`px-4 py-1.5 rounded-full text-xs font-bold flex items-center gap-1.5 border transition-all duration-200 cursor-pointer shrink-0 ${showFavoritesOnly
+                ? 'bg-rose-100 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-900/40 shadow-sm'
+                : 'bg-white dark:bg-zinc-950 text-zinc-500 dark:text-zinc-400 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
               }`}
           >
             <Heart className={`w-3.5 h-3.5 ${showFavoritesOnly ? 'fill-rose-500 stroke-rose-500' : 'stroke-zinc-500'}`} />
@@ -237,36 +266,46 @@ function Home() {
         </>
       )}
 
-      {/* Slide-over details Panel */}
-      <RecipeDrawer
-        recipe={selectedRecipe}
-        onClose={() => setSelectedRecipe(null)}
-      />
+      {/* Slide-over details Panel loaded on demand */}
+      {selectedRecipe && (
+        <Suspense fallback={null}>
+          <RecipeDrawer
+            recipe={selectedRecipe}
+            onClose={() => setSelectedRecipe(null)}
+          />
+        </Suspense>
+      )}
     </div>
   );
 }
 
-// 📱 Main Layout Wrapper (Calculates dynamic padding depending on current page URL)
+// 📱 Main Layout Wrapper
 function AppContent() {
   const location = useLocation();
   const isReelsPage = location.pathname === '/reels';
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-300">
-
-      {/* Sidebar/Bottom Navigation Bar remains mounted */}
       <Sidebar />
-
       <InstallPrompt />
+
       <main
         className={`flex-1 min-h-screen overflow-y-auto md:pt-0 md:pb-0 ${isReelsPage ? 'pt-0 pb-20' : 'pt-14 pb-20'
           }`}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/reels" element={<ReelsPage />} />
-          <Route path="/create" element={<CreateRecipePage />} />
-        </Routes>
+        <Suspense
+          fallback={
+            <div className="flex h-screen items-center justify-center">
+              <Loader2 className="w-8 h-8 animate-spin text-rose-500" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/reels" element={<ReelsPage />} />
+            <Route path="/create" element={<CreateRecipePage />} />
+          </Routes>
+        </Suspense>
       </main>
     </div>
   );
@@ -276,7 +315,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <Router>
-        <AppContent /> {/* 👈 Beautiful. Simply renders the AppContent wrapper with no duplicate nodes! */}
+        <AppContent />
       </Router>
     </ThemeProvider>
   );

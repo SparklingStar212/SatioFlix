@@ -19,7 +19,7 @@ const parseISO8601ToSeconds = (durationStr: string): number => {
 
 export const fetchDynamicCookingVideos = async (
   searchQuery: string,
-  maxResults: number = 30,
+  maxResults: number = 50,
 ) => {
   const apiKey = process.env.YOUTUBE_API_KEY;
   if (!apiKey) {

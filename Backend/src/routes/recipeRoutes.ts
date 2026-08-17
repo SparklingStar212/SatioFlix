@@ -4,6 +4,11 @@ import { Recipe } from "../models/Recipe";
 
 const router = express.Router();
 
+// Helper to escape regex special characters
+const escapeRegex = (text: string) => {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 // 1. Route: POST /api/recipes (Create a new recipe)
 router.post("/", async (req: Request, res: Response): Promise<any> => {
   try {
@@ -43,26 +48,37 @@ router.post("/", async (req: Request, res: Response): Promise<any> => {
   }
 });
 
-// 2. Route: GET /api/recipes (Fetch all recipes OR filter by country/tag)
+// 2. Route: GET /api/recipes (Fetch recipes with lean hydration & caching)
 router.get("/", async (req: Request, res: Response): Promise<any> => {
   try {
     const { country, tag } = req.query;
-    let queryFilter: any = {};
+    const queryFilter: Record<string, any> = {};
 
-    // Filter by country if provided (case-insensitive)
-    if (country) {
+    // Filter by country if provided
+    if (country && typeof country === "string") {
       queryFilter.countryOfOrigin = {
-        $regex: new RegExp(country as string, "i"),
+        $regex: new RegExp(escapeRegex(country.trim()), "i"),
       };
     }
 
     // Filter by tag if provided
-    if (tag) {
-      queryFilter.tags = { $in: [tag] };
+    if (tag && typeof tag === "string") {
+      queryFilter.tags = { $in: [tag.trim()] };
     }
 
-    const recipes = await Recipe.find(queryFilter).sort({ createdAt: -1 });
-    res.json(recipes);
+    // ⚡ Cache-Control: Caches responses on CDN/Browser for 2 minutes with background revalidation
+    res.setHeader(
+      "Cache-Control",
+      "public, max-age=120, s-maxage=300, stale-while-revalidate=600",
+    );
+
+    // ⚡ .lean() skips Mongoose document hydration, making queries 3-5x faster
+    const recipes = await Recipe.find(queryFilter)
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+
+    res.status(200).json(recipes);
   } catch (error) {
     console.error("❌ Error fetching recipes:", error);
     res.status(500).json({ error: "Failed to retrieve recipes" });
@@ -72,11 +88,17 @@ router.get("/", async (req: Request, res: Response): Promise<any> => {
 // 3. Route: GET /api/recipes/:id (Get a single recipe detail)
 router.get("/:id", async (req: Request, res: Response): Promise<any> => {
   try {
-    const recipe = await Recipe.findById(req.params.id);
+    // ⚡ Cache single recipe lookups for 5 minutes
+    res.setHeader(
+      "Cache-Control",
+      "public, max-age=300, s-maxage=600, stale-while-revalidate=1200",
+    );
+
+    const recipe = await Recipe.findById(req.params.id).lean().exec();
     if (!recipe) {
       return res.status(404).json({ error: "Recipe not found" });
     }
-    res.json(recipe);
+    res.status(200).json(recipe);
   } catch (error) {
     console.error("❌ Error fetching recipe detail:", error);
     res.status(500).json({ error: "Failed to retrieve recipe" });

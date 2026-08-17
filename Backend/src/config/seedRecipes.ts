@@ -7,6 +7,8 @@ dotenv.config();
 
 const recipesToSeed = [
   // --- ASIA ---
+
+  //Korean Dishes
   {
     title: "Kimchi Fried Rice (Kimchi Bokkeumbap)",
     description:
@@ -46,6 +48,1088 @@ const recipesToSeed = [
     ],
     tags: ["spicy", "quick", "vegetarian"],
   },
+  {
+    title: "Tteokbokki (Spicy Rice Cakes)",
+    description:
+      "Chewy cylinder-shaped Korean rice cakes simmered in a sweet, savory, and fiery gochujang and anchovy-dashi broth with fish cakes.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_JJ9CCknrEOj0UgxdDiKO-RmyP6SnzWKweM6UNfYcjQ&s=10",
+    ingredients: [
+      { name: "Korean rice cakes (Garaetteok)", quantity: 350, unit: "g" },
+      { name: "Korean fish cake sheets", quantity: 2, unit: "pcs" },
+      { name: "Gochujang (Korean chili paste)", quantity: 2, unit: "tbsp" },
+      { name: "Gochugaru (Chili flakes)", quantity: 1, unit: "tbsp" },
+      { name: "Soy sauce", quantity: 1, unit: "tbsp" },
+      { name: "Sugar", quantity: 1.5, unit: "tbsp" },
+      { name: "Dashi or anchovy broth", quantity: 500, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Bring the dashi or anchovy broth to a boil in a shallow pan and whisk in gochujang, gochugaru, soy sauce, and sugar.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add the rice cakes and sliced fish cakes to the simmering sauce.",
+      },
+      {
+        stepNumber: 3,
+        text: "Cook over medium heat for 8-10 minutes, stirring frequently until the sauce thickens and rice cakes become soft and chewy.",
+      },
+    ],
+    tags: ["Street-Food", "Spicy", "Sweet-Spicy", "Classic"],
+  },
+  {
+    title: "Bibimbap",
+    description:
+      "A colorful, nutritious rice bowl topped with seasoned sautéed vegetables, marinated beef, a fried egg, and savory gochujang sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 25,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm4Q9OnWwJuT0FhI2ix-WgIblYxU3-hU5NweQEfGvCRw&s=10",
+    ingredients: [
+      { name: "Cooked short-grain white rice", quantity: 400, unit: "g" },
+      { name: "Ground beef", quantity: 150, unit: "g" },
+      { name: "Spinach", quantity: 100, unit: "g" },
+      { name: "Bean sprouts", quantity: 100, unit: "g" },
+      { name: "Carrot, julienned", quantity: 1, unit: "pc" },
+      { name: "Eggs", quantity: 2, unit: "pcs" },
+      { name: "Gochujang bibimbap sauce", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Blanch spinach and bean sprouts separately, season each with sesame oil, garlic, and salt.",
+      },
+      {
+        stepNumber: 2,
+        text: "Sauté the carrots and brown the beef with soy sauce, garlic, and sugar.",
+      },
+      {
+        stepNumber: 3,
+        text: "Place warm rice in a bowl, arrange the vegetables and beef in neat sections on top, add a sunny-side-up egg in the center, and serve with bibimbap sauce.",
+      },
+    ],
+    tags: ["Classic", "Healthy", "Comfort-Food", "Savory"],
+  },
+  {
+    title: "Sundubu Jjigae (Spicy Soft Tofu Stew)",
+    description:
+      "A bubbling, fiery hotpot stew made with silky uncurdled soft tofu, clams or pork, and finished with a fresh egg cracked right on top.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTTpif5nlSO9FD-4hukfdHblth97ManlxKkrGPw4Pn1Q&s=10",
+    ingredients: [
+      { name: "Sundubu (Extra soft tofu tube)", quantity: 350, unit: "g" },
+      { name: "Fresh clams or pork mince", quantity: 100, unit: "g" },
+      { name: "Gochugaru (Korean chili flakes)", quantity: 1.5, unit: "tbsp" },
+      { name: "Toasted sesame oil", quantity: 1, unit: "tbsp" },
+      { name: "Garlic, minced", quantity: 2, unit: "pcs" },
+      { name: "Anchovy broth", quantity: 300, unit: "ml" },
+      { name: "Egg", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "In a stone pot or saucepan, stir-fry garlic and gochugaru in sesame oil over low heat for 1 minute to release chili oil.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add clams or pork and anchovy broth, bringing everything to a vigorous boil.",
+      },
+      {
+        stepNumber: 3,
+        text: "Spoon in the soft tofu tubes in large chunks, simmer for 5 minutes, and crack a raw egg directly into the bubbling soup just before serving.",
+      },
+    ],
+    tags: ["Soup", "Spicy", "Comfort-Food", "Classic"],
+  },
+  {
+    title: "Bulgogi (Korean Marinated Beef)",
+    description:
+      "Thinly sliced tender ribeye marinated in a sweet, savory soy glaze with grated Asian pear and seared over high heat.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 30,
+    cookTime: 10,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJO9r9zDMJmmrlfwCq_5DzYw8vfQ-gE0wJnEc6jz0tmQ&s=10",
+    ingredients: [
+      {
+        name: "Beef ribeye or sirloin, thinly sliced",
+        quantity: 500,
+        unit: "g",
+      },
+      { name: "Soy sauce", quantity: 3, unit: "tbsp" },
+      { name: "Grated Asian pear or apple", quantity: 3, unit: "tbsp" },
+      { name: "Brown sugar", quantity: 1.5, unit: "tbsp" },
+      { name: "Garlic cloves, minced", quantity: 3, unit: "pcs" },
+      { name: "Toasted sesame oil", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Combine soy sauce, grated pear, sugar, garlic, and sesame oil in a bowl to make the marinade.",
+      },
+      {
+        stepNumber: 2,
+        text: "Toss the thinly sliced beef into the marinade and let rest for at least 30 minutes.",
+      },
+      {
+        stepNumber: 3,
+        text: "Sear the beef on high heat in a cast-iron skillet or grill pan in batches to caramelize without boiling in liquid.",
+      },
+    ],
+    tags: ["Beefy", "Sweet-Savory", "Classic", "Grill"],
+  },
+  {
+    title: "Kimchi Jjigae (Kimchi Stew)",
+    description:
+      "A deeply rich, savory stew prepared with well-aged fermented kimchi, fatty pork belly, tofu, and scallions.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 30,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-raihhJEzxDP4dEYPfPOaWYjfLKIjMZPS6LHDQ6ZZZA&s=10",
+    ingredients: [
+      { name: "Aged sour Kimchi, chopped", quantity: 300, unit: "g" },
+      { name: "Pork belly, sliced", quantity: 200, unit: "g" },
+      { name: "Firm tofu, sliced", quantity: 200, unit: "g" },
+      { name: "Gochugaru", quantity: 1, unit: "tbsp" },
+      { name: "Gochujang", quantity: 0.5, unit: "tbsp" },
+      { name: "Anchovy broth or water", quantity: 500, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Sear pork belly slices in a pot until the fat renders, then add chopped kimchi and sauté for 5 minutes.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add gochugaru, gochujang, and broth, bringing the stew to a boil.",
+      },
+      {
+        stepNumber: 3,
+        text: "Lower heat, simmer for 20 minutes until kimchi is tender, then lay sliced tofu on top and cook for 5 more minutes.",
+      },
+    ],
+    tags: ["Soup", "Spicy", "Porky", "Comfort-Food"],
+  },
+  {
+    title: "Japchae (Stir-Fried Glass Noodles)",
+    description:
+      "Sweet potato glass noodles stir-fried with an array of crunchy vegetables, thinly sliced beef, and seasoned with sweet soy-sesame glaze.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 25,
+    cookTime: 15,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJe3UfwrgVdhtJx7XbOsQlpltHPPpde5d8zH3p5LIng&s=10",
+    ingredients: [
+      { name: "Dangmyeon (Sweet potato noodles)", quantity: 250, unit: "g" },
+      { name: "Beef sirloin, strips", quantity: 100, unit: "g" },
+      { name: "Shiitake mushrooms, sliced", quantity: 4, unit: "pcs" },
+      { name: "Spinach", quantity: 100, unit: "g" },
+      { name: "Soy sauce", quantity: 3, unit: "tbsp" },
+      { name: "Sugar", quantity: 2, unit: "tbsp" },
+      { name: "Toasted sesame oil", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil sweet potato noodles until chewy (about 6-7 minutes), drain, and toss with a little sesame oil.",
+      },
+      {
+        stepNumber: 2,
+        text: "Separately sauté mushrooms, beef strips, carrots, onions, and blanched spinach.",
+      },
+      {
+        stepNumber: 3,
+        text: "Combine the noodles and cooked ingredients in a large bowl, pour over soy sauce and sugar glaze, and toss thoroughly.",
+      },
+    ],
+    tags: ["Celebration", "Sweet-Savory", "Traditional", "Stir-Fry"],
+  },
+  {
+    title: "Korean Fried Chicken (Yangnyeom)",
+    description:
+      "Ultra-crispy double-fried chicken pieces glazed in a sticky, sweet, and spicy garlic-gochujang sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 20,
+    cookTime: 20,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdAiZJerHWxg6qfaTdB1DhTcd1Kb3vMMHGyQBj-6o39w&s=10",
+    ingredients: [
+      { name: "Chicken wings or boneless thighs", quantity: 600, unit: "g" },
+      { name: "Potato starch or cornstarch", quantity: 100, unit: "g" },
+      { name: "Gochujang", quantity: 2, unit: "tbsp" },
+      { name: "Honey or rice syrup", quantity: 3, unit: "tbsp" },
+      { name: "Garlic, minced", quantity: 3, unit: "pcs" },
+      { name: "Soy sauce", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Season chicken with salt, pepper, and ginger, then dredge thoroughly in potato starch.",
+      },
+      {
+        stepNumber: 2,
+        text: "Deep fry the chicken at 170°C for 8 minutes, let rest on a rack, and fry a second time at 190°C for 2 minutes for extra crunch.",
+      },
+      {
+        stepNumber: 3,
+        text: "Simmer gochujang, honey, garlic, and soy sauce until sticky, then toss the hot crispy chicken in the glaze.",
+      },
+    ],
+    tags: ["Chicken", "Crispy", "Sweet-Spicy", "Street-Food"],
+  },
+  {
+    title: "Samgyeopsal (Grilled Pork Belly)",
+    description:
+      "Thick, juicy slices of unseasoned pork belly grilled at the table, wrapped in fresh lettuce with ssamjang and garlic slices.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 15,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRlKlf__Izq85O6dOGz0ENsNc3BWMto770g51RJPAE0g&s=10",
+    ingredients: [
+      { name: "Fresh pork belly strips", quantity: 500, unit: "g" },
+      { name: "Red leaf lettuce", quantity: 1, unit: "pc" },
+      { name: "Perilla leaves", quantity: 10, unit: "pcs" },
+      {
+        name: "Ssamjang (Soybean chili dipping paste)",
+        quantity: 3,
+        unit: "tbsp",
+      },
+      { name: "Garlic cloves, sliced", quantity: 4, unit: "pcs" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Heat a heavy skillet or tabletop grill until smoking hot.",
+      },
+      {
+        stepNumber: 2,
+        text: "Lay out the pork belly strips and grill until both sides are golden and crispy, cutting into bite-sized pieces with kitchen shears.",
+      },
+      {
+        stepNumber: 3,
+        text: "Wrap a piece of pork inside a lettuce leaf with ssamjang, sliced garlic, and grilled kimchi.",
+      },
+    ],
+    tags: ["Porky", "Grill", "Traditional", "Savory"],
+  },
+  {
+    title: "Haemul Pajeon (Seafood Scallion Pancake)",
+    description:
+      "A savory, crispy Korean pancake packed with bundles of fresh green scallions, squid, and shrimp, served with a tangy soy dipping sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzt3MQbUmd6YeAXVDvtbDaCy1e5wXnZb4kKYybsa8yWw&s=10",
+    ingredients: [
+      { name: "All-purpose flour", quantity: 120, unit: "g" },
+      { name: "Cornstarch", quantity: 30, unit: "g" },
+      { name: "Ice cold water", quantity: 180, unit: "ml" },
+      { name: "Green scallions (cut into lengths)", quantity: 8, unit: "pcs" },
+      { name: "Shrimp & squid rings", quantity: 150, unit: "g" },
+      { name: "Egg, beaten", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Whisk flour, cornstarch, salt, and ice-cold water together to form a light, fluid batter.",
+      },
+      {
+        stepNumber: 2,
+        text: "Heat plenty of oil in a skillet, lay down scallions parallel, pour batter over them, and press seafood on top.",
+      },
+      {
+        stepNumber: 3,
+        text: "Drizzle beaten egg across the top, flip once the bottom is golden brown and crisp, and cook the reverse side thoroughly.",
+      },
+    ],
+    tags: ["Seafood", "Crispy", "Savory", "Pastry"],
+  },
+  {
+    title: "Doenjang Jjigae (Soybean Paste Stew)",
+    description:
+      "A deeply savory, earthy Korean comfort stew made with fermented soybean paste, zucchini, tofu, and anchovy stock.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 20,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnuVkPkkSJiFzP2ceDFMk2srIMca-O7eG3q8Q71Km4Eg&s=10",
+    ingredients: [
+      {
+        name: "Doenjang (Korean fermented soybean paste)",
+        quantity: 3,
+        unit: "tbsp",
+      },
+      { name: "Anchovy broth", quantity: 500, unit: "ml" },
+      { name: "Firm tofu, cubed", quantity: 150, unit: "g" },
+      { name: "Zucchini, diced", quantity: 0.5, unit: "pc" },
+      { name: "Potato, peeled & diced", quantity: 1, unit: "pc" },
+      { name: "Green chili, sliced", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Bring anchovy stock to a boil and dissolve the doenjang paste into the broth through a fine strainer.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add diced potatoes and simmer for 8 minutes until slightly tender.",
+      },
+      {
+        stepNumber: 3,
+        text: "Toss in zucchini, green chilies, and tofu cubes, simmering for 7 more minutes before serving alongside steamed rice.",
+      },
+    ],
+    tags: ["Soup", "Traditional", "Comfort-Food", "Savory"],
+  },
+  {
+    title: "Dakgalbi (Spicy Stir-Fried Chicken)",
+    description:
+      "Juicy chicken thighs tossed with cabbage, sweet potatoes, and chewy rice cakes in a spicy, sweet gochujang chili sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 20,
+    cookTime: 15,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXse3v_y6T7zyq5JRULJeTn91LwTsR6DX9FnJnnDwJ2w&s=10",
+    ingredients: [
+      { name: "Boneless chicken thighs, cubed", quantity: 450, unit: "g" },
+      { name: "Green cabbage, chopped", quantity: 200, unit: "g" },
+      { name: "Rice cakes (Tteok)", quantity: 100, unit: "g" },
+      { name: "Korean sweet potato, sliced", quantity: 1, unit: "pc" },
+      { name: "Gochujang", quantity: 2, unit: "tbsp" },
+      { name: "Gochugaru", quantity: 1.5, unit: "tbsp" },
+      { name: "Soy sauce", quantity: 1.5, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Marinate diced chicken in gochujang, gochugaru, soy sauce, garlic, and ginger for 15 minutes.",
+      },
+      {
+        stepNumber: 2,
+        text: "Heat a wide, flat cast-iron pan with oil, and add cabbage, sweet potato slices, and rice cakes.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add the marinated chicken and stir-fry continuously on medium-high heat until sweet potato is tender and sauce is glossy.",
+      },
+    ],
+    tags: ["Chicken", "Spicy", "Stir-Fry", "Sweet-Spicy"],
+  },
+  {
+    title: "Galbi (Korean Grilled Short Ribs)",
+    description:
+      "Flanken-cut beef short ribs marinated in soy sauce, Asian pear juice, mirin, and garlic, grilled to smoky caramelized perfection.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 40,
+    cookTime: 10,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQslxCp1ehMR6fLbJGIfIkAdak69bTKpw4JQuE6qFvxeg&s=10",
+    ingredients: [
+      { name: "Beef short ribs (Flanken/LA cut)", quantity: 800, unit: "g" },
+      { name: "Soy sauce", quantity: 4, unit: "tbsp" },
+      { name: "Grated Asian pear", quantity: 4, unit: "tbsp" },
+      { name: "Brown sugar", quantity: 2, unit: "tbsp" },
+      { name: "Toasted sesame oil", quantity: 1.5, unit: "tbsp" },
+      { name: "Mirin (Rice wine)", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Rinse ribs under cold water to remove any bone dust, then pat completely dry with paper towels.",
+      },
+      {
+        stepNumber: 2,
+        text: "Blend pear, soy sauce, sugar, garlic, mirin, and sesame oil, and marinate ribs for at least 4 hours.",
+      },
+      {
+        stepNumber: 3,
+        text: "Grill short ribs over hot charcoal or high heat for 3-4 minutes per side until charred and caramelized.",
+      },
+    ],
+    tags: ["Beefy", "Grill", "Celebration", "Smoky"],
+  },
+  {
+    title: "Gimbap (Korean Seaweed Rice Rolls)",
+    description:
+      "Bite-sized seaweed rolls packed with seasoned white rice, yellow pickled radish (Danmuji), cooked spinach, carrots, and sweet egg ribbons.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 30,
+    cookTime: 10,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMSh-OBhFvEn3OoZZmiVOtlOhb0OZfaAHI-aqMn4bk8Q&s=10",
+    ingredients: [
+      { name: "Roasted Gim (Seaweed sheets)", quantity: 4, unit: "pcs" },
+      { name: "Cooked short-grain rice", quantity: 350, unit: "g" },
+      { name: "Danmuji (Yellow pickled radish)", quantity: 4, unit: "pcs" },
+      { name: "Cooked spinach & seasoned carrots", quantity: 100, unit: "g" },
+      { name: "Egg omelet strips", quantity: 2, unit: "pcs" },
+      { name: "Toasted sesame oil", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Season warm cooked rice with toasted sesame oil and a pinch of salt.",
+      },
+      {
+        stepNumber: 2,
+        text: "Lay a seaweed sheet on a bamboo mat, spread rice evenly over two-thirds of the sheet, and line up the fillings in the center.",
+      },
+      {
+        stepNumber: 3,
+        text: "Roll tightly using the mat, brush the exterior roll with sesame oil, and slice into clean bite-sized rounds.",
+      },
+    ],
+    tags: ["Street-Food", "Healthy", "Classic", "Easy"],
+  },
+  {
+    title: "Jajangmyeon (Black Bean Noodles)",
+    description:
+      "Chewy wheat noodles smothered in a rich, savory black bean sauce packed with diced pork belly and caramelized onions.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 20,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt1JCE1FTOax-oF1EG1uwMsid4DQuuCMogu98mUVRpKg&s=10",
+    ingredients: [
+      { name: "Fresh Jajangmyeon noodles", quantity: 300, unit: "g" },
+      { name: "Chunjang (Korean black bean paste)", quantity: 3, unit: "tbsp" },
+      { name: "Pork belly, diced", quantity: 150, unit: "g" },
+      { name: "Onions, diced", quantity: 2, unit: "pcs" },
+      { name: "Zucchini, diced", quantity: 0.5, unit: "pc" },
+      { name: "Cornstarch slurry", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Fry chunjang paste in a generous splash of oil for 2 minutes to remove bitterness, then set aside.",
+      },
+      {
+        stepNumber: 2,
+        text: "Stir-fry diced pork, heavy amounts of onions, and zucchini until soft, add the fried paste, water, and thicken with cornstarch slurry.",
+      },
+      {
+        stepNumber: 3,
+        text: "Boil noodles, drain, transfer to bowls, and ladle the glossy black bean sauce generously over the top.",
+      },
+    ],
+    tags: ["Comfort-Food", "Savory", "Onion-Heavy", "Porky"],
+  },
+  {
+    title: "Jjamppong (Spicy Seafood Noodle Soup)",
+    description:
+      "A fiery red noodle soup loaded with mussels, shrimp, squid, and crisp vegetables in a smoky, spicy chili-infused seafood broth.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 20,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8YlQGgk_GFgtbOWVlc6whPMCTDE8x2I4a0U_tDXgm6Q&s=10",
+    ingredients: [
+      { name: "Chinese-style wheat noodles", quantity: 300, unit: "g" },
+      { name: "Mussels & shrimp", quantity: 200, unit: "g" },
+      { name: "Squid, scored & sliced", quantity: 100, unit: "g" },
+      { name: "Gochugaru (Chili flakes)", quantity: 2, unit: "tbsp" },
+      { name: "Napa cabbage, sliced", quantity: 100, unit: "g" },
+      { name: "Chicken or dashi broth", quantity: 600, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Stir-fry garlic, ginger, and cabbage on very high heat in a wok with gochugaru to develop wok-hei smokiness.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add seafood and stock, boiling vigorously until clams/mussels open and release their natural juices.",
+      },
+      {
+        stepNumber: 3,
+        text: "Place boiled noodles into large serving bowls and pour the fiery seafood broth and toppings over.",
+      },
+    ],
+    tags: ["Seafood", "Spicy", "Smoky", "Soup"],
+  },
+  {
+    title: "Samgyetang (Ginseng Chicken Soup)",
+    description:
+      "A nourishing traditional summer soup featuring a whole Cornish game hen stuffed with sweet glutinous rice, ginseng, and jujubes.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 20,
+    cookTime: 60,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUxax9msx-AKZmGAxyXbT1qzvN3f7BaEPOwTagfJqIfQ&s=10",
+    ingredients: [
+      { name: "Small whole chicken (or Cornish hen)", quantity: 1, unit: "pc" },
+      { name: "Sweet glutinous rice, soaked", quantity: 60, unit: "g" },
+      { name: "Fresh or dried ginseng root", quantity: 1, unit: "pc" },
+      { name: "Dried jujubes (Red dates)", quantity: 3, unit: "pcs" },
+      { name: "Garlic cloves, whole", quantity: 6, unit: "pcs" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Rinse chicken thoroughly and stuff the cavity with soaked glutinous rice, garlic, jujubes, and ginseng root.",
+      },
+      {
+        stepNumber: 2,
+        text: "Cross the chicken legs and tie or secure with toothpicks to keep fillings inside.",
+      },
+      {
+        stepNumber: 3,
+        text: "Submerge in a pot of water, cover, and gently simmer for 50-60 minutes until the broth turns milky and meat falls off the bone.",
+      },
+    ],
+    tags: ["Chicken", "Healthy", "Slow-Cooked", "Soup"],
+  },
+  {
+    title: "Gamjatang (Spicy Pork Bone Stew)",
+    description:
+      "A rich, hearty stew made by slow-cooking pork neck bones with potatoes, perilla seed powder, and wild sesame greens.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 25,
+    cookTime: 90,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZj1bk5eWEzmnExJiIl27gDyeteN6LwrrkXftBqDUuXQ&s=10",
+    ingredients: [
+      { name: "Pork neck bones", quantity: 1000, unit: "g" },
+      { name: "Potatoes, peeled & halved", quantity: 3, unit: "pcs" },
+      { name: "Doenjang", quantity: 1, unit: "tbsp" },
+      { name: "Gochugaru", quantity: 2, unit: "tbsp" },
+      { name: "Wild perilla seed powder", quantity: 2, unit: "tbsp" },
+      { name: "Napa cabbage leaves", quantity: 150, unit: "g" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Parboil pork neck bones for 10 minutes, discard water, and scrub clean of impurities.",
+      },
+      {
+        stepNumber: 2,
+        text: "Simmer bones in fresh water with doenjang, gochugaru, garlic, and ginger on low heat for 75 minutes.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add potatoes, blanched cabbage, and perilla seed powder, simmering until potatoes are fork-tender and meat slides off the bones.",
+      },
+    ],
+    tags: ["Soup", "Porky", "Slow-Cooked", "Spicy"],
+  },
+  {
+    title: "Budae Jjigae (Army Stew)",
+    description:
+      "A fusion hotpot stew loaded with spam, sausages, baked beans, kimchi, tofu, and instant ramen noodles in a spicy broth.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 15,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODs0DuIHUtCzpJ2AoOpj2IliAMBn4mtCJF7xylgJxtQ&s=10",
+    ingredients: [
+      { name: "Spam, sliced", quantity: 150, unit: "g" },
+      { name: "Cocktail sausages, scored", quantity: 100, unit: "g" },
+      { name: "Aged Kimchi", quantity: 100, unit: "g" },
+      { name: "Canned baked beans", quantity: 2, unit: "tbsp" },
+      { name: "Instant ramen noodle cake", quantity: 1, unit: "pc" },
+      { name: "American cheese slice", quantity: 1, unit: "pc" },
+      { name: "Anchovy/chicken stock", quantity: 500, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Arrange spam, sausages, kimchi, tofu, and baked beans neatly in sections inside a wide, shallow pot.",
+      },
+      {
+        stepNumber: 2,
+        text: "Place a dollop of gochujang-garlic paste in the center and pour over the stock.",
+      },
+      {
+        stepNumber: 3,
+        text: "Bring to a boil, drop the ramen block and cheese slice on top, and cook until noodles reach al dente.",
+      },
+    ],
+    tags: ["Cheesy", "Spicy", "Comfort-Food", "Soup"],
+  },
+  {
+    title: "Bossam (Boiled Pork Belly Wraps)",
+    description:
+      "Succulent pork belly boiled with aromatics and soybean paste until tender, thinly sliced and served with spicy radish kimchi and salted shrimp sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 50,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc_jWhKRiYRG3R1AYuQmevyz-fNf4xglzl4tbbVDFedw&s=10",
+    ingredients: [
+      { name: "Pork belly slab", quantity: 800, unit: "g" },
+      { name: "Doenjang (Soybean paste)", quantity: 2, unit: "tbsp" },
+      {
+        name: "Instant coffee powder (for aroma/color)",
+        quantity: 0.5,
+        unit: "tsp",
+      },
+      { name: "Garlic & ginger slices", quantity: 30, unit: "g" },
+      { name: "Salted Napa cabbage leaves", quantity: 8, unit: "pcs" },
+      { name: "Saeujeot (Salted tiny shrimp)", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil a pot of water with doenjang, coffee powder, onions, garlic, and ginger.",
+      },
+      {
+        stepNumber: 2,
+        text: "Submerge the pork belly slab and simmer gently for 45-50 minutes until fork-tender.",
+      },
+      {
+        stepNumber: 3,
+        text: "Rest briefly, slice into thin strips, and serve alongside salted cabbage leaves, spicy radish salad, and saeujeot.",
+      },
+    ],
+    tags: ["Porky", "Authentic", "Traditional", "Slow-Cooked"],
+  },
+  {
+    title: "Dakgangjeong (Sweet & Crispy Chicken Bites)",
+    description:
+      "Bite-sized boneless chicken pieces extra-crisped in potato starch, coated in a sweet, sticky soy-garlic glaze with roasted peanuts.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 15,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM2MmIJBhXYehFRBrGQFh6pgpGht1ul1DyP2nuxxmRcA&s=10",
+    ingredients: [
+      { name: "Boneless chicken thighs, cubed", quantity: 400, unit: "g" },
+      { name: "Potato starch", quantity: 80, unit: "g" },
+      { name: "Soy sauce", quantity: 2, unit: "tbsp" },
+      { name: "Rice syrup or honey", quantity: 3, unit: "tbsp" },
+      { name: "Crushed roasted peanuts", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      { stepNumber: 1, text: "Coat chicken cubes evenly in potato starch." },
+      {
+        stepNumber: 2,
+        text: "Double-fry in oil until exterior shell turns light and exceptionally crunchy.",
+      },
+      {
+        stepNumber: 3,
+        text: "Simmer soy sauce, rice syrup, minced garlic, and ginger until bubbling, toss the hot chicken to coat, and sprinkle with peanuts.",
+      },
+    ],
+    tags: ["Chicken", "Crispy", "Sweet-Savory", "Street-Food"],
+  },
+  {
+    title: "Hotteok (Sweet Korean Street Pancakes)",
+    description:
+      "Crispy-chewy yeast dough stuffed with dark brown sugar, cinnamon, and chopped nuts, fried flat until the sugar melts into caramel syrup.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 45,
+    cookTime: 10,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAa2361HDJm9IXcZF9nWWy22GEfuJYO_nBbS5mcGHdSQ&s=10",
+    ingredients: [
+      { name: "All-purpose flour", quantity: 150, unit: "g" },
+      { name: "Sweet rice flour (Glutinous)", quantity: 50, unit: "g" },
+      { name: "Instant yeast", quantity: 1, unit: "tsp" },
+      { name: "Dark brown sugar", quantity: 60, unit: "g" },
+      { name: "Ground cinnamon", quantity: 0.5, unit: "tsp" },
+      { name: "Crushed walnuts or peanuts", quantity: 2, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Mix flours, yeast, warm milk, and let the sticky yeast dough rise for 40 minutes.",
+      },
+      {
+        stepNumber: 2,
+        text: "Oil hands, scoop a ball of dough, flatten, stuff the center with brown sugar and cinnamon nuts, and pinch sealed.",
+      },
+      {
+        stepNumber: 3,
+        text: "Place in an oiled skillet seam-side down, press flat with a hotteok press or spatula, and fry until both sides are golden.",
+      },
+    ],
+    tags: ["Pastry", "Sweet", "Street-Food", "Crispy"],
+  },
+  {
+    title: "Kimchi Jeon (Crispy Kimchi Pancake)",
+    description:
+      "A fast, savory pan-fried pancake packed with aged sour kimchi and a splash of kimchi brine for a tangy, crispy bite.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 5,
+    cookTime: 10,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBKBf2uqNKb40ASpDso2F901JRXyzOuU5EgBDciF3-iA&s=10",
+    ingredients: [
+      { name: "Sour Kimchi, finely chopped", quantity: 150, unit: "g" },
+      { name: "Kimchi brine/juice", quantity: 3, unit: "tbsp" },
+      { name: "All-purpose flour", quantity: 100, unit: "g" },
+      { name: "Ice water", quantity: 100, unit: "ml" },
+      { name: "Scallion, chopped", quantity: 1, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Combine chopped kimchi, scallions, kimchi juice, flour, and ice water in a bowl until just mixed.",
+      },
+      {
+        stepNumber: 2,
+        text: "Heat 2 tablespoons of oil in a non-stick pan over medium-high heat.",
+      },
+      {
+        stepNumber: 3,
+        text: "Spread batter thin and fry until edges are browned and crunchy, flip once, and crisp the reverse side.",
+      },
+    ],
+    tags: ["Easy", "Quick", "Crispy", "Savory"],
+  },
+  {
+    title: "Ojingeo Bokkeum (Spicy Stir-Fried Squid)",
+    description:
+      "Tender scored squid stir-fried on intense heat with carrots, onions, and scallions in a fiery gochujang chili paste sauce.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 8,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMRHkKn3iL9zktYw-A5Z51xZsS754ShZdEtPgifQAt_g&s=10",
+    ingredients: [
+      { name: "Fresh squid (cleaned & scored)", quantity: 350, unit: "g" },
+      { name: "Gochujang", quantity: 1.5, unit: "tbsp" },
+      { name: "Gochugaru", quantity: 1, unit: "tbsp" },
+      { name: "Soy sauce", quantity: 1, unit: "tbsp" },
+      { name: "Onion, sliced", quantity: 1, unit: "pc" },
+      { name: "Toasted sesame oil", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Cut squid into bite-sized rings or diagonal diamond-scored rectangles.",
+      },
+      {
+        stepNumber: 2,
+        text: "Mix gochujang, gochugaru, soy sauce, garlic, and sugar into a paste.",
+      },
+      {
+        stepNumber: 3,
+        text: "Stir-fry vegetables and squid over high heat for 3-4 minutes only so the squid remains tender, glazing in the sauce at the end.",
+      },
+    ],
+    tags: ["Seafood", "Spicy", "Stir-Fry", "Quick"],
+  },
+  {
+    title: "Yukgaejang (Spicy Shredded Beef Soup)",
+    description:
+      "A traditional fiery red beef soup packed with shredded brisket, bracken fern (gosari), scallions, and mung bean sprouts.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 20,
+    cookTime: 50,
+    servingsDefault: 3,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTYQXz9KDI5z5gdwDv-fXCW9vCtPtWaqBku609WlVhqw&s=10",
+    ingredients: [
+      { name: "Beef brisket", quantity: 400, unit: "g" },
+      { name: "Gosari (Fernbrake), rehydrated", quantity: 80, unit: "g" },
+      { name: "Mung bean sprouts", quantity: 100, unit: "g" },
+      { name: "Green scallions, cut long", quantity: 5, unit: "pcs" },
+      { name: "Gochugaru", quantity: 2, unit: "tbsp" },
+      { name: "Sesame oil", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil beef brisket with aromatics for 40 minutes, strain stock, and shred beef by hand along the grain.",
+      },
+      {
+        stepNumber: 2,
+        text: "Season shredded beef, gosari, and scallions with gochugaru, garlic, soy sauce, and sesame oil.",
+      },
+      {
+        stepNumber: 3,
+        text: "Return everything to the boiling beef broth and simmer for 15 minutes until vegetables are tender.",
+      },
+    ],
+    tags: ["Soup", "Beefy", "Spicy", "Traditional"],
+  },
+  {
+    title: "Korean Egg Roll (Gyeran Mari)",
+    description:
+      "A classic home side dish consisting of seasoned beaten eggs rolled into layered savory ribbons speckled with finely diced carrots and scallions.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 5,
+    cookTime: 8,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWWX1SaxHr1DDmSXWaj2gxRNaWg-54giWsqjSqB10AQQ&s=10",
+    ingredients: [
+      { name: "Large eggs", quantity: 4, unit: "pcs" },
+      { name: "Carrot, finely minced", quantity: 1, unit: "tbsp" },
+      { name: "Scallion, finely minced", quantity: 1, unit: "tbsp" },
+      { name: "Salt", quantity: 0.5, unit: "tsp" },
+      { name: "Mirin", quantity: 1, unit: "tsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Whisk eggs with minced carrots, scallions, mirin, and salt.",
+      },
+      {
+        stepNumber: 2,
+        text: "Pour a thin layer into an oiled rectangular pan over low heat; once half-set, roll one side inward.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour another layer of egg, connecting to the roll, and repeat folding until thick, then cool and slice into rounds.",
+      },
+    ],
+    tags: ["Breakfast", "Easy", "Quick", "Savory"],
+  },
+  {
+    title: "Naengmyeon (Cold Buckwheat Noodles)",
+    description:
+      "Springy, thin buckwheat noodles served in an icy, tangy beef and Dongchimi radish water broth, garnished with cucumber and boiled egg.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 5,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsagbD-u9Q4IGCg3CZgXRNR-iRBkLmnmSKvyWs__ovig&s=10",
+    ingredients: [
+      { name: "Naengmyeon buckwheat noodles", quantity: 200, unit: "g" },
+      {
+        name: "Chilled Naengmyeon broth (with slushy ice)",
+        quantity: 500,
+        unit: "ml",
+      },
+      { name: "Pickled radish slices", quantity: 4, unit: "pcs" },
+      { name: "Asian pear, sliced", quantity: 2, unit: "pcs" },
+      { name: "Hard-boiled egg", quantity: 1, unit: "pc" },
+      { name: "Korean mustard & vinegar", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil buckwheat noodles for 1-2 minutes, drain immediately, and wash vigorously in ice water to remove starch.",
+      },
+      {
+        stepNumber: 2,
+        text: "Twist noodles into a mound inside a chilled stainless-steel bowl.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour semi-frozen slushy broth over noodles and garnish with sliced pear, pickled radish, cucumber, and halved egg.",
+      },
+    ],
+    tags: ["Sour", "Fresh", "Classic", "Healthy"],
+  },
+  {
+    title: "Jangjorim (Soy-Braised Beef & Quail Eggs)",
+    description:
+      "A beloved side dish (banchan) of tender beef brisket and boiled quail eggs simmered in a sweet garlic soy sauce reduction.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 15,
+    cookTime: 35,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBXfWuYlv9xZlJCC0L3LKnFEY1hZXamgAFqRBLVA0JIA&s=10",
+    ingredients: [
+      { name: "Beef flank or brisket", quantity: 350, unit: "g" },
+      { name: "Boiled peeled quail eggs", quantity: 10, unit: "pcs" },
+      { name: "Soy sauce", quantity: 80, unit: "ml" },
+      { name: "Sugar", quantity: 2, unit: "tbsp" },
+      { name: "Garlic cloves, whole", quantity: 6, unit: "pcs" },
+      { name: "Mild green shishito peppers", quantity: 4, unit: "pcs" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Boil beef in water until tender, remove and shred into bite-sized strips.",
+      },
+      {
+        stepNumber: 2,
+        text: "Add beef broth, soy sauce, sugar, garlic, and shredded beef into a pot and bring to a simmer.",
+      },
+      {
+        stepNumber: 3,
+        text: "Add quail eggs and shishito peppers, simmering for 15 minutes until the eggs take on a rich brown glaze.",
+      },
+    ],
+    tags: ["Beefy", "Sweet-Savory", "Traditional", "Slow-Cooked"],
+  },
+  {
+    title: "Dubu Jorim (Spicy Braised Tofu)",
+    description:
+      "Pan-fried golden tofu triangles braised slowly in a savory, spicy soy sauce glaze loaded with garlic and scallions.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 10,
+    cookTime: 12,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFXTlvqtJZ-zeSCpB-Y5B2OONk7f0G4aSEAES8__iZlA&s=10",
+    ingredients: [
+      { name: "Firm tofu, sliced into rectangles", quantity: 300, unit: "g" },
+      { name: "Soy sauce", quantity: 2, unit: "tbsp" },
+      { name: "Gochugaru", quantity: 1, unit: "tbsp" },
+      { name: "Garlic, minced", quantity: 1, unit: "tbsp" },
+      { name: "Toasted sesame oil", quantity: 1, unit: "tsp" },
+      { name: "Water", quantity: 60, unit: "ml" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Pan-fry sliced tofu in oil over medium heat until both sides turn golden and slightly crisp.",
+      },
+      {
+        stepNumber: 2,
+        text: "Mix soy sauce, gochugaru, garlic, sugar, sesame oil, and water in a small bowl.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pour the sauce over the tofu in the skillet, reduce heat, and simmer until the tofu absorbs the glaze.",
+      },
+    ],
+    tags: ["Vegetarian", "Spicy", "Easy", "Quick"],
+  },
+  {
+    title: "Kongguksu (Cold Soy Milk Noodle Soup)",
+    description:
+      "A pure, nutty, and creamy summer noodle dish made with fresh blended soybean milk and wheat noodles, seasoned simply with salt.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 20,
+    cookTime: 10,
+    servingsDefault: 2,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsscfgUff12py4hhCDQ20TSJ63y96SEf622taGXDRtmQ&s=10",
+    ingredients: [
+      {
+        name: "Dried white soybeans, soaked & boiled",
+        quantity: 200,
+        unit: "g",
+      },
+      { name: "Somyeon (Thin wheat noodles)", quantity: 180, unit: "g" },
+      { name: "Toasted sesame seeds", quantity: 2, unit: "tbsp" },
+      { name: "Cold water", quantity: 400, unit: "ml" },
+      { name: "Cucumber, julienned", quantity: 0.5, unit: "pc" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Blend boiled soybeans with cold water and toasted sesame seeds into an ultra-smooth, creamy milk, then chill thoroughly.",
+      },
+      {
+        stepNumber: 2,
+        text: "Boil somyeon noodles until chewy, then rinse completely in ice water.",
+      },
+      {
+        stepNumber: 3,
+        text: "Place noodles into bowls, pour the chilled soy broth over, season with a pinch of salt, and top with cucumber slices.",
+      },
+    ],
+    tags: ["Vegetarian", "Creamy", "Healthy", "Fresh"],
+  },
+  {
+    title: "Mandu (Korean Steamed/Pan-Fried Dumplings)",
+    description:
+      "Plump dumplings stuffed with a savory filling of minced pork, tofu, leeks, and glass noodles, pan-fried to crisp bottoms.",
+    author: "SatioFlix Chef",
+    countryOfOrigin: "South Korea",
+    prepTime: 30,
+    cookTime: 10,
+    servingsDefault: 4,
+    coverImage:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfu2YjJwP7sJ1tAH-SpEtPz6PSHQzEYnRKArTS9cnWHg&s=10",
+    ingredients: [
+      { name: "Mandu dumpling wrappers", quantity: 20, unit: "pcs" },
+      { name: "Ground pork", quantity: 250, unit: "g" },
+      { name: "Firm tofu (squeezed dry & crumbled)", quantity: 100, unit: "g" },
+      {
+        name: "Dangmyeon (glass noodles, boiled & minced)",
+        quantity: 50,
+        unit: "g",
+      },
+      { name: "Garlic chives or scallions, chopped", quantity: 50, unit: "g" },
+      { name: "Sesame oil & soy sauce", quantity: 1, unit: "tbsp" },
+    ],
+    instructions: [
+      {
+        stepNumber: 1,
+        text: "Mix minced pork, squeezed tofu, minced glass noodles, chives, soy sauce, and sesame oil into a cohesive filling.",
+      },
+      {
+        stepNumber: 2,
+        text: "Place a spoonful of filling into each wrapper, moisten the edges with water, fold, and pleat tightly.",
+      },
+      {
+        stepNumber: 3,
+        text: "Pan-fry dumplings in oil until bottoms are golden, add a splash of water, cover immediately to steam for 4 minutes.",
+      },
+    ],
+    tags: ["Porky", "Crispy", "Savory", "Classic"],
+  },
+
+
+
+
+  
+
+  // Japan
   {
     title: "Classic Pork Ramen",
     description:
