@@ -1,5 +1,5 @@
 // src/components/ReelsPage.tsx
-import { useEffect, useState, useRef, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo, memo } from 'react';
 import { api } from '../services/api';
 import type { Video } from '../services/api';
 import { Loader2, AlertCircle, RefreshCw, ChefHat, Search, X } from 'lucide-react';
@@ -21,7 +21,8 @@ const getOptimizedThumbnail = (video: Video): string => {
   return `https://wsrv.nl/?url=${encodeURIComponent(rawUrl)}&w=480&q=75&output=webp`;
 };
 
-function VideoReel({
+// ⚡ Memoized Video Reel to prevent unnecessary DOM re-renders during scrolling
+const VideoReel = memo(function VideoReel({
   video,
   isActive,
   index,
@@ -56,7 +57,7 @@ function VideoReel({
 
   const embedUrl = useMemo(() => {
     if (!isActive) return '';
-    return `https://www.youtube-nocookie.com/embed/${video.externalVideoId}?autoplay=1&mute=0&loop=1&playlist=${video.externalVideoId}&controls=1&modestbranding=1&rel=0&iv_load_policy=3&fs=0`;
+    return `https://www.youtube-nocookie.com/embed/${video.externalVideoId}?autoplay=1&mute=0&loop=1&playlist=${video.externalVideoId}&controls=1&modestbranding=1&rel=0&playsinline=1&enablejsapi=0`;
   }, [isActive, video.externalVideoId]);
 
   return (
@@ -79,7 +80,7 @@ function VideoReel({
               alt={video.title || "thumbnail"}
               loading="lazy"
               decoding="async"
-              className="w-full h-full object-cover blur-sm opacity-50 transition-opacity duration-300"
+              className="w-full h-full object-cover blur-xs opacity-60 transition-opacity duration-300"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <Loader2 className="w-8 h-8 animate-spin text-zinc-600" />
@@ -102,7 +103,7 @@ function VideoReel({
       </div>
     </div>
   );
-}
+});
 
 export default function ReelsPage() {
   const [allVideos, setAllVideos] = useState<Video[]>([]);
