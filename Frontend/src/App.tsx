@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useSearchParams, useLocation } 
 import { ThemeProvider } from './context/ThemeContext';
 import Sidebar from './components/layout/Sidebar';
 import RecipeCard from './components/RecipeCard';
+import SurvivalHub from './components/SurvivalHub';
 import { api } from './services/api';
 import type { Recipe } from './services/api';
 import { Loader2, Heart } from 'lucide-react';
@@ -305,6 +306,7 @@ function AppContent() {
             <Route path="/" element={<Home />} />
             <Route path="/reels" element={<ReelsPage />} />
             <Route path="/create" element={<CreateRecipePage />} />
+            <Route path="/survival" element={<SurvivalHub />} />
           </Routes>
         </Suspense>
       </main>
