@@ -1,6 +1,6 @@
 // src/components/layout/Sidebar.tsx
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
-import { ChefHat, Film, PlusCircle, Globe, Moon, Sun } from 'lucide-react';
+import { ChefHat, Film, PlusCircle, Globe, Moon, Sun, LifeBuoy } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const CUISINES = [
@@ -32,6 +32,7 @@ export default function Sidebar() {
   const isHomeActive = location.pathname === '/' && !activeCountry;
   const isReelsActive = location.pathname === '/reels';
   const isCreateActive = location.pathname === '/create';
+  const isSurvivalActive = location.pathname === '/survival';
 
   const handleCuisineClick = (countryName: string) => {
     navigate(`/?country=${countryName}`);
@@ -120,6 +121,17 @@ export default function Sidebar() {
           >
             <PlusCircle className="w-5 h-5" />
             <span>Add Recipe</span>
+          </button>
+
+          <button
+            onClick={() => navigate('/survival')}
+            className={`flex flex-col md:flex-row items-center gap-1 md:gap-3 px-3 md:px-4 py-1 md:py-2.5 rounded-xl text-[10px] md:text-sm font-bold transition-all duration-300 cursor-pointer w-full md:w-auto ${isSurvivalActive
+                ? 'text-rose-500 md:bg-rose-500 md:text-white md:shadow-lg md:shadow-rose-500/20'
+                : 'text-zinc-400 dark:text-zinc-500 md:text-zinc-500 md:dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800/60'
+              }`}
+          >
+            <LifeBuoy className="w-5 h-5" />
+            <span>Survival</span>
           </button>
 
           {/* --- Divider for Desktop Layout --- */}

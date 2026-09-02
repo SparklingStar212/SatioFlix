@@ -5,18 +5,19 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db";
 import videoRoutes from "./routes/videoRoutes";
 import recipeRoutes from "./routes/recipeRoutes";
-import userRoutes from "./routes/userRoutes"; // 👈 1. Import user routes
+import userRoutes from "./routes/userRoutes";
+import survivalRoutes from "./routes/survival"; // 👈 1. Import your new survival routes
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT; // Fallback to 5000 if PORT isn't set
 
 connectDB();
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || process.env.VITE_FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || process.env.VITE_FRONTEND_URL || "*",
     credentials: true,
   }),
 );
@@ -25,7 +26,8 @@ app.use(express.json());
 // Register API Routes
 app.use("/api/videos", videoRoutes);
 app.use("/api/recipes", recipeRoutes);
-app.use("/api/users", userRoutes); // 👈 2. Mount user routes!
+app.use("/api/users", userRoutes);
+app.use("/api/survival", survivalRoutes); // 👈 2. Mount your survival routes!
 
 app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Welcome to the SatioFlix API! 🍽️" });

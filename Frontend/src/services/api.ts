@@ -49,3 +49,35 @@ export interface Video {
   createdAt: string;
   countryOfOrigin?: string;
 }
+
+
+export interface SurvivalRequest {
+  mission: 'emergency' | 'planner' | 'survivor';
+  country: string;
+  currency: string;
+  budget: number;
+  days: number; 
+  pantry: string[]; 
+  energyLevel: 1 | 2 | 3 | 4 | 5; 
+}
+
+export interface GroceryItem {
+  name: string;
+  estimatedCost: number;
+}
+
+export interface MealPlan {
+  day: number; 
+  mealTitle: string; 
+  matchedVideoId?: string; // This will map to your existing Video._id!
+  totalEstimatedCost: number;
+  instructions: string[]; 
+}
+
+export interface SurvivalPlanResponse {
+  _id?: string; // For when we pull a cached plan from MongoDB
+  totalBudgetUsed: number;
+  currency: string;
+  groceryList: GroceryItem[];
+  meals: MealPlan[];
+}

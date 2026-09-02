@@ -8,6 +8,7 @@ import { api } from './services/api';
 import type { Recipe } from './services/api';
 import { Loader2, Heart } from 'lucide-react';
 import InstallPrompt from './components/layout/InstallPrompt';
+import { SurvivalProvider } from './context/SurvivalContext';
 
 // ⚡ Code-splitting heavy routes and modals so initial page load is lightweight
 const RecipeDrawer = lazy(() => import('./components/RecipeDrawer'));
@@ -314,9 +315,11 @@ function AppContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <Router>
-        <AppContent />
-      </Router>
+      <SurvivalProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </SurvivalProvider>
     </ThemeProvider>
   );
 }
