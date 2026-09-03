@@ -21,27 +21,38 @@ async function generateMealPlanWithFallback(prompt: string) {
   for (const modelName of MODEL_CANDIDATES) {
     try {
       console.log(`🧠 Attempting AI Generation with: ${modelName}...`);
-      const model = aiClient.getGenerativeModel({ model: modelName, generationConfig });
+      const model = aiClient.getGenerativeModel({
+        model: modelName,
+        generationConfig,
+      });
       const result = await model.generateContent(prompt);
-      
+
       const text = result.response.text();
       if (text) {
         console.log(`✅ Success using model: ${modelName}`);
         return JSON.parse(text);
       }
     } catch (error: any) {
-      console.warn(`⚠️ Model ${modelName} failed or throttled. Trying next candidate...`, error.message || error);
+      console.warn(
+        `⚠️ Model ${modelName} failed or throttled. Trying next candidate...`,
+        error.message || error,
+      );
     }
   }
 
   // If the loop finishes without returning, every single model failed
-  console.error("❌ All model candidates in the fallback array failed simultaneously.");
-  throw new Error("Critical: AI Generation failed across all configured Gemini models.");
+  console.error(
+    "❌ All model candidates in the fallback array failed simultaneously.",
+  );
+  throw new Error(
+    "Critical: AI Generation failed across all configured Gemini models.",
+  );
 }
 
 router.post("/generate", async (req: Request, res: Response): Promise<any> => {
   try {
-    const { mission, country, currency, budget, days, pantry, energyLevel } = req.body;
+    const { mission, country, currency, budget, days, pantry, energyLevel } =
+      req.body;
     const sortedPantry = [...pantry].sort();
 
     // 1. THE CACHE INTERCEPT
@@ -118,9 +129,9 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
     return res.status(200).json(savedPlan);
   } catch (error: any) {
     console.error("Survival Engine Error:", error);
-    return res.status(500).json({ 
-      error: "Failed to generate survival plan.", 
-      details: error.message || String(error) 
+    return res.status(500).json({
+      error: "Failed to generate survival plan.",
+      details: error.message || String(error),
     });
   }
 });
