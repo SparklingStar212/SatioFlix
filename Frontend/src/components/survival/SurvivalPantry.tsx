@@ -1,7 +1,7 @@
 // src/components/survival/SurvivalPantry.tsx
 import { useState, useMemo } from 'react';
 import { useSurvival } from '../../context/SurvivalContext';
-import { Search, ShoppingBag, ArrowLeft, Zap, Check } from 'lucide-react';
+import { Search, ShoppingBag, ArrowLeft, Zap, Check, Plus } from 'lucide-react';
 
 interface PantryCategory {
   category: string;
@@ -48,6 +48,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
   const { state, updateState } = useSurvival();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [customInput, setCustomInput] = useState('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const toggleIngredient = (item: string) => {
@@ -59,13 +60,27 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
       updated = [...state.pantry, item];
     }
     updateState({ pantry: updated });
-    if (errorMsg) setErrorMsg(null); // Clear error once they start selecting items
+    if (errorMsg) setErrorMsg(null);
+  };
+
+  const handleAddCustomItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = customInput.trim();
+    if (!trimmed) return;
+
+    // Capitalize nicely and prevent duplicates
+    const formatted = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+    if (!state.pantry.includes(formatted)) {
+      updateState({ pantry: [...state.pantry, formatted] });
+    }
+    setCustomInput('');
+    if (errorMsg) setErrorMsg(null);
   };
 
   const handleGenerate = () => {
     // Guardrail: If budget is 0 AND pantry is completely empty, block generation
     if (state.budget === 0 && (!state.pantry || state.pantry.length === 0)) {
-      setErrorMsg("⚠️ Bro, you have zero cash and zero pantry items! Even faith needs a pinch of salt. Please select at least one pantry staple or go back and set a budget.");
+      setErrorMsg("⚠️ Bro, you have zero cash and zero pantry items! Even faith needs a pinch of salt. Please select or add at least one pantry item or go back and set a budget.");
       return;
     }
 
@@ -106,8 +121,26 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
 
       <div>
         <h2 className="text-xl font-black text-zinc-900 dark:text-white">What's Already in Your Kitchen?</h2>
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">Tap items you already have so the AI subtracts them from your shopping list.</p>
+        <p className="text-xs text-zinc-500 dark:text-zinc-400">Tap preset items or type your own unique foodstuffs below.</p>
       </div>
+
+      {/* ➕ Custom Ingredient Input Form */}
+      <form onSubmit={handleAddCustomItem} className="flex gap-2">
+        <input
+          type="text"
+          value={customInput}
+          onChange={(e) => setCustomInput(e.target.value)}
+          placeholder="Add custom food item (e.g. Suya spice, Ayamase paste)..."
+          className="flex-1 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl px-4 py-2.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-rose-500 transition-colors"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 cursor-pointer shrink-0 shadow-md shadow-rose-500/20"
+        >
+          <Plus className="w-3.5 h-3.5" />
+          <span>Add</span>
+        </button>
+      </form>
 
       {/* 🔍 Sticky Search Bar */}
       <div className="sticky top-0 z-20 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md py-2">
@@ -117,7 +150,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search ingredients (e.g. Rice, Eggs, Pasta)..."
+            placeholder="Search preset ingredients (e.g. Rice, Eggs, Pasta)..."
             className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl pl-11 pr-4 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-rose-500 transition-colors"
           />
         </div>
@@ -125,6 +158,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
         {/* 🏷️ Horizontal Category Chips */}
         <div className="flex gap-2 overflow-x-auto pt-3 pb-1 scrollbar-none">
           <button
+            type="button"
             onClick={() => setSelectedCategory('All')}
             className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${selectedCategory === 'All'
                 ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
@@ -135,6 +169,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
           </button>
           {PANTRY_DATABASE.map((cat) => (
             <button
+              type="button"
               key={cat.category}
               onClick={() => setSelectedCategory(cat.category)}
               className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${selectedCategory === cat.category
@@ -149,10 +184,10 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
       </div>
 
       {/* 🧺 Tappable Ingredient Chips Grid */}
-      <div className="space-y-6 max-h-64 overflow-y-auto pr-1">
+      <div className="space-y-6 max-h-56 overflow-y-auto pr-1">
         {filteredCategories.length === 0 ? (
-          <div className="text-center py-8 text-xs text-zinc-400">
-            No ingredients found matching "{searchQuery}"
+          <div className="text-center py-6 text-xs text-zinc-400">
+            No preset ingredients found matching "{searchQuery}"
           </div>
         ) : (
           filteredCategories.map((cat) => (
@@ -163,6 +198,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
                   const isSelected = state.pantry.includes(item);
                   return (
                     <button
+                      type="button"
                       key={item}
                       onClick={() => toggleIngredient(item)}
                       className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${isSelected
@@ -191,6 +227,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
         <div className="grid grid-cols-1 gap-2">
           {ENERGY_LEVELS.map((el) => (
             <button
+              type="button"
               key={el.level}
               onClick={() => updateState({ energyLevel: el.level as any })}
               className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${state.energyLevel === el.level
@@ -217,6 +254,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
 
       {/* Generate Button */}
       <button
+        type="button"
         onClick={handleGenerate}
         className="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white font-black text-sm rounded-xl transition-all shadow-xl shadow-rose-500/30 cursor-pointer flex items-center justify-center gap-2"
       >

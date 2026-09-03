@@ -115,7 +115,7 @@ export default function SurvivalResults({ plan, onReset }: SurvivalResultsProps)
 
       {/* TAB 1: MEAL TIMETABLE */}
       {activeTab === 'meals' && (
-        <div className="space-y-6 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin">
+        <div className="space-y-6 max-h-125 overflow-y-auto pr-1 scrollbar-thin">
           {plan.meals.map((dayPlan, dayIdx) => (
             <div key={dayIdx} className="space-y-3">
               {/* Day Header Badge */}
@@ -136,7 +136,7 @@ export default function SurvivalResults({ plan, onReset }: SurvivalResultsProps)
                       key={mealIdx}
                       className="p-4 bg-zinc-50 dark:bg-zinc-800/40 rounded-xl border border-zinc-200 dark:border-zinc-700/60 flex flex-col sm:flex-row gap-4 justify-between relative overflow-hidden"
                     >
-                      {matchedVideo && <div className="absolute top-0 right-0 w-16 h-16 bg-rose-500/5 rounded-bl-full -z-0" />}
+                      {matchedVideo && <div className="absolute top-0 right-0 w-16 h-16 bg-rose-500/5 rounded-bl-full z-0" />}
 
                       <div className="z-10 flex-1">
                         <div className="flex items-center gap-2 mb-2">
@@ -180,7 +180,7 @@ export default function SurvivalResults({ plan, onReset }: SurvivalResultsProps)
                                 className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity"
                               />
                             ) : (
-                              <div className="absolute inset-0 bg-gradient-to-br from-rose-900 to-zinc-900 opacity-80" />
+                              <div className="absolute inset-0 bg-linear-to-br from-rose-900 to-zinc-900 opacity-80" />
                             )}
                             <PlaySquare className="w-8 h-8 text-white relative z-10 drop-shadow-lg group-hover:scale-110 transition-transform" />
                           </a>
