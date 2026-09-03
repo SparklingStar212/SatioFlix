@@ -58,6 +58,7 @@ export interface SurvivalRequest {
   days: number;
   pantry: string[];
   energyLevel: 1 | 2 | 3 | 4 | 5;
+  mealsPerDay?: number;
 }
 
 export interface GroceryItem {

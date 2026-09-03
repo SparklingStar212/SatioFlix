@@ -50,8 +50,17 @@ async function generateMealPlanWithFallback(prompt: string) {
 
 router.post("/generate", async (req: Request, res: Response): Promise<any> => {
   try {
-    const { mission, country, currency, budget, days, pantry, energyLevel } =
-      req.body;
+    // Inside router.post('/generate', ...)
+    const {
+      mission,
+      country,
+      currency,
+      budget,
+      days,
+      pantry,
+      energyLevel,
+      mealsPerDay = 2,
+    } = req.body;
     const sortedPantry = [...pantry].sort();
 
     // 1. THE CACHE INTERCEPT
@@ -83,21 +92,24 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
 
     // Upgraded system prompt incorporating real student variety, fresh daily meals, and zero ghost leftovers
     const systemPrompt = `
-      You are an expert student budget survival chef for a student in ${country}.
+      You are an expert student budget meal planner for a student in ${country}.
       Output strictly valid JSON. No markdown, no conversational text.
 
       PARAMETERS:
       - Mission: ${mission}
       - Budget: ${budget} ${currency}
       - Duration: ${days} days
-      - Pantry (Available items): ${sortedPantry.length > 0 ? sortedPantry.join(", ") : "EMPTY (TRUE ZERO RESOURCES)"}
-      - Effort Level (1-5): ${energyConstraints[energyLevel]}
+      - Meals Per Day: ${mealsPerDay} (User specified frequency)
+      - Pantry (Available items): ${sortedPantry.length > 0 ? sortedPantry.join(", ") : "EMPTY (ZERO RESOURCES)"}
+      - Effort Level: ${energyConstraints[energyLevel]}
 
-      CRITICAL ZERO-RESOURCE RULES:
-      1. TRUE ZERO SURVIVAL: If both Budget is 0 AND Pantry is EMPTY, the student has literally nothing. Provide an emergency survival schedule focusing on hyper-cheap campus hacks, leveraging shared hostel resources, drinking garri with water/sugar if accessible, or creative fasting/hydration routines combined with ultra-low-cost survival strategies.
-      2. GROCERY LIST: If budget is 0, groceryList must be [].
-      3. REALISTIC FREQUENCY: 1 to 2 meals per day maximum.
-      4. STRICT VARIETY & NO GHOST LEFTOVERS.
+      CRITICAL STRUCTURAL RULES:
+      1. EXACT MEAL FREQUENCY: For EVERY single day in the 'meals' array, the 'dailyMeals' array MUST contain exactly ${mealsPerDay} meal slot(s). 
+         - If mealsPerDay is 1, use slot: "Daily Meal".
+         - If mealsPerDay is 2, use slots: "Lunch", "Dinner".
+         - If mealsPerDay is 3, use slots: "Breakfast", "Lunch", "Dinner".
+      2. PANTRY STRETCHING: Creatively divide and portion available items across these slots without repeating identical dishes back-to-back.
+      3. ZERO-BUDGET: If budget is 0, groceryList must be [].
 
       EXPECTED JSON SCHEMA:
       {
@@ -108,7 +120,7 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
           "day": Number,
           "dailyMeals": [
             {
-              "slot": "Lunch" | "Dinner",
+              "slot": "String (e.g. Lunch / Dinner)",
               "mealTitle": "String",
               "estimatedCost": Number,
               "instructions": ["Step 1", "Step 2"]

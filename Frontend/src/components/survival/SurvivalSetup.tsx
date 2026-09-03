@@ -197,6 +197,29 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
         />
       </div>
 
+      {/* 4. Meals Per Day Selector */}
+      <div className="space-y-2">
+        <label className="flex items-center gap-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
+          <Calendar className="w-4 h-4 text-rose-500" />
+          <span>Meals Per Day (1 to 3)</span>
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          {[1, 2, 3].map((num) => (
+            <button
+              type="button"
+              key={num}
+              onClick={() => updateState({ mealsPerDay: num as any })}
+              className={`py-3 rounded-xl text-xs font-bold transition-all cursor-pointer border ${(state.mealsPerDay || 2) === num
+                  ? 'bg-rose-500 text-white border-rose-500 shadow-md shadow-rose-500/20'
+                  : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300'
+                }`}
+            >
+              {num} {num === 1 ? 'Meal' : 'Meals'} / Day
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* 3. Duration (Days) Input */}
       <div className="space-y-2">
         <label className="flex items-center gap-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
