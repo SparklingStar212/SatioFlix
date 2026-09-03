@@ -9,9 +9,11 @@ const aiClient = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 // --- DYNAMIC MODEL CANDIDATES FALLBACK LOOP ---
 const MODEL_CANDIDATES = [
-  "gemini-3.7-flash", // Latest high-speed flash generation
-  "gemini-3.5-flash", // Rock-solid agentic flash model
-  "gemini-2.5-pro", // Reliable deep reasoning fallback
+  "gemini-3.7-flash", 
+  "gemini-3.5-flash", 
+  "gemini-1.5-flash",
+  "gemini-1.5-pro",
+  "gemini-2.5-flash",
 ];
 
 async function generateMealPlanWithFallback(prompt: string) {
