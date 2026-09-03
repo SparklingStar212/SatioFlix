@@ -48,7 +48,7 @@ export default function SurvivalResults({ plan, onReset }: SurvivalResultsProps)
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const res = await api.get<Video[]>('/videos');
+        const res = await api.get<Video[]>('/api/videos');
         setMatchingVideos(res.data);
       } catch (err) {
         console.error("Failed to fetch videos for reel sync:", err);

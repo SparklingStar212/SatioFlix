@@ -8,55 +8,46 @@ const router = Router();
 
 const aiClient = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
-// --- 3-TIER MULTI-MODEL WATERFALL FALLBACK ---
 async function generateMealPlanWithFallback(prompt: string) {
   const generationConfig = { responseMimeType: "application/json" };
 
-  // Tier 1: The fastest, cutting-edge default
+  // Tier 1: Primary fast model
   try {
-    console.log("🧠 Tier 1 Attempt: Gemini 3.5 Flash...");
+    console.log("🧠 Tier 1 Attempt: Gemini 1.5 Flash...");
     const model = aiClient.getGenerativeModel({
-      model: "gemini-3.5-flash",
+      model: "gemini-1.5-flash",
       generationConfig,
     });
     const result = await model.generateContent(prompt);
     return JSON.parse(result.response.text());
   } catch (tier1Error) {
-    console.warn(
-      "⚠️ Tier 1 (3.5 Flash) failed. Cascading to Tier 2...",
-      tier1Error,
-    );
+    console.warn("⚠️ Tier 1 failed. Cascading to Tier 2...", tier1Error);
   }
 
-  // Tier 2: The stable workhorse fallback
+  // Tier 2: Backup fast model / higher quota pool
   try {
-    console.log("🧠 Tier 2 Attempt: Gemini 2.5 Flash...");
+    console.log("🧠 Tier 2 Attempt: Gemini 1.5 Flash 8B / Secondary...");
     const model = aiClient.getGenerativeModel({
-      model: "gemini-2.5-flash",
+      model: "gemini-1.5-flash-8b",
       generationConfig,
     });
     const result = await model.generateContent(prompt);
     return JSON.parse(result.response.text());
   } catch (tier2Error) {
-    console.warn(
-      "⚠️ Tier 2 (2.5 Flash) failed. Cascading to Tier 3 (Pro)...",
-      tier2Error,
-    );
+    console.warn("⚠️ Tier 2 failed. Cascading to Tier 3 (Pro)...", tier2Error);
   }
 
-  // Tier 3: The heavy-duty reasoning fallback
+  // Tier 3: Heavy-duty reasoning fallback
   try {
-    console.log("🧠 Tier 3 Attempt: Gemini 3.1 Pro...");
+    console.log("🧠 Tier 3 Attempt: Gemini 1.5 Pro...");
     const model = aiClient.getGenerativeModel({
-      model: "3.1-pro-preview",
+      model: "gemini-1.5-pro",
       generationConfig,
     });
     const result = await model.generateContent(prompt);
     return JSON.parse(result.response.text());
   } catch (tier3Error) {
-    console.error(
-      "❌ All 3 AI tiers (3.5 Flash, 2.5 Flash, 3.1 Pro) failed simultaneously.",
-    );
+    console.error("❌ All AI tiers failed simultaneously.");
     throw new Error(
       "Critical: AI Generation completely failed across all fallback models.",
     );
