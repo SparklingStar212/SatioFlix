@@ -1,21 +1,75 @@
-// src/routes/survival.ts (or wherever your routes/services live)
+// src/routes/survival.ts
 import { Request, Response, Router } from "express";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Video } from "../models/Video";
-import SurvivalPlan from "../models/SurvivalPlan"; // You'll create this Mongoose model next
-// import { aiClient } from '../config/ai'; // Assuming your AI setup is in your config folder
+import SurvivalPlan from "../models/SurvivalPlan";
 
 const router = Router();
 
-router.post("/generate", async (req: Request, res: Response) => {
+const aiClient = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+
+// --- 3-TIER MULTI-MODEL WATERFALL FALLBACK ---
+async function generateMealPlanWithFallback(prompt: string) {
+  const generationConfig = { responseMimeType: "application/json" };
+
+  // Tier 1: The fastest, cutting-edge default
   try {
-    // 1. Cast the request body to our strict interface from Step 1
+    console.log("🧠 Tier 1 Attempt: Gemini 3.5 Flash...");
+    const model = aiClient.getGenerativeModel({
+      model: "gemini-3.5-flash",
+      generationConfig,
+    });
+    const result = await model.generateContent(prompt);
+    return JSON.parse(result.response.text());
+  } catch (tier1Error) {
+    console.warn(
+      "⚠️ Tier 1 (3.5 Flash) failed. Cascading to Tier 2...",
+      tier1Error,
+    );
+  }
+
+  // Tier 2: The stable workhorse fallback
+  try {
+    console.log("🧠 Tier 2 Attempt: Gemini 2.5 Flash...");
+    const model = aiClient.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig,
+    });
+    const result = await model.generateContent(prompt);
+    return JSON.parse(result.response.text());
+  } catch (tier2Error) {
+    console.warn(
+      "⚠️ Tier 2 (2.5 Flash) failed. Cascading to Tier 3 (Pro)...",
+      tier2Error,
+    );
+  }
+
+  // Tier 3: The heavy-duty reasoning fallback
+  try {
+    console.log("🧠 Tier 3 Attempt: Gemini 3.1 Pro...");
+    const model = aiClient.getGenerativeModel({
+      model: "3.1-pro-preview",
+      generationConfig,
+    });
+    const result = await model.generateContent(prompt);
+    return JSON.parse(result.response.text());
+  } catch (tier3Error) {
+    console.error(
+      "❌ All 3 AI tiers (3.5 Flash, 2.5 Flash, 3.1 Pro) failed simultaneously.",
+    );
+    throw new Error(
+      "Critical: AI Generation completely failed across all fallback models.",
+    );
+  }
+}
+
+router.post("/generate", async (req: Request, res: Response): Promise<any> => {
+  try {
     const { mission, country, currency, budget, days, pantry, energyLevel } =
       req.body;
-
-    // 2. THE CACHE INTERCEPT (Step 3)
-    // Sort pantry alphabetically so ["Eggs", "Rice"] matches ["Rice", "Eggs"]
     const sortedPantry = [...pantry].sort();
 
+    // 1. THE CACHE INTERCEPT
     const cachedPlan = await SurvivalPlan.findOne({
       mission,
       country,
@@ -23,18 +77,16 @@ router.post("/generate", async (req: Request, res: Response) => {
       days,
       energyLevel,
       pantry: sortedPantry,
-    }).lean(); // .lean() for maximum performance
+    }).lean();
 
     if (cachedPlan) {
-      // Boom. $0.00 cost, instant response.
+      console.log("⚡ Serving from MongoDB Cache");
       return res.status(200).json(cachedPlan);
     }
 
-    // 3. CACHE MISS: Prepare for AI Generation
+    // 2. CACHE MISS: Prepare for AI Generation
     const existingVideos = await Video.find({}).select("title -_id").lean();
-    const existingTitles = existingVideos
-      .map((v) => (v as any).title)
-      .join(", ");
+    const existingTitles = existingVideos.map((v: any) => v.title).join(", ");
 
     const energyConstraints: Record<number, string> = {
       1: "Zero cooking. Require raw, soaked, instant, or microwave prep only.",
@@ -44,7 +96,6 @@ router.post("/generate", async (req: Request, res: Response) => {
       5: "Full cooking. Time and effort are not constraints.",
     };
 
-    // 4. The Master System Prompt
     const systemPrompt = `
       You are a realistic budget meal planner for a student in ${country}.
       Output strictly valid JSON. No markdown, no conversational text.
@@ -75,29 +126,10 @@ router.post("/generate", async (req: Request, res: Response) => {
       }
     `;
 
-    // 5. Call your AI Config (Implementation depends on your AI provider in /config)
-    /*
-      const response = await aiClient.generate({ prompt: systemPrompt });
-      const generatedData = JSON.parse(response.text);
-    */
-    // 5. Call your AI Config (Temporary Mock Data for Deployment Testing)
-    const generatedData = {
-      totalBudgetUsed: budget * 0.95,
-      currency: currency,
-      groceryList: [
-        { name: "Bulk Carb (Rice/Pasta)", estimatedCost: budget * 0.4 },
-        { name: "Protein (Eggs/Beans)", estimatedCost: budget * 0.3 },
-        { name: "Vegetables & Oil", estimatedCost: budget * 0.25 },
-      ],
-      meals: Array.from({ length: days }).map((_, i) => ({
-        day: i + 1,
-        mealTitle: "Test Survival Meal",
-        totalEstimatedCost: Math.floor((budget * 0.95) / days),
-        instructions: ["Prep ingredients", "Cook meal", "Serve hot"],
-      })),
-    };
+    // 3. CALL MULTI-TIER AI ENGINE
+    const generatedData = await generateMealPlanWithFallback(systemPrompt);
 
-    // 6. SAVE TO GLOBAL POOL (Step 3)
+    // 4. SAVE TO GLOBAL POOL
     const savedPlan = await SurvivalPlan.create({
       mission,
       country,
@@ -105,13 +137,23 @@ router.post("/generate", async (req: Request, res: Response) => {
       days,
       energyLevel,
       pantry: sortedPantry,
-      ...generatedData, // Spreads the AI JSON (groceryList, meals, etc.)
+      ...generatedData,
     });
 
     return res.status(200).json(savedPlan);
   } catch (error) {
     console.error("Survival Engine Error:", error);
     return res.status(500).json({ error: "Failed to generate survival plan." });
+  }
+});
+
+router.get("/videos", async (req: Request, res: Response): Promise<any> => {
+  try {
+    const videos = await Video.find({}).lean();
+    return res.status(200).json(videos);
+  } catch (error) {
+    console.error("Failed to fetch videos:", error);
+    return res.status(500).json({ error: "Failed to fetch videos" });
   }
 });
 
