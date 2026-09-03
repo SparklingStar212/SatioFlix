@@ -75,27 +75,30 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
 
     const energyConstraints: Record<number, string> = {
       1: "Zero cooking. Require raw, soaked, instant, or microwave prep only.",
-      2: "Very low effort. Boiling water or assembling pre-made items.",
+      2: "Very low effort. Boiling water or assembling pre-main items.",
       3: "Basic cooking. 1 pot/pan, under 20 minutes.",
       4: "Moderate cooking. Standard frying, boiling, and chopping allowed.",
       5: "Full cooking. Time and effort are not constraints.",
     };
 
+    // Upgraded system prompt incorporating real student variety, fresh daily meals, and zero ghost leftovers
     const systemPrompt = `
-      You are a realistic budget meal planner for a student in ${country}.
+      You are an expert student budget meal planner for a student in ${country}.
       Output strictly valid JSON. No markdown, no conversational text.
 
       PARAMETERS:
       - Mission: ${mission}
       - Budget: ${budget} ${currency}
       - Duration: ${days} days
-      - Pantry: ${sortedPantry.length > 0 ? sortedPantry.join(", ") : "None"}
-      - Effort: ${energyConstraints[energyLevel]}
+      - Pantry (Available items): ${sortedPantry.length > 0 ? sortedPantry.join(", ") : "None"}
+      - Effort Level (1-5): ${energyConstraints[energyLevel]}
 
-      RULES:
-      1. ONLY suggest locally available, cheap staples in ${country}.
-      2. Keep grocery list within the ${budget} ${currency} limit.
-      3. BIAS TOWARD THESE RECIPES if they fit the budget: [${existingTitles}].
+      CRITICAL REAL-WORLD STUDENT RULES:
+      1. REALISTIC MEAL FREQUENCY: Provide 1 to 2 substantial meals per day (e.g., Lunch and Dinner slots) reflecting real student eating habits without complex breakfast rituals.
+      2. ZERO GHOST LEFTOVERS: Students do not store food for weeks. Each meal or cooking session must be freshly prepared for that day's window. Do not reference phantom leftovers from days prior.
+      3. STRICT VARIETY (NO REPETITION): The primary goal is variety so the student stops eating the same thing over and over. Rotate actively between different carbs and proteins (e.g., alternate between rice, beans, yam, potatoes, pasta, or swallow variations across consecutive days).
+      4. BUDGET INTEGRITY: Keep the grocery list strictly within the ${budget} ${currency} limit.
+      5. BIAS TOWARD THESE RECIPES if they fit the budget: [${existingTitles}].
 
       EXPECTED JSON SCHEMA:
       {
@@ -104,9 +107,14 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
         "groceryList": [{ "name": "String", "estimatedCost": Number }],
         "meals": [{
           "day": Number,
-          "mealTitle": "String",
-          "totalEstimatedCost": Number,
-          "instructions": ["Step 1", "Step 2"]
+          "dailyMeals": [
+            {
+              "slot": "Lunch" | "Dinner",
+              "mealTitle": "String",
+              "estimatedCost": Number,
+              "instructions": ["Step 1", "Step 2"]
+            }
+          ]
         }]
       }
     `;
