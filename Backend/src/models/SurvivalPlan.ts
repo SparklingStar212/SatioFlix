@@ -1,6 +1,18 @@
 // src/models/SurvivalPlan.ts
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IDailyMealSlot {
+  slot: "Lunch" | "Dinner";
+  mealTitle: string;
+  estimatedCost: number;
+  instructions: string[];
+}
+
+export interface IDayPlan {
+  day: number;
+  dailyMeals: IDailyMealSlot[];
+}
+
 export interface ISurvivalPlan extends Document {
   mission: string;
   country: string;
@@ -11,13 +23,26 @@ export interface ISurvivalPlan extends Document {
   totalBudgetUsed: number;
   currency: string;
   groceryList: Array<{ name: string; estimatedCost: number }>;
-  meals: Array<{
-    day: number;
-    mealTitle: string;
-    totalEstimatedCost: number;
-    instructions: string[];
-  }>;
+  meals: IDayPlan[];
 }
+
+const DailyMealSlotSchema = new Schema(
+  {
+    slot: { type: String, required: true },
+    mealTitle: { type: String, required: true },
+    estimatedCost: { type: Number, required: true },
+    instructions: [{ type: String, required: true }],
+  },
+  { _id: false },
+);
+
+const DayPlanSchema = new Schema(
+  {
+    day: { type: Number, required: true },
+    dailyMeals: { type: [DailyMealSlotSchema], required: true },
+  },
+  { _id: false },
+);
 
 const SurvivalPlanSchema = new Schema(
   {
@@ -38,14 +63,7 @@ const SurvivalPlanSchema = new Schema(
         estimatedCost: { type: Number, required: true },
       },
     ],
-    meals: [
-      {
-        day: { type: Number, required: true },
-        mealTitle: { type: String, required: true },
-        totalEstimatedCost: { type: Number, required: true },
-        instructions: [{ type: String, required: true }],
-      },
-    ],
+    meals: { type: [DayPlanSchema], required: true },
   },
   { timestamps: true },
 );
