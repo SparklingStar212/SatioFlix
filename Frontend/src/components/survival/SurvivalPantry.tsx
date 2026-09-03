@@ -8,7 +8,6 @@ interface PantryCategory {
   items: string[];
 }
 
-// 🌍 Globally balanced student pantry items (works for Nigeria, UK, US, South Korea, etc.)
 const PANTRY_DATABASE: PantryCategory[] = [
   {
     category: 'Carbs & Grains',
@@ -49,6 +48,7 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
   const { state, updateState } = useSurvival();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const toggleIngredient = (item: string) => {
     const exists = state.pantry.includes(item);
@@ -59,6 +59,18 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
       updated = [...state.pantry, item];
     }
     updateState({ pantry: updated });
+    if (errorMsg) setErrorMsg(null); // Clear error once they start selecting items
+  };
+
+  const handleGenerate = () => {
+    // Guardrail: If budget is 0 AND pantry is completely empty, block generation
+    if (state.budget === 0 && (!state.pantry || state.pantry.length === 0)) {
+      setErrorMsg("⚠️ Bro, you have zero cash and zero pantry items! Even faith needs a pinch of salt. Please select at least one pantry staple or go back and set a budget.");
+      return;
+    }
+
+    setErrorMsg(null);
+    onSubmitMission();
   };
 
   const filteredCategories = useMemo(() => {
@@ -196,9 +208,16 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
         </div>
       </div>
 
+      {/* Error Warning Banner */}
+      {errorMsg && (
+        <div className="p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-600 dark:text-rose-400 text-xs font-bold animate-shake text-center">
+          {errorMsg}
+        </div>
+      )}
+
       {/* Generate Button */}
       <button
-        onClick={onSubmitMission}
+        onClick={handleGenerate}
         className="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white font-black text-sm rounded-xl transition-all shadow-xl shadow-rose-500/30 cursor-pointer flex items-center justify-center gap-2"
       >
         <span>Generate AI Survival Plan 🚀</span>

@@ -83,22 +83,21 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
 
     // Upgraded system prompt incorporating real student variety, fresh daily meals, and zero ghost leftovers
     const systemPrompt = `
-      You are an expert student budget meal planner for a student in ${country}.
+      You are an expert student budget survival chef for a student in ${country}.
       Output strictly valid JSON. No markdown, no conversational text.
 
       PARAMETERS:
       - Mission: ${mission}
       - Budget: ${budget} ${currency}
       - Duration: ${days} days
-      - Pantry (Available items): ${sortedPantry.length > 0 ? sortedPantry.join(", ") : "None"}
+      - Pantry (Available items): ${sortedPantry.length > 0 ? sortedPantry.join(", ") : "EMPTY (TRUE ZERO RESOURCES)"}
       - Effort Level (1-5): ${energyConstraints[energyLevel]}
 
-      CRITICAL REAL-WORLD STUDENT RULES:
-      1. REALISTIC MEAL FREQUENCY: Provide 1 to 2 substantial meals per day (e.g., Lunch and Dinner slots) reflecting real student eating habits without complex breakfast rituals.
-      2. ZERO GHOST LEFTOVERS: Students do not store food for weeks. Each meal or cooking session must be freshly prepared for that day's window. Do not reference phantom leftovers from days prior.
-      3. STRICT VARIETY (NO REPETITION): The primary goal is variety so the student stops eating the same thing over and over. Rotate actively between different carbs and proteins (e.g., alternate between rice, beans, yam, potatoes, pasta, or swallow variations across consecutive days).
-      4. BUDGET INTEGRITY: Keep the grocery list strictly within the ${budget} ${currency} limit.
-      5. BIAS TOWARD THESE RECIPES if they fit the budget: [${existingTitles}].
+      CRITICAL ZERO-RESOURCE RULES:
+      1. TRUE ZERO SURVIVAL: If both Budget is 0 AND Pantry is EMPTY, the student has literally nothing. Provide an emergency survival schedule focusing on hyper-cheap campus hacks, leveraging shared hostel resources, drinking garri with water/sugar if accessible, or creative fasting/hydration routines combined with ultra-low-cost survival strategies.
+      2. GROCERY LIST: If budget is 0, groceryList must be [].
+      3. REALISTIC FREQUENCY: 1 to 2 meals per day maximum.
+      4. STRICT VARIETY & NO GHOST LEFTOVERS.
 
       EXPECTED JSON SCHEMA:
       {

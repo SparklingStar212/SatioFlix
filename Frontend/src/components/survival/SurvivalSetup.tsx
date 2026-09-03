@@ -70,7 +70,6 @@ export const GLOBAL_COUNTRIES: CountryCurrencyInfo[] = [
   { name: 'Israel', currency: 'ILS', symbol: '₪', minDailyThreshold: 12 }
 ].sort((a, b) => a.name.localeCompare(b.name));
 
-// Helper to grab country metadata safely
 export function getCountryDetails(countryName: string): CountryCurrencyInfo {
   const found = GLOBAL_COUNTRIES.find(c => c.name === countryName);
   if (found) return found;
@@ -84,6 +83,7 @@ interface SurvivalSetupProps {
 export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
   const { state, updateState } = useSurvival();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isZeroBudget, setIsZeroBudget] = useState(state.budget === 0);
 
   useEffect(() => {
     const savedCountry = localStorage.getItem('satio_survival_country');
@@ -102,18 +102,34 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
     localStorage.setItem('satio_survival_currency', details.currency);
   };
 
+  const handleZeroBudgetToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setIsZeroBudget(checked);
+    if (checked) {
+      updateState({ budget: 0 });
+      setErrorMsg(null);
+    }
+  };
+
   const handleProceed = () => {
     const details = getCountryDetails(state.country);
     const absoluteMinimum = details.minDailyThreshold * state.days;
 
-    if (state.budget <= 0 || state.days <= 0) {
-      setErrorMsg("Please enter a valid budget and number of days.");
+    if (state.days <= 0) {
+      setErrorMsg("Please enter a valid number of days.");
       return;
     }
 
-    if (state.budget < absoluteMinimum) {
-      setErrorMsg(`Bro, even garri needs water! ${state.budget} ${state.currency} is too low for ${state.days} days. Try at least ${absoluteMinimum} ${state.currency} or fewer days.`);
-      return;
+    // Skip cash threshold validation if user selected zero cash (pantry-only mode)
+    if (!isZeroBudget) {
+      if (state.budget <= 0) {
+        setErrorMsg("Please enter a valid budget or select 'I have zero cash'.");
+        return;
+      }
+      if (state.budget < absoluteMinimum) {
+        setErrorMsg(`Bro, even garri needs water! ${state.budget} ${state.currency} is too low for ${state.days} days. Try at least ${absoluteMinimum} ${state.currency} or fewer days.`);
+        return;
+      }
     }
 
     setErrorMsg(null);
@@ -151,18 +167,33 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
         </select>
       </div>
 
-      {/* 2. Budget Input */}
+      {/* 2. Budget Input with Zero Cash Toggle */}
       <div className="space-y-2">
-        <label className="flex items-center gap-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
-          <Wallet className="w-4 h-4 text-rose-500" />
-          <span>Total Budget ({state.currency})</span>
-        </label>
+        <div className="flex justify-between items-center">
+          <label className="flex items-center gap-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
+            <Wallet className="w-4 h-4 text-rose-500" />
+            <span>Total Budget ({state.currency})</span>
+          </label>
+          <label className="flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={isZeroBudget}
+              onChange={handleZeroBudgetToggle}
+              className="w-4 h-4 rounded border-zinc-300 dark:border-zinc-700 text-emerald-500 focus:ring-emerald-500"
+            />
+            <span>I have zero cash (Pantry Only)</span>
+          </label>
+        </div>
         <input
           type="number"
-          value={state.budget || ''}
+          disabled={isZeroBudget}
+          value={isZeroBudget ? 0 : (state.budget || '')}
           onChange={(e) => updateState({ budget: Number(e.target.value) })}
           placeholder="e.g. 15000"
-          className="w-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl px-4 py-3 text-sm font-semibold text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-rose-500 transition-colors"
+          className={`w-full rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${isZeroBudget
+              ? 'bg-zinc-100 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-800 text-zinc-400 cursor-not-allowed'
+              : 'bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-rose-500'
+            }`}
         />
       </div>
 
@@ -182,7 +213,7 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
         />
       </div>
 
-      {/* Impossible Math Error Banner */}
+      {/* Error Banner */}
       {errorMsg && (
         <div className="p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-600 dark:text-rose-400 text-xs font-bold animate-shake">
           {errorMsg}
