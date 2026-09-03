@@ -132,9 +132,13 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
     });
 
     return res.status(200).json(savedPlan);
-  } catch (error) {
+  } catch (error: any) {
     console.error("Survival Engine Error:", error);
-    return res.status(500).json({ error: "Failed to generate survival plan." });
+    // 🔍 Send the real error back to the frontend for debugging
+    return res.status(500).json({
+      error: "Failed to generate survival plan.",
+      details: error.message || String(error),
+    });
   }
 });
 
