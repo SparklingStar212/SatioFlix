@@ -68,7 +68,6 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
     const trimmed = customInput.trim();
     if (!trimmed) return;
 
-    // Capitalize nicely and prevent duplicates
     const formatted = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
     if (!state.pantry.includes(formatted)) {
       updateState({ pantry: [...state.pantry, formatted] });
@@ -78,12 +77,24 @@ export default function SurvivalPantry({ onBack, onSubmitMission }: SurvivalPant
   };
 
   const handleGenerate = () => {
-    // Guardrail: If budget is 0 AND pantry is completely empty, block generation
+    // 1. Guardrail: If budget is 0 AND pantry is completely empty, block generation
     if (state.budget === 0 && (!state.pantry || state.pantry.length === 0)) {
-      setErrorMsg("⚠️ Bro, you have zero cash and zero pantry items! Even faith needs a pinch of salt. Please select or add at least one pantry item or go back and set a budget.");
+      setErrorMsg("⚠️ Bro, you have zero cash and zero pantry items! Even faith needs a pinch of salt. Please select or add at least one pantry item.");
       return;
     }
 
+    // 2. Hybrid Reality Check: If they have cash > 0 BUT have NO pantry items selected, 
+    // check if their budget is drastically too low for the requested duration.
+    if (state.budget > 0 && (!state.pantry || state.pantry.length === 0)) {
+      const dailySpend = state.budget / state.days;
+      // If daily cash available is extremely restrictive without any pantry stock backing it up:
+      if (dailySpend < 200) {
+        setErrorMsg(`⚠️ Warning: ${state.budget} ${state.currency} for ${state.days} days with NO pantry items is extremely tight. Consider selecting some items you own or reducing your days.`);
+        return;
+      }
+    }
+
+    // If they have pantry items backing them up, any small cash top-up is fully accepted!
     setErrorMsg(null);
     onSubmitMission();
   };

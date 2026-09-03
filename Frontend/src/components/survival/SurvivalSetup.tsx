@@ -112,24 +112,14 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
   };
 
   const handleProceed = () => {
-    const details = getCountryDetails(state.country);
-    const absoluteMinimum = details.minDailyThreshold * state.days;
-
     if (state.days <= 0) {
       setErrorMsg("Please enter a valid number of days.");
       return;
     }
 
-    // Skip cash threshold validation if user selected zero cash (pantry-only mode)
-    if (!isZeroBudget) {
-      if (state.budget <= 0) {
-        setErrorMsg("Please enter a valid budget or select 'I have zero cash'.");
-        return;
-      }
-      if (state.budget < absoluteMinimum) {
-        setErrorMsg(`Bro, even garri needs water! ${state.budget} ${state.currency} is too low for ${state.days} days. Try at least ${absoluteMinimum} ${state.currency} or fewer days.`);
-        return;
-      }
+    if (!isZeroBudget && state.budget < 0) {
+      setErrorMsg("Please enter a valid budget amount.");
+      return;
     }
 
     setErrorMsg(null);
@@ -197,7 +187,7 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
         />
       </div>
 
-      {/* 4. Meals Per Day Selector */}
+      {/* 3. Meals Per Day Selector */}
       <div className="space-y-2">
         <label className="flex items-center gap-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
           <Calendar className="w-4 h-4 text-rose-500" />
@@ -220,7 +210,7 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
         </div>
       </div>
 
-      {/* 3. Duration (Days) Input */}
+      {/* 4. Duration (Days) Input */}
       <div className="space-y-2">
         <label className="flex items-center gap-2 text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
           <Calendar className="w-4 h-4 text-rose-500" />
@@ -245,6 +235,7 @@ export default function SurvivalSetup({ onNext }: SurvivalSetupProps) {
 
       {/* Proceed Button */}
       <button
+        type="button"
         onClick={handleProceed}
         className="w-full py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-rose-500/20 cursor-pointer"
       >
