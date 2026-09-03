@@ -5,59 +5,43 @@ import { Video } from "../models/Video";
 import SurvivalPlan from "../models/SurvivalPlan";
 
 const router = Router();
-
 const aiClient = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+
+// --- DYNAMIC MODEL CANDIDATES FALLBACK LOOP ---
+const MODEL_CANDIDATES = [
+  "gemini-3.6-flash",
+  "gemini-2.5-flash",
+  "gemini-1.5-flash",
+  "gemini-1.5-pro",
+];
 
 async function generateMealPlanWithFallback(prompt: string) {
   const generationConfig = { responseMimeType: "application/json" };
 
-  // Tier 1: Primary fast model
-  try {
-    console.log("🧠 Tier 1 Attempt: Gemini 1.5 Flash...");
-    const model = aiClient.getGenerativeModel({
-      model: "gemini-1.5-flash",
-      generationConfig,
-    });
-    const result = await model.generateContent(prompt);
-    return JSON.parse(result.response.text());
-  } catch (tier1Error) {
-    console.warn("⚠️ Tier 1 failed. Cascading to Tier 2...", tier1Error);
+  for (const modelName of MODEL_CANDIDATES) {
+    try {
+      console.log(`🧠 Attempting AI Generation with: ${modelName}...`);
+      const model = aiClient.getGenerativeModel({ model: modelName, generationConfig });
+      const result = await model.generateContent(prompt);
+      
+      const text = result.response.text();
+      if (text) {
+        console.log(`✅ Success using model: ${modelName}`);
+        return JSON.parse(text);
+      }
+    } catch (error: any) {
+      console.warn(`⚠️ Model ${modelName} failed or throttled. Trying next candidate...`, error.message || error);
+    }
   }
 
-  // Tier 2: Backup fast model / higher quota pool
-  try {
-    console.log("🧠 Tier 2 Attempt: Gemini 1.5 Flash 8B / Secondary...");
-    const model = aiClient.getGenerativeModel({
-      model: "gemini-1.5-flash-8b",
-      generationConfig,
-    });
-    const result = await model.generateContent(prompt);
-    return JSON.parse(result.response.text());
-  } catch (tier2Error) {
-    console.warn("⚠️ Tier 2 failed. Cascading to Tier 3 (Pro)...", tier2Error);
-  }
-
-  // Tier 3: Heavy-duty reasoning fallback
-  try {
-    console.log("🧠 Tier 3 Attempt: Gemini 1.5 Pro...");
-    const model = aiClient.getGenerativeModel({
-      model: "gemini-1.5-pro",
-      generationConfig,
-    });
-    const result = await model.generateContent(prompt);
-    return JSON.parse(result.response.text());
-  } catch (tier3Error) {
-    console.error("❌ All AI tiers failed simultaneously.");
-    throw new Error(
-      "Critical: AI Generation completely failed across all fallback models.",
-    );
-  }
+  // If the loop finishes without returning, every single model failed
+  console.error("❌ All model candidates in the fallback array failed simultaneously.");
+  throw new Error("Critical: AI Generation failed across all configured Gemini models.");
 }
 
 router.post("/generate", async (req: Request, res: Response): Promise<any> => {
   try {
-    const { mission, country, currency, budget, days, pantry, energyLevel } =
-      req.body;
+    const { mission, country, currency, budget, days, pantry, energyLevel } = req.body;
     const sortedPantry = [...pantry].sort();
 
     // 1. THE CACHE INTERCEPT
@@ -117,7 +101,7 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
       }
     `;
 
-    // 3. CALL MULTI-TIER AI ENGINE
+    // 3. CALL ARRAY-BASED MULTI-MODEL FALLBACK LOOP
     const generatedData = await generateMealPlanWithFallback(systemPrompt);
 
     // 4. SAVE TO GLOBAL POOL
@@ -134,10 +118,9 @@ router.post("/generate", async (req: Request, res: Response): Promise<any> => {
     return res.status(200).json(savedPlan);
   } catch (error: any) {
     console.error("Survival Engine Error:", error);
-    // 🔍 Send the real error back to the frontend for debugging
-    return res.status(500).json({
-      error: "Failed to generate survival plan.",
-      details: error.message || String(error),
+    return res.status(500).json({ 
+      error: "Failed to generate survival plan.", 
+      details: error.message || String(error) 
     });
   }
 });
